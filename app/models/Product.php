@@ -4,7 +4,9 @@ namespace App\Models;
 class Product extends BaseModel{
     protected $table = "user";
     protected $loaihang="categories";
-    public function getProduct(){
+    protected $sanpham="product";
+    protected $chitietsanpham="product-information";
+    public function getuser(){
         $sql = "SELECT * FROM $this->table";
         $this->setQuery($sql);
         return $this->loadAllRows();
@@ -14,20 +16,24 @@ class Product extends BaseModel{
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-    public function addProduct($id, $ten, $gia){
-        $sql = "INSERT INTO $this->table VALUES (?, ?, ?)";
+    public function getproduct(){
+        $sql="SELECT * FROM $this->sanpham";
         $this->setQuery($sql);
-        return $this->execute(options: [$id, $ten, $gia]);
-        switch ($variable) {
-            case 'value':
-                # code...
-                break;
-            
-            default:
-                # code...
-                break;
-        }
+        return $this->loadAllRows();
     }
+      public function addProduct($product_name, $product_image,$product_title,$product_price, $product_color, $product_manufacturer, $product_seat_count,$edit_product_move, $product_fuel,$product_consumption){
+        $sql = "INSERT INTO `$this->sanpham` (name_product, images, title, price, category_id) VALUES (?, ?, ?, ?, ?)";;
+        
+        $this->setQuery($sql);
+        $this->execute([$product_name,$product_image,$product_title,$product_price, $product_manufacturer]);
+        $idfk=$this->pdo->lastInsertId();
+        $sqll = "INSERT INTO `$this->chitietsanpham`(product_id, color, seat_number, move, consumption, fuel) VALUES (?, ?, ?, ?, ?, ?)";
+        $this->setQuery($sqll);
+       $ktra= $this->execute([$idfk, $product_color, $product_seat_count, $edit_product_move, $product_consumption, $product_fuel]);
+       
+    }
+    // <--------------------------------------------------->
+  
     public function idProduct($id){
      $sql="SELECT * FROM $this->table Where id=?";
      $this->setQuery($sql);

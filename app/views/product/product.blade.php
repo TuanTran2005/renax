@@ -1,8 +1,7 @@
 @extends('layout.home')
 @section('content')
-
-
-<main class="flex-1 p-6">
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
     <h2 class="text-2xl font-bold mb-6 text-yellow-400">
       <i class="fas fa-box mr-2"></i> Quản lý sản phẩm
     </h2>
@@ -11,8 +10,7 @@
     <div class="flex justify-between items-center mb-6">
       <div>
         <input type="text" placeholder="Tìm kiếm sản phẩm..." 
-          class="bg-gray-700 text-white p-2 rounded shadow focus:outline-none focus:ring focus:ring-blue-500">
-      </div>
+          class="bg-gray-700 text-white p-2 rounded shadow focus:outline-none focus:ring focus:ring-blue-500"> </div>
       <div>
         <select class="bg-gray-700 text-white p-2 rounded shadow">
           <option value="all">Tất cả trạng thái</option>
@@ -29,9 +27,14 @@
 
     <!-- Product Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      @foreach ( $products as $product )
+      @php
+      $images=json_decode($product->images,true);
+      $i=0;
+      @endphp
       <div class="product-card">
-        <img src="https://via.placeholder.com/300" alt="Toyota Camry" class="w-full h-48 object-cover rounded mb-4">
-        <h3 class="text-xl font-bold text-yellow-400">Toyota Camry</h3>
+        <img src="{{$images[0]}}" width="200px" alt="Toyota Camry" class="w-full h-48 object-cover rounded mb-4">
+        <h3 class="text-xl font-bold text-yellow-400">{{$product->name_product}}</h3>
         <p class="text-gray-400">Màu: Đỏ</p>
         <p class="text-gray-400">Năm sản xuất: 2022</p>
         <p class="text-gray-400">Hãng xe: Toyota</p>
@@ -44,8 +47,10 @@
           <button onclick="openModal('deleteProductModal')" class="bg-red-600 px-4 py-2 rounded text-white hover:bg-red-700 transition">Xóa</button>
         </div>
       </div>
+     @endforeach
       <!-- Add more product cards as needed -->
     </div>
+
 
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
@@ -64,38 +69,55 @@
 <div id="addProductModal" class="modal flex">
   <div class="modal-content">
     <h2 class="text-2xl font-bold text-green-400 mb-4">Thêm Sản phẩm</h2>
-    <form action="#" method="POST" class="space-y-6">
+    <form action="{{route('post-product')}}" method="POST" class="space-y-6" enctype="multipart/form-data">
       <!-- Product Name -->
       <div class="flex flex-col space-y-2">
         <label for="product_name" class="text-yellow-300">Tên sản phẩm</label>
         <input type="text" id="product_name" name="product_name" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
       </div>
       <!-- Product Image -->
+      <div class="flex flex-col space-y-2"><label for="product_image" class="text-yellow-300">Ảnh sản phẩm</label>
+        <input type="file" id="product_image" name="product_image[]" class="bg-gray-700 text-white p-2 rounded shadow w-full" accept="image/*" multiple required>
+      </div>
+      <!-- Product Title -->
       <div class="flex flex-col space-y-2">
-        <label for="product_image" class="text-yellow-300">Ảnh sản phẩm</label>
-        <input type="file" id="product_image" name="product_image" class="bg-gray-700 text-white p-2 rounded shadow w-full" accept="image/*" required>
+        <label for="product_title" class="text-yellow-300">Tiêu đề sản phẩm</label>
+        <input type="text" id="product_title" name="product_title" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
+      </div>
+       <!-- Product price -->
+       <div class="flex flex-col space-y-2">
+        <label for="product_price" class="text-yellow-300">Giá sản phẩm</label>
+        <input type="text" id="product_price" name="product_price" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
       </div>
       <!-- Product Color -->
       <div class="flex flex-col space-y-2">
         <label for="product_color" class="text-yellow-300">Màu sắc</label>
         <input type="text" id="product_color" name="product_color" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
       </div>
-      <!-- Year of Manufacture -->
-      <div class="flex flex-col space-y-2">
-        <label for="product_year" class="text-yellow-300">Năm sản xuất</label>
-        <input type="number" id="product_year" name="product_year" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
-      </div>
       <!-- Car Manufacturer -->
       <div class="flex flex-col space-y-2">
         <label for="product_manufacturer" class="text-yellow-300">Hãng xe</label>
-        <input type="text" id="product_manufacturer" name="product_manufacturer" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
+<select id="product_manufacturer" name="product_manufacturer" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
+   <option value="" disabled selected>Chọn hãng xe</option>
+   @foreach ($productx  as $root )
+    <option value="{{$root->id}}">{{$root->name}}</option>
+    <!-- Thêm các hãng xe khác tại đây -->
+  @endforeach
+</select>
+
       </div>
       <!-- Seat Count -->
       <div class="flex flex-col space-y-2">
         <label for="product_seat_count" class="text-yellow-300">Số ghế</label>
         <input type="number" id="product_seat_count" name="product_seat_count" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
       </div>
+       <!-- Seat move -->
+       <div class="flex flex-col space-y-2">
+        <label for="edit_product_move" class="text-yellow-300">Di chuyển</label>
+        <input type="text" id="edit_product_move" name="edit_product_move" class="bg-gray-700 text-white p-2 rounded shadow w-full" value="5" required>
+      </div>
       <!-- Fuel Type -->
+       
       <div class="flex flex-col space-y-2">
         <label for="product_fuel" class="text-yellow-300">Nhiên liệu</label>
         <input type="text" id="product_fuel" name="product_fuel" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
@@ -108,7 +130,7 @@
       <!-- Additional Fields -->
       <div class="flex justify-between">
         <button type="button" onclick="closeModal('addProductModal')" class="bg-gray-600 px-4 py-2 rounded hover:bg-gray-500">Đóng</button>
-        <button type="submit" class="bg-green-600 px-4 py-2 rounded text-white hover:bg-green-700 transition">Lưu sản phẩm</button>
+        <button type="submit" name="them" class="bg-green-600 px-4 py-2 rounded text-white hover:bg-green-700 transition">Lưu sản phẩm</button>
       </div>
     </form>
   </div>
@@ -121,8 +143,7 @@
     <form action="#" method="POST" class="space-y-6">
       <!-- Product Name -->
       <div class="flex flex-col space-y-2">
-        <label for="edit_product_name" class="text-yellow-300">Tên sản phẩm</label>
-        <input type="text" id="edit_product_name" name="edit_product_name" class="bg-gray-700 text-white p-2 rounded shadow w-full" value="Toyota Camry" required>
+        <label for="edit_product_name" class="text-yellow-300">Tên sản phẩm</label>/-strong/-heart:>:o:-((:-h <input type="text" id="edit_product_name" name="edit_product_name" class="bg-gray-700 text-white p-2 rounded shadow w-full" value="Toyota Camry" required>
       </div>
       <!-- Product Image -->
       <div class="flex flex-col space-y-2">
@@ -144,8 +165,8 @@
         <label for="edit_product_manufacturer" class="text-yellow-300">Hãng xe</label>
         <input type="text" id="edit_product_manufacturer" name="edit_product_manufacturer" class="bg-gray-700 text-white p-2 rounded shadow w-full" value="Toyota" required>
       </div>
-      <!-- Seat Count -->
-      <div class="flex flex-col space-y-2">
+       <!-- Seat Count -->
+       <div class="flex flex-col space-y-2">
         <label for="edit_product_seat_count" class="text-yellow-300">Số ghế</label>
         <input type="number" id="edit_product_seat_count" name="edit_product_seat_count" class="bg-gray-700 text-white p-2 rounded shadow w-full" value="5" required>
       </div>
@@ -169,8 +190,7 @@
 </div>
 
 
-  <!-- Delete Product Modal -->
-  <div id="deleteProductModal" class="modal flex">
+  <!-- Delete Product Modal --> <div id="deleteProductModal" class="modal flex">
     <div class="modal-content">
       <h2 class="text-2xl font-bold text-red-400 mb-4">Xóa sản phẩm</h2>
       <p>Bạn có chắc chắn muốn xóa sản phẩm này không?</p>
@@ -189,5 +209,30 @@
     function closeModal(modalId) {
       document.getElementById(modalId).style.display = "none";
     }
+    window.onload = function() {
+  closeModal(); // Đảm bảo modal đóng khi trang tải xong
+  
+};
+
   </script>
-  @endsection
+  <style>
+    .modal {
+    display: none; /* Ẩn modal mặc định */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Hiệu ứng tối nền */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex; /* Hiển thị modal khi thêm class "active" */
+}
+
+  </style>
+
+
+@endsection

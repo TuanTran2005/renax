@@ -19,11 +19,14 @@ try{
     //định nghĩa đường dẫn trỏ đến Product Controller
     $router->get('list-product',[App\Controllers\ProductController::class, 'index']);
     $router->get('add-product',[App\Controllers\ProductController::class, 'addProduct']);
+    $router->post('update-product',[App\Controllers\ProductController::class, 'update_Product']);
     $router->get('get-product',[App\Controllers\ProductController::class,'get_product']);
-    $router->post('post-product',[App\Controllers\ProductController::class, 'postProduct']);
-    $router->get('update-product/{id}',[App\Controllers\ProductController::class,'updateProduct']);
-    $router->post('post-product/{id}',[App\Controllers\ProductController::class,'addUpdate']);
-    $router->get('delete-product/{id}',[App\Controller\ProductController::class,'deleteProduct']);
+    $router->post('post-product',[App\Controllers\ProductController::class,'post_product']);
+    // <---------------------------------------------->
+    // $router->post('post-product',[App\Controllers\ProductController::class, 'postProduct']);
+    // $router->get('update-product/{id}',[App\Controllers\ProductController::class,'updateProduct']);
+    // $router->post('post-product/{id}',[App\Controllers\ProductController::class,'addUpdate']);
+    // $router->get('delete-product/{id}',[App\Controller\ProductController::class,'deleteProduct']);
     // khu vực cần quan tâm -----------
     //$router->get('test', [App\Controllers\ProductController::class, 'index']);
 
