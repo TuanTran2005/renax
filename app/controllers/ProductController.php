@@ -17,14 +17,15 @@ class ProductController extends BaseController{
 
     public function addProduct(){
         $products=$this->product->getcategories();
-
+          
         return $this->render('product.categories',compact('products'));
     }
-    public function update_Product(){
+    public function add_cartegori(){
         if (isset($_POST['add'])) {
            $tenlh=$_POST['tenlh'];
            $mt=$_POST['mt'];
-
+           $this->product->category($tenlh,$mt);
+           flash('success', "Thêm thành công", 'add-product');
         }
     }
     public function get_product(){
@@ -54,6 +55,14 @@ class ProductController extends BaseController{
             
         }
         
+    }
+    public function update_cartegori(){
+       $this->product->updatecate($_POST['tenlh'],$_POST['mt'],$_POST['id']);
+       flash('success', "Sửa thành công", 'add-product');
+    }
+    public function delete_cartegori($id){
+        $this->product->delete_cartegorr($id);
+        flash('success', "xóa thành công", 'add-product');
     }
 // <-------------------------------------------------------->
     public function postProduct(){

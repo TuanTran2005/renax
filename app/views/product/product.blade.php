@@ -100,7 +100,7 @@
 <select id="product_manufacturer" name="product_manufacturer" class="bg-gray-700 text-white p-2 rounded shadow w-full" required>
    <option value="" disabled selected>Chọn hãng xe</option>
    @foreach ($productx  as $root )
-    <option value="{{$root->id}}">{{$root->name}}</option>
+    <option value="{{$root->id}}">{{$root->name_category}}</option>
     <!-- Thêm các hãng xe khác tại đây -->
   @endforeach
 </select>

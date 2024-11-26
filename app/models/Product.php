@@ -16,8 +16,13 @@ class Product extends BaseModel{
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-    public function getproduct(){
-        $sql="SELECT * FROM $this->sanpham";
+    public function getProduct() {
+        // Sử dụng JOIN để kết hợp 2 bảng
+        $sql = "SELECT * FROM $this->sanpham 
+        INNER JOIN `$this->chitietsanpham` 
+        ON $this->sanpham.id = `$this->chitietsanpham`.product_id";
+        
+        // Đặt câu truy vấn và thực thi
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
@@ -29,7 +34,23 @@ class Product extends BaseModel{
         $idfk=$this->pdo->lastInsertId();
         $sqll = "INSERT INTO `$this->chitietsanpham`(product_id, color, seat_number, move, consumption, fuel) VALUES (?, ?, ?, ?, ?, ?)";
         $this->setQuery($sqll);
-       $ktra= $this->execute([$idfk, $product_color, $product_seat_count, $edit_product_move, $product_consumption, $product_fuel]);
+        $this->execute([$idfk, $product_color, $product_seat_count, $edit_product_move, $product_consumption, $product_fuel]);
+       
+    }
+    public function category($tenlh,$mt){
+        $sql="INSERT INTO `$this->loaihang`(name_category, `describe`) VALUES (?,?)";
+        $this->setQuery($sql);
+        $this->execute([$tenlh,$mt]);
+    }
+    public function updatecate($ten,$mt,$id){
+        $sql="UPDATE $this->loaihang SET name_category= ? ,`describe`= ? WHERE id = ? ";
+        $this->setQuery($sql);
+        return $this->execute([$ten,$mt,$id]);
+    }
+    public function delete_cartegorr($id) {
+        $sql = "DELETE FROM $this->loaihang WHERE id=?";
+        $this->setQuery($sql);
+        $this->execute([$id]);
        
     }
     // <--------------------------------------------------->

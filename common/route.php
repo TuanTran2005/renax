@@ -19,9 +19,11 @@ try{
     //định nghĩa đường dẫn trỏ đến Product Controller
     $router->get('list-product',[App\Controllers\ProductController::class, 'index']);
     $router->get('add-product',[App\Controllers\ProductController::class, 'addProduct']);
-    $router->post('update-product',[App\Controllers\ProductController::class, 'update_Product']);
+    $router->post('add_cartegori',[App\Controllers\ProductController::class, 'add_cartegori']);
+    $router->post('update-cartegori',[App\Controllers\ProductController::class,'update_cartegori']);
     $router->get('get-product',[App\Controllers\ProductController::class,'get_product']);
     $router->post('post-product',[App\Controllers\ProductController::class,'post_product']);
+    $router->post('delete_cartegory/{id}',[App\Controllers\ProductController::class,'delete_cartegori']);
     // <---------------------------------------------->
     // $router->post('post-product',[App\Controllers\ProductController::class, 'postProduct']);
     // $router->get('update-product/{id}',[App\Controllers\ProductController::class,'updateProduct']);
