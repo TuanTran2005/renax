@@ -5,9 +5,10 @@ class Product extends BaseModel{
     protected $table = "user";
     protected $loaihang="categories";
     protected $sanpham="product";
+    protected $user="user";
     protected $chitietsanpham="product-information";
     public function getuser(){
-        $sql = "SELECT * FROM $this->table";
+        $sql = "SELECT * FROM $this->table ";
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
@@ -17,12 +18,10 @@ class Product extends BaseModel{
         return $this->loadAllRows();
     }
     public function getProduct() {
-        // Sử dụng JOIN để kết hợp 2 bảng
-        $sql = "SELECT * FROM $this->sanpham 
-        INNER JOIN `$this->chitietsanpham` 
-        ON $this->sanpham.id = `$this->chitietsanpham`.product_id";
         
-        // Đặt câu truy vấn và thực thi
+        $sql = "SELECT product.*,`product-information`.*,   product.id AS id_pr, `product-information`.id AS id_if  FROM $this->sanpham  INNER JOIN `$this->chitietsanpham` ON $this->sanpham.id = `$this->chitietsanpham`.product_id";
+        
+       
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
@@ -53,23 +52,18 @@ class Product extends BaseModel{
         $this->execute([$id]);
        
     }
-    // <--------------------------------------------------->
-  
-    public function idProduct($id){
-     $sql="SELECT * FROM $this->table Where id=?";
-     $this->setQuery($sql);
-     return $this->loadRow([$id]);
-    }
-    public function idUpdate($id,$ten,$gia){
-    $sql="UPDATE $this->table SET ten= ? , gia= ? WHERE id = ?";
-    $this->setQuery($sql);
-    return $this->execute(options:[$ten,$gia,$id]);
-    }
-    public function idDelete($id){
-        $sql="DELETE FROM $this->table WHERE id = ? ";
+    public function updateUser($id,$name,$images,$pass,$address,$phone,$email,$date,$status,$gender,$role){
+        $sql="UPDATE $this->user  SET `name`= ? ,images= ? ,`password`= ? ,addpress= ? ,phone= ? ,email= ? ,`date`= ? ,`status`= ? ,gender= ? ,`role`= ? WHERE id=? ";
         $this->setQuery($sql);
-        return $this->execute(options:[$id]);
+        $this->execute([$name,$images,$pass,$address,$phone,$email,$date,$status,$gender,$role,$id]);
     }
+    public function deleteUser($id){
+        $sql = "DELETE FROM $this->user WHERE id=?";
+        $this->setQuery($sql);
+        $this->execute([$id]);
+    }
+    // <--------------------------------------------------->
+
 }
 
 

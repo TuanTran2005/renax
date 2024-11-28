@@ -11,7 +11,7 @@ class ProductController extends BaseController{
     
     public function index(){
         $products = $this->product->getuser();
-   
+        
        return $this->render('product.adduser',compact('products')); 
     }
 
@@ -64,53 +64,22 @@ class ProductController extends BaseController{
         $this->product->delete_cartegorr($id);
         flash('success', "xóa thành công", 'add-product');
     }
+    public function update_user(){
+        if (isset($_POST['add'])) {
+            $img=basename($_FILES['image']['name']);
+            $url = 'app/img/';  
+            $noi=$url.$img;
+            move_uploaded_file($_FILES['image']['tmp_name'],$noi);
+            $this->product->updateUser($_POST['editid'],$_POST['editName'],$noi,$_POST['pass'],$_POST['address'],$_POST['editPhone'],$_POST['editEmail'],$_POST['date'],$_POST['status'],$_POST['gender'],$_POST['role']);
+            flash('success', "Sửa thành công", 'list-user');
+        }
+    }
+    public function delete_user(){
+        $this->product->deleteUser($_POST['delete_user']);
+         flash('success', "Xóa thành công", 'list-user');
+    }
 // <-------------------------------------------------------->
-    public function postProduct(){
-        // validate form
-        if(isset($_POST['gui'])){
-            $error = [];
-            // rỗng
-            if(empty($_POST['ten'])){
-                $error[] = "Bạn vui lòng nhập tên";
-            }
-            if(empty($_POST['gia'])){
-                $error[] = "Bạn vui lòng nhập gia";
-            }
-            if(count($error)>=1){
-                flash('errors', $error, 'add-product');
-            }else{
-                $check = $this->product->idUpdate(null,  $_POST['ten'],$_POST['gia']);
-                if ($check){
-                    flash('success', "Thêm thành công", 'list-product');
-                }
-            }
-        }
-    }
-    public function updateProduct($id)
-    {
-        $sql=$this->product->idProduct($id);
-        return $this->render('product/update.php', compact('sql'));
-    }
-    public function addUpdate($id){
-        if(isset($_POST['gui'])){
-            $error = [];
-            // rỗng
-            if(empty($_POST['ten'])){
-                $error[] = "Bạn vui lòng nhập tên";
-            }
-            if(empty($_POST['gia'])){
-                $error[] = "Bạn vui lòng nhập gia";
-            }
-            if(count($error)>=1){
-                flash('errors', $error, 'add-product');
-            }else{
-                $check = $this->product->idUpdate($id,  $_POST['ten'],$_POST['gia']);
-                if ($check){
-                    flash('success', "Thêm thành công", 'list-product');
-                }
-            }
-        }
-    }
+  
 }
 
 
