@@ -85,7 +85,8 @@
 
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
   <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
     <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
   </a>
@@ -121,11 +122,21 @@
 
       <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
     </div>
+
+    <!-- Form Tìm kiếm -->
+    <form class="d-flex ms-3" action="search_results.html" method="GET">
+      <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" name="search_query">
+      <button class="btn btn-outline-primary" type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
     <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
       Đặt câu hỏi<i class="fa fa-arrow-right ms-3"></i>
     </a>
   </div>
 </nav>
+<!-- Navbar End -->
 
 
    

@@ -1,5 +1,8 @@
 @extends('layout.main')
 @section('content')
+@php
+var_dump( $_SESSION['auth']);
+@endphp
     <!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5">
       <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
@@ -357,8 +360,6 @@ Dịch vụ của CarSev chúng tôi đã trở nên nổi tiếng và in dấu 
       </div>
       <div class="bonbon d-flex">
  @foreach ( $product as $index )
- 
-
     <div class="col-lg-3 col-md-6 wow fadeInUp m-3" data-wow-delay="0.1s">
         <div class="team-item ">
             <div class="position-relative overflow-hidden">

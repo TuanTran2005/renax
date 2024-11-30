@@ -30,7 +30,7 @@
             <!-- Product Item 1 -->
             <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="card product-item">
-                    <img src="{{json_decode($index->images)[3] }}" class="card-img-top" alt="Sản phẩm 1">
+                    <img src="{{json_decode($index->images)[3] }}" width="406px" height="230px"  alt="Sản phẩm 1">
                     <div class="card-body text-center">
                         <h5 class="card-title">{{$index->name_product}}</h5>
                         <p class="card-text">{{$index->title}}</p>

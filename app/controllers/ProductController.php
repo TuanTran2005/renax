@@ -123,7 +123,7 @@ class ProductController extends BaseController{
      return $this->render('userPare.index',compact('product'));
   }
   public function product_page(){
-    $id=$_GET['id'];
+    $id = isset($_GET['id']) ? $_GET['id'] : 1;
     $product=$this->product->productPage($id);
     $productx=$this->product->nut();
     return $this->render('userPare.product',compact('product','productx'));
@@ -131,16 +131,16 @@ class ProductController extends BaseController{
   public function login(){
     return $this->render('userPare.login');
   }
-  public function checkUser() {
-    $product = $this->product->getuser();
-
-    if (isset($_POST['check'])) { // Kiểm tra xem có form được gửi không
+  public function check() {
+    $product = $this->product->getuser();  // Lấy danh sách người dùng
+ 
+    if (isset($_POST['checks'])) { // Kiểm tra xem có form được gửi không
         // Kiểm tra nếu email và mật khẩu đã được gửi từ form
         $email = $_POST['nameLogin'] ?? null; 
         $password = $_POST['passwordLogin'] ?? null;
         
         if ($email && $password) {
-            // Tìm người dùng theo email (thay vì duyệt qua tất cả người dùng)
+            // Tìm người dùng theo email
             $user = null;
             foreach ($product as $value) {
                 if ($value->email == $email) {
@@ -151,40 +151,43 @@ class ProductController extends BaseController{
     
             if ($user) {
                 // Kiểm tra mật khẩu nếu người dùng tồn tại
-                if (password_verify($password, $user->password)) {
+                if ($password==$user->password) {
                     // Lưu thông tin vào session
                     $_SESSION['auth'] = [
                         'id' => $user->id,
                         'email' => $user->email,
                         'role' => $user->role,
                     ];
-    
-                    // Gọi hàm flash để thông báo thành công
                     flash('success', "Đăng nhập thành công!", 'userpage');
-                    
                     // Chuyển hướng tới trang người dùng sau khi đăng nhập
                     header("Location: http://renax.test/userpage"); 
                     exit();
                 } else {
-                    // Nếu mật khẩu không đúng
                     flash('error', "Sai mật khẩu!", 'login');
                 }
             } else {
-                // Nếu không tìm thấy người dùng với email này
                 flash('error', "Email không tồn tại!", 'login');
             }
         } else {
-            // Nếu thiếu email hoặc mật khẩu trong form
             flash('error', "Vui lòng nhập đầy đủ thông tin!", 'login');
         }
     }
-    
 }
+
 public function detailProduct(){
     $id=$_GET['id'];
-
+    $productxs=$this->product->review($id);
     $product=$this->product->detail_Product($id);
-    return $this->render('userPare.detail_Product',compact('product'));
+    return $this->render('userPare.detail_Product',compact('product','productxs'));
+}
+public function review($id){
+    if (isset($_POST['review'])) {
+        $product=$id;
+        $user=$_SESSION['auth']['id'];
+       $this->product->danhgia($product,$user,$_POST['rating'],$_POST['content']);
+       header("Location: http://renax.test/product_page");
+
+    }
 }
 }
 

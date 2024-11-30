@@ -7,6 +7,7 @@ class Product extends BaseModel{
     protected $user="user";
     protected $review="product_reviews";
     protected $chitietsanpham="product-information";
+    protected $binhluan='product_reviews';
     public function getuser(){
         $sql = "SELECT * FROM $this->user ";
         $this->setQuery($sql);
@@ -134,8 +135,7 @@ class Product extends BaseModel{
     }
     public function detail_Product($id) {
         // Xây dựng câu lệnh SQL
-        $sql = "SELECT * 
-        FROM $this->sanpham 
+        $sql = "SELECT product.*,`product-information`.*,   product.id AS id_pr, `product-information`.id AS id_if FROM $this->sanpham 
         INNER JOIN `$this->chitietsanpham` 
         ON $this->sanpham.id = `$this->chitietsanpham`.id 
         WHERE $this->sanpham.id = ?";
@@ -145,9 +145,19 @@ $this->setQuery($sql);
 
 // Gọi phương thức loadRow để thực thi câu lệnh và trả về 1 hàng dữ liệu
 return $this->loadRow([$id]);
-
+      
     }
-    
+ public function danhgia($product,$user,$grant,$review){
+    $sql="INSERT INTO $this->binhluan(product_id,user_id,rating,review	) VALUES (?,?,?,?)";
+    $this->setQuery($sql);
+    $this->execute([$product,$user,$grant,$review]);
+ }
+ public function review($id){
+    $sql = "SELECT *  FROM $this->user  INNER JOIN $this->binhluan ON $this->user.id = $this->binhluan.user_id WHERE $this->binhluan.product_id= ?  " ;
+    $this->setQuery($sql);
+    return $this->loadAllRows([$id]);
+     
+ }
     
     
 }
