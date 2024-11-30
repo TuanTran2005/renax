@@ -8,6 +8,7 @@ class Product extends BaseModel{
     protected $review="product_reviews";
     protected $chitietsanpham="product-information";
     protected $binhluan='product_reviews';
+    protected $dichvu='servise';
     public function getuser(){
         $sql = "SELECT * FROM $this->user ";
         $this->setQuery($sql);
@@ -158,7 +159,17 @@ return $this->loadRow([$id]);
     return $this->loadAllRows([$id]);
      
  }
-    
+ public function userPagex(){
+    $sql = "SELECT * FROM $this->sanpham ORDER BY price DESC LIMIT 4";
+    $this->setQuery($sql);
+   return $this->loadAllRows();
+
+} 
+public function servise($id){
+ $sql="SELECT * FROM $this->dichvu WHERE product_id= ? ";
+ $this->setQuery($sql);
+ return $this->loadAllRows([$id]);
+}
     
 }
    

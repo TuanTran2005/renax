@@ -13,11 +13,10 @@
                 } else {
                     $imagesArray = [];
                 }
-    
             @endphp
             <div id="mainImage" class="mb-3">
                 @if(count($imagesArray) > 0)
-                    <img id="largeImage" width="600px" src="{{ trim($imagesArray[0], '""[]') }}" class="img-fluid" alt="Product Image">
+                    <img id="largeImage" width="600px" src="{{ trim($imagesArray[0], '""[]') }}" class="img-fluid" alt="Product Image" style="border-radius: 0;">
                 @else
                     <p>No images available</p>
                 @endif
@@ -27,14 +26,14 @@
                     @php
                         $image = str_replace(['[', ']', '"'], '', $image); 
                     @endphp
-                    <img src="{{ $image }}" class="img-thumbnail me-2" width="100px" alt="Thumbnail Image" onclick="changeImage('{{ $image }}')">
+                    <img src="{{ $image }}" class="img-thumbnail me-2" width="100px" alt="Thumbnail Image" onclick="changeImage('{{ $image }}')" style="border-radius: 0; cursor: pointer;">
                 @endforeach
             </div>
         </div>
         <div class="col-lg-6">
             <h2>{{ $product->name_product ?? 'Product not found' }}</h2>
             <p class="text-muted">Category: {{ $product->title ?? 'N/A' }}</p>
-
+         
             @php
                 $colors = [];
                 if ($product && isset($product->color) && !is_null($product->color)) {
@@ -62,94 +61,92 @@
                 <span class="h4">Price: ${{ $product->price ?? '0.00' }}</span>
             </div>
 
-            <div class="mb-3">
-                <label for="quantity" class="form-label">Quantity:</label>
-                <input type="number" id="quantity" class="form-control" value="1" min="1">
-            </div>
+            <form action="{{ route('addToCart') }}?id={{$product->id}}" method="POST">
+                @csrf
+                <input type="hidden" id="coler" name="color">
+               <input type="hidden" value="{{ trim($imagesArray[0], '""[]') }}" name="images">
+               <input type="hidden" value="{{$product->name_product}}" name="nameProduct">
+               <input type="hidden" value="{{$product->price}}" name="pricrProduct">
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity:</label>
+                    <input type="number" id="quantity" class="form-control" name="quantity" value="1" min="1">
+                </div>
 
-            <button class="btn btn-primary">Add to Cart</button>
+                <!-- Display Services Instead of Dropdown -->
+                <div class="mb-3">
+                    <label for="service" class="form-label">Services Available:</label>
+               @foreach ( $servise as $index )
+               <p><strong>{{$index->name}}</strong></p>
+               @endforeach
+                    
+                    
+
+                </div>
+
+                <button type="submit" name="add" class="btn btn-primary">Add to Cart</button>
+            </form>
         </div>
     </div>
 
-    <!-- Mô tả với hình ảnh nằm ngang, trước sản phẩm tương ứng -->
+    <!-- Product Description -->
     <div class="row mt-5">
         <div class="col-12">
             <h3>Product Description</h3>
             <div class="row">
                 <div class="col-md-6">
-                    <img src="{{trim( $imagesArray[0] ,'""[]')}}" width="600px" class="img-fluid" alt="Description Image 1">
+                    <img src="{{trim( $imagesArray[0] ,'""[]')}}" width="600px" class="img-fluid" alt="Description Image 1" style="border-radius: 0;">
                     <p class="mt-3">This is the first image description that explains this part of the product.</p>
                 </div>
                 <div class="col-md-6">
-                    <img src="{{trim( $imagesArray[0] ,'""[]')}}" width="600px" class="img-fluid" alt="Description Image 1">
-                    <p class="mt-3">This is the first image description that explains this part of the product.</p>
+                    <img src="{{trim( $imagesArray[0] ,'""[]')}}" width="600px" class="img-fluid" alt="Description Image 2" style="border-radius: 0;">
+                    <p class="mt-3">This is the second image description that explains this part of the product.</p>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End mô tả với hình ảnh nằm ngang -->
 
-    <!-- Related Products Start -->
+    <!-- Related Products -->
     <div class="row mt-5">
         <div class="col-12">
             <h3>Related Products</h3>
             <div class="row">
-                <!-- Sample Related Product -->
+                @foreach ( $productxsmax as $sp )
                 <div class="col-md-3 mb-4">
                     <div class="card">
-                        <img src="path/to/image.jpg" class="card-img-top" alt="Related Product">
+                        <img src="{{ json_decode($sp->images)[0] }}" height="180px" class="card-img-top" alt="Related Product" style="border-radius: 0;">
                         <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">$100.00</p>
+                            <h5 class="card-title">{{$sp->name_product}}</h5>
+                            <p class="card-text">${{$sp->price}}</p>
                             <a href="/product-detail" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Another Related Product -->
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <img src="path/to/image.jpg" class="card-img-top" alt="Related Product">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Name</h5>
-                            <p class="card-text">$120.00</p>
-                            <a href="/product-detail" class="btn btn-primary">View Details</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional Related Products can be added here -->
+                @endforeach
             </div>
         </div>
     </div>
-    <!-- Related Products End -->
 
-    <!-- Product Reviews Start -->
+    <!-- Product Reviews -->
     <div class="row mt-5">
         <div class="col-12">
             <h3>Product Reviews</h3>
 
-            <!-- Display existing reviews -->
-            <div id="reviews" class="mt-3">
-                <!-- Sample review -->
+            <!-- Display existing reviews with overflow: auto -->
+            <div id="reviews" class="mt-3" style="max-height: 300px; overflow: auto;">
+                @foreach ($productxs as $review)
                 <div class="border p-3 mb-3">
-                    <div><strong>John Doe</strong> - <span class="text-muted">25 Dec 2024</span></div>
-                    <div class="mt-2">This is a great product! I really love it. Highly recommend.</div>
+                    <div><strong>{{$review->name}}</strong> - <span class="text-muted">{{$review->review_date}}</span></div>
+                    <div class="mt-2">{{$review->review}}</div>
                     <div class="mt-2">
                         <strong>Rating:</strong>
-                        <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <!-- Filled stars -->
+                        <span class="text-warning">
+                            @for ($i=1;$i<=$review->rating;$i++)
+                             &#9733;
+                            @endfor
+                        </span>
                     </div>
                 </div>
-
-                <div class="border p-3 mb-3">
-                    <div><strong>Jane Smith</strong> - <span class="text-muted">20 Dec 2024</span></div>
-                    <div class="mt-2">Good product, but could be better. The color isn't exactly as expected.</div>
-                    <div class="mt-2">
-                        <strong>Rating:</strong>
-                        <span class="text-warning">&#9733;&#9733;&#9733;&#9733;</span> <!-- 4 filled stars -->
-                        <span class="text-muted">&#9733; &#9733;</span> <!-- Empty star -->
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <!-- Add Review Form -->
@@ -175,17 +172,19 @@
             </div>
         </div>
     </div>
-    <!-- Product Reviews End -->
 
 </div>
 <!-- Product Detail End -->
 
 <script>
-    function changeImage(src) {
-        document.getElementById('largeImage').src = src;
+    // Function to handle the color selection
+    function changeColor($coler) {
+        document.getElementById('coler').value=$coler;
     }
-    function changeColor(color) {
-        console.log("Color selected:", color);
+
+    // Function to change the main image when clicking on thumbnail
+    function changeImage(imageSrc) {
+        document.getElementById('largeImage').src = imageSrc;
     }
 </script>
 

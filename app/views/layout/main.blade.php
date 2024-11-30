@@ -35,9 +35,129 @@
         overflow: auto;
         width: 100%;
       }
+     
       ::-webkit-scrollbar {
+
   width: 0px;
 }
+body {
+            font-family: 'Ubuntu', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+
+        .table th,
+        .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Cart Item */
+        .cart-item {
+            border: 1px solid #e4e7f2;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        .cart-item:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .cart-item .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2d3436;
+        }
+
+        .cart-item .price {
+            color: #e74c3c;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Image Styling */
+        .cart-item img {
+            width: 100px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Quantity Input */
+        .quantity-input {
+            width: 80px;
+            padding: 5px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        /* Delete Button */
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 12px 14px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+        }
+
+        /* Buttons */
+        .btn-custom {
+            background: linear-gradient(to right, #3498db, #8e44ad);
+            color: white;
+            border-radius: 8px;
+            padding: 12px 24px;
+            border: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        /* Total Price */
+        .total-price {
+            font-size: 28px;
+            font-weight: 600;
+            color: #2ecc71;
+        }
+
+        .total-price-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        /* Checkout Button */
+        .checkout-btn {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background-color: #27ae60;
+        }
+
     </style>
 </head>
 
@@ -117,6 +237,7 @@
         <div class="dropdown-menu fade-up m-0">
           <a href="blog.html" class="dropdown-item">Bài viết</a>
           <a href="service.html" class="dropdown-item">Dịch vụ</a>
+          <a href="{{route('cart')}}" class="dropdown-item">Giỏ hàng</a>
         </div>
       </div>
 
@@ -213,8 +334,6 @@
         <div class="row">
           <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
             &copy; <a class="border-bottom" href="#">Tên Trang Web Của Bạn</a>, Tất Cả Quyền Được Bảo Lưu.
-    
-            <!--/*** Mẫu này miễn phí miễn là bạn giữ liên kết/attribution của tác giả ở chân trang. Nếu bạn muốn sử dụng mẫu mà không có liên kết/attribution của tác giả, bạn có thể mua Giấy Phép Xóa Tín Dụng từ "https://htmlcodex.com/credit-removal". Cảm ơn bạn đã hỗ trợ. ***/-->
             Thiết Kế Bởi
             <a class="border-bottom" href="https://htmlcodex.com"
               >HTML Codex</a

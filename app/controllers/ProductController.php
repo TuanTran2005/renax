@@ -176,9 +176,11 @@ class ProductController extends BaseController{
 
 public function detailProduct(){
     $id=$_GET['id'];
+    $productxsmax=$this->product->userPagex();
     $productxs=$this->product->review($id);
     $product=$this->product->detail_Product($id);
-    return $this->render('userPare.detail_Product',compact('product','productxs'));
+    $servise=$this->product->servise($id);
+    return $this->render('userPare.detail_Product',compact('product','productxs','productxsmax','servise'));
 }
 public function review($id){
     if (isset($_POST['review'])) {
@@ -188,6 +190,29 @@ public function review($id){
        header("Location: http://renax.test/product_page");
 
     }
+}
+public function cartProduct(){
+    return $this->render('userPare.cart');
+}
+public function addToCart(){
+    if (!isset($_SESSION['cart'])) {
+       $_SESSION['cart']=[];
+    }
+    if (isset($_POST['add'])) {
+        $product_id = $_GET['id'];
+        $quantity = $_POST['quantity'];
+        $color=$_POST['color'];
+        $images=$_POST['images'];
+        $nameProduct=$_POST['nameProduct'];
+        $priceProduct=$_POST['priceProduct'];
+
+        if (isset($_SESSION['cart'][$product_id][$images][$nameProduct][$color][$priceProduct])) {
+            $_SESSION['cart'][$product_id][$images][$nameProduct][$color][$priceProduct]+=$quantity;
+        }else {
+            $_SESSION['cart'][$product_id][$images][$nameProduct][$color][$priceProduct]=$quantity;
+        }
+    }
+    flash('error', "Thêm giỏ hàng thành công", 'product_page');
 }
 }
 

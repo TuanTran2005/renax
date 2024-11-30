@@ -30,7 +30,9 @@ try{
     $router->get('product_page',[App\Controllers\ProductController::class,'product_page']);
     $router->get('detailProduct',[App\Controllers\ProductController::class,'detailProduct']);
     $router->post('reviewProduct/{id}',[App\Controllers\ProductController::class,'review']);
-    
+    $router->get('cart',[App\Controllers\ProductController::class,'cartProduct']);
+    $router->post('addToCart',[App\Controllers\ProductController::class,'addToCart']);
+
     $router->get('/', [App\Controllers\ProductController::class, 'indes'],['before'=>'auth|admin']);
     $router->get('list-user',[App\Controllers\ProductController::class, 'index'],['before'=>'auth|admin']);
     $router->get('add-product',[App\Controllers\ProductController::class, 'addProduct'],['before'=>'auth|admin']);
