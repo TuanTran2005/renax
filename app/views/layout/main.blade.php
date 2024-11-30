@@ -1,120 +1,255 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Thêm Font Awesome để sử dụng icon -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <title>@yield('title', 'Admin Dashboard')</title>
+    <meta charset="utf-8">
+    <title>CarServ - Car Repair HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700&family=Ubuntu:wght@400;500&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="../../css/style.css" rel="stylesheet">
     <style>
-        /* Định dạng sidebar */
-        .sidebar {
-            min-height: 100vh;
-            background-color: #343a40;
-            color: #fff;
-        }
-        .sidebar a {
-            color: #ddd;
-            text-decoration: none;
-        }
-        .sidebar a:hover {
-            background-color: #495057;
-            color: #fff;
-        }
-        .active-link {
-            background-color: #495057;
-            font-weight: bold;
-        }
-        /* Định dạng phần login và header */
-        .header-right {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        .header-right .dropdown-menu {
-            min-width: 200px;
-        }
-        .header-right .icon {
-            margin-left: 20px;
-            cursor: pointer;
-        }
-        .icon:hover {
-            color: #007bff;
-        }
+      .bonbon{
+        overflow: auto;
+        width: 100%;
+      }
+      ::-webkit-scrollbar {
+  width: 0px;
+}
     </style>
 </head>
+
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar p-3">
-                <h4 class="text-center py-2">Admin Menu</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active-link" href="{{ BASE_URL }}">Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ BASE_URL }}list-product">Quản lý sản phẩm</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ BASE_URL }}add-product">Thêm sản phẩm</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ BASE_URL }}order-management">Quản lý đơn hàng</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ BASE_URL }}user-management">Quản lý người dùng</a>
-                    </li>
-                </ul>
-            </nav>
-
-            <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <!-- Header -->
-                <header class="d-flex justify-content-between align-items-center py-3 mb-3 border-bottom">
-                    <h1 class="h2">Admin Dashboard</h1>
-
-                    <!-- Phần Login/Thông tin người dùng -->
-                    <div class="header-right">
-                        @if(isset($_SESSION['auth']) && !empty($_SESSION['auth']))
-                            <!-- Nếu đã đăng nhập -->
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ $_SESSION['auth']['username'] }}
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="{{ BASE_URL }}logout">Đăng xuất</a></li>
-                                </ul>
-                            </div>
-                        @else
-                            <!-- Nếu chưa đăng nhập -->
-                            <a href="{{ BASE_URL }}login" class="btn btn-primary">
-                                <i class="fas fa-sign-in-alt"></i> Đăng nhập
-                            </a>
-                        @endif
-
-                        <!-- Thêm icon thông báo -->
-                        <div class="icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                    </div>
-                </header>
-
-                <!-- Nội dung chính -->
-                <div class="content">
-                    @yield('content') <!-- Nội dung trang sẽ được load ở đây -->
-                </div>
-
-                <footer class="text-center py-3">
-                    <span>FPT POLYTECHNIC</span>
-                </footer>
-            </main>
+    <!-- Spinner Start -->
+ <!-- Spinner Start -->
+ <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
     </div>
+    <!-- Spinner End -->
 
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-light p-0">
+        <div class="row gx-0 d-none d-lg-flex">
+            <div class="col-lg-7 px-5 text-start">
+                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+                    <small class="fa fa-map-marker-alt text-primary me-2"></small>
+                    <small>123 Street, New York, USA</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center py-3">
+                    <small class="far fa-clock text-primary me-2"></small>
+                    <small>Mon - Fri : 09.00 AM - 09.00 PM</small>
+                </div>
+            </div>
+            <div class="col-lg-5 px-5 text-end">
+                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
+                    <small class="fa fa-phone-alt text-primary me-2"></small>
+                    <small>+012 345 6789</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center">
+                    <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-sm-square bg-white text-primary me-0" href=""><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-sm-square bg-white text-primary me-1" href="login.html"><i class="fas fa-sign-in-alt"></i></a> 
+                    <a class="btn btn-sm-square bg-white text-primary me-1" href="{{route('login')}}"><i class="fas fa-user"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+  <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
+  </a>
+  <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav ms-auto p-4 p-lg-0">
+      <a href="{{route('userpage')}}" class="nav-item nav-link active">Trang chủ</a>
+      <a href="about.html" class="nav-item nav-link">Về chúng tôi</a>
+      
+      <!-- Nút "Sản phẩm" -->
+      <a href="{{ route('product_page') }}?id=1" class="nav-item nav-link">Sản phẩm</a>
+
+      <!-- Nút "Loại hàng" -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Loại hàng</a>
+        <div class="dropdown-menu fade-up m-0">
+          <a href="product-category1.html" class="dropdown-item">Loại hàng 1</a>
+          <a href="product-category2.html" class="dropdown-item">Loại hàng 2</a>
+          <a href="product-category3.html" class="dropdown-item">Loại hàng 3</a>
+        </div>
+      </div>
+
+      <!-- Nút "Thư mục" chứa bài viết và dịch vụ -->
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Thư mục</a>
+        <div class="dropdown-menu fade-up m-0">
+          <a href="blog.html" class="dropdown-item">Bài viết</a>
+          <a href="service.html" class="dropdown-item">Dịch vụ</a>
+        </div>
+      </div>
+
+      <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+    </div>
+    <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
+      Đặt câu hỏi<i class="fa fa-arrow-right ms-3"></i>
+    </a>
+  </div>
+</nav>
+
+
+   
+<!-- Navbar End -->
+@yield('content')
+<div
+    class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn"
+    data-wow-delay="0.1s"
+    >
+    <div class="container py-5">
+      <div class="row g-5">
+        <div class="col-lg-3 col-md-6">
+          <h4 class="text-light mb-4">Địa Chỉ</h4>
+          <p class="mb-2">
+            <i class="fa fa-map-marker-alt me-3"></i>123 Phố, New York, Mỹ
+          </p>
+          <p class="mb-2">
+            <i class="fa fa-phone-alt me-3"></i>+012 345 67890
+          </p>
+          <p class="mb-2">
+            <i class="fa fa-envelope me-3"></i>info@example.com
+          </p>
+          <div class="d-flex pt-2">
+            <a class="btn btn-outline-light btn-social" href=""
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a class="btn btn-outline-light btn-social" href=""
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a class="btn btn-outline-light btn-social" href=""
+              ><i class="fab fa-youtube"></i
+            ></a>
+            <a class="btn btn-outline-light btn-social" href=""
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h4 class="text-light mb-4">Giờ Mở Cửa</h4>
+          <h6 class="text-light">Thứ Hai - Thứ Sáu:</h6>
+          <p class="mb-4">09:00 AM - 09:00 PM</p>
+          <h6 class="text-light">Thứ Bảy - Chủ Nhật:</h6>
+          <p class="mb-0">09:00 AM - 12:00 PM</p>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h4 class="text-light mb-4">Dịch Vụ</h4>
+          <a class="btn btn-link" href="">Kiểm Tra Chẩn Đoán</a>
+          <a class="btn btn-link" href="">Bảo Dưỡng Động Cơ</a>
+          <a class="btn btn-link" href="">Thay Lốp</a>
+          <a class="btn btn-link" href="">Thay Dầu</a>
+          <a class="btn btn-link" href="">Dọn Dẹp Hút Bụi</a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h4 class="text-light mb-4">Bản Tin</h4>
+          <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+          <div class="position-relative mx-auto" style="max-width: 400px">
+            <input
+              class="form-control border-0 w-100 py-3 ps-4 pe-5"
+              type="text"
+              placeholder="Email của bạn"
+            />
+            <button
+              type="button"
+              class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2"
+            >
+              Đăng Ký
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="copyright">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            &copy; <a class="border-bottom" href="#">Tên Trang Web Của Bạn</a>, Tất Cả Quyền Được Bảo Lưu.
+    
+            <!--/*** Mẫu này miễn phí miễn là bạn giữ liên kết/attribution của tác giả ở chân trang. Nếu bạn muốn sử dụng mẫu mà không có liên kết/attribution của tác giả, bạn có thể mua Giấy Phép Xóa Tín Dụng từ "https://htmlcodex.com/credit-removal". Cảm ơn bạn đã hỗ trợ. ***/-->
+            Thiết Kế Bởi
+            <a class="border-bottom" href="https://htmlcodex.com"
+              >HTML Codex</a
+            >
+            <br />Phân Phối Bởi:
+            <a
+              class="border-bottom"
+              href="https://themewagon.com"
+              target="_blank"
+              >ThemeWagon</a
+            >
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <div class="footer-menu">
+              <a href="">Trang Chủ</a>
+              <a href="">Cookies</a>
+              <a href="">Trợ Giúp</a>
+              <a href="">Câu Hỏi Thường Gặp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- Chân Trang Kết Thúc -->
+    
+    
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+          ><i class="bi bi-arrow-up"></i
+        ></a>
+    
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+      </body>
+    </html>
+    

@@ -1,22 +1,34 @@
 <?php
 
 use Phroute\Phroute\RouteCollector;
-
 $url = !isset($_GET['url']) ? "/" : $_GET['url'];
 try{
     $router = new RouteCollector();
 
-    // filter check đăng nhập
+ 
     $router->filter('auth', function(){
         if(!isset($_SESSION['auth']) || empty($_SESSION['auth'])){
-            header('location: ' . BASE_URL . 'login');die;
+            header('location: ' . BASE_URL . 'login');
+            die;
+        }
+    
+    });
+    $router->filter('admin', function() {
+        // Kiểm tra nếu người dùng đã đăng nhập và có role là admin (role = 1)
+        if (isset($_SESSION['auth']) && $_SESSION['auth']['role'] != 1) {
+            // Nếu người dùng không phải là admin, chuyển hướng về trang khác (userpage chẳng hạn)
+            header('location: ' . BASE_URL . 'userpage');
+            die;
         }
     });
+    $router->get('login',[App\Controllers\ProductController::class,'login']);
+    // $router->post('check',App\Controllers\ProductController::class,'checkUser');
 
-    // khu vực cần quan tâm -----------
-    // bắt đầu định nghĩa ra các đường dẫn
-    $router->get('/', [App\Controllers\HomeController::class, 'index']);  
-    //định nghĩa đường dẫn trỏ đến Product Controller
+    $router->get('userpage',[App\Controllers\ProductController::class,'userpage']);
+    $router->get('product_page',[App\Controllers\ProductController::class,'product_page']);
+    $router->get('detailProduct',[App\Controllers\ProductController::class,'detailProduct']);
+    
+    $router->get('/', [App\Controllers\ProductController::class, 'indes']);
     $router->get('list-user',[App\Controllers\ProductController::class, 'index']);
     $router->get('add-product',[App\Controllers\ProductController::class, 'addProduct']);
     $router->post('add_cartegori',[App\Controllers\ProductController::class, 'add_cartegori']);
@@ -26,12 +38,14 @@ try{
     $router->post('delete_cartegory/{id}',[App\Controllers\ProductController::class,'delete_cartegori']);
     $router->post('update_user',[App\Controllers\ProductController::class,'update_user']);
     $router->post('delete_user',[App\Controllers\ProductController::class,'delete_user']);
-    # NB. You can cache the return value from $router->getData() so you don't have to create the routes each request - massive speed gains
+    $router->post('update-product',[App\Controllers\ProductController::class,'update_product']);
+    $router->post('delete-product',[App\Controllers\ProductController::class,'delete_product']);
+  
     $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
     $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $url);
 
-    // Print out the value returned from the dispatched function
+ 
     echo $response;
 }catch(Exception $e){
     var_dump($e->getMessage());die;

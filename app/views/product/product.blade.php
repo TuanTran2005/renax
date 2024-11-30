@@ -35,7 +35,7 @@
           <td class="p-4">
             <button onclick="openreview('viewProductModal','{{$product->id_pr }}','{{$product->id_if }}','{{$product->color}}','{{$product->seat_number}}','{{$product->move}}','{{$product->consumption}}','{{$product->fuel}}','{{ json_decode($product->images, true)[0] ?? '' }}')" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Xem</button>
             <button onclick="openUpdate('editProductModal','{{$product->id_pr }}','{{$product->id_if }}','{{$product->name_product}}','{{$product->color}}','{{$product->seat_number}}','{{$product->move}}','{{$product->consumption}}','{{$product->fuel}}','{{ json_decode($product->images, true)[0] ?? '' }}','{{$product->images}}','{{$product->category_id }}','{{$product->title}}','{{$product->price}}')" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Sửa</button>
-            <button onclick="openModal('deleteProductModal')" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
+            <button onclick="openDelete('deleteProductModal','{{$product->id_pr }}')" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
           </td>
         </tr>
         @endforeach
@@ -110,9 +110,9 @@
     <h2 class="text-2xl font-bold text-blue-800 mb-4">Chỉnh Sửa Sản Phẩm</h2>
     <form action="{{ route('update-product') }}" method="post" enctype="multipart/form-data">
       @csrf
-      @method('PUT') <!-- Để hỗ trợ cập nhật -->
-      <input type="hidden" name="product_id" id="editProductId" value="">
-      
+      <input type="hidden" name="product_id" id="editProductId">
+      <input type="hidden" name="product_idif" id="editProductIdIf">
+      <input type="hidden" name="img" id="img">
       <div class="mb-4">
         <label for="editProductName" class="block text-sm font-semibold text-gray-700">Tên Sản Phẩm</label>
         <input type="text" id="editProductName" name="product_name" class="w-full px-4 py-2 rounded border border-gray-300" placeholder="Nhập tên sản phẩm">
@@ -164,7 +164,7 @@
       </div>
       <div class="flex justify-end space-x-4">
         <button onclick="closeModal('editProductModal')" type="button" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
-        <button type="submit" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Cập nhật</button>
+        <button type="submit" name="capnhat" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Cập nhật</button>
       </div>
     </form>
   </div>
@@ -197,9 +197,12 @@
       <h2 class="text-xl font-semibold text-red-600 mb-4">Xóa Sản Phẩm</h2>
       <p class="mb-6">Bạn có chắc chắn muốn xóa sản phẩm này?</p>
       <div class="flex justify-end space-x-4">
+        <form action="{{route('delete-product')}}" method="post">
+          <input type="hidden" id="delete_product" name="delete_product">
         <button onclick="closeModal('deleteProductModal')" type="button" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
-        <button class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
-      </div>
+        <button type="submit" name="xoa" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
+      </form>
+    </div>
     </div>
   </div>
 
@@ -220,8 +223,8 @@
       document.getElementById(modalId).classList.remove("hidden");
     }
     function openUpdate(modalId,idpk,idif,nameproduct,coler,seat_number,move,consumption,fuel,img,images,category_id,title,price ) {
-   document.getElementById('idpk').innerHTML=idpk;
-   document.getElementById('idif').innerHTML=idif;
+   document.getElementById('editProductId').value=idpk;
+   document.getElementById('editProductIdIf').value=idif;
    document.getElementById('loaihang').value=category_id ;
    document.getElementById('editProductName').value=nameproduct;
    document.getElementById('editProductColor').value=coler;
@@ -231,9 +234,8 @@
    document.getElementById('editProductFuel').value=fuel;
    document.getElementById('editProductTitle').value=title;
    document.getElementById('editProductPrice').value=price;
-   const anh=JSON.parse(images);;
-   console.log(anh);
-   
+   document.getElementById('img').value=images;
+   const anh=JSON.parse(images);
    const imageContainer=document.getElementById('imageContainer');
    imageContainer.innerHTML = '';
    anh.forEach(imagePath => {
@@ -243,6 +245,10 @@
     imgElement.className = "w-32 h-32 object-cover mb-4 rounded-sm p-3 ";
     imageContainer.appendChild(imgElement);
    });
+      document.getElementById(modalId).classList.remove("hidden");
+    }
+    function openDelete(modalId,id) {
+      document.getElementById('delete_product').value=id;
       document.getElementById(modalId).classList.remove("hidden");
     }
 

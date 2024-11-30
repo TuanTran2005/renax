@@ -10,19 +10,19 @@
     <div class="grid grid-cols-4 gap-6 mb-10">
       <div class="bg-green-300 p-6 rounded shadow-lg">
         <h3 class="text-lg font-bold text-green-700"><i class="fas fa-users mr-2"></i> Người dùng</h3>
-        <p class="text-3xl mt-2">15,876</p>
+        <p class="text-3xl mt-2">{{$user->total}}</p>
       </div>
       <div class="bg-red-300 p-6 rounded shadow-lg">
         <h3 class="text-lg font-bold text-red-700"><i class="fas fa-comments mr-2"></i> Bình luận</h3>
-        <p class="text-3xl mt-2">5,421</p>
+        <p class="text-3xl mt-2">{{$reviews->total}}</p>
       </div>
       <div class="bg-purple-300 p-6 rounded shadow-lg">
         <h3 class="text-lg font-bold text-purple-700"><i class="fas fa-box mr-2"></i> Sản phẩm</h3>
-        <p class="text-3xl mt-2">2,134</p>
+        <p class="text-3xl mt-2">{{$product->total}}</p>
       </div>
       <div class="bg-yellow-300 p-6 rounded shadow-lg">
         <h3 class="text-lg font-bold text-yellow-700"><i class="fas fa-tags mr-2"></i> Loại hàng</h3>
-        <p class="text-3xl mt-2">8</p>
+        <p class="text-3xl mt-2">{{$categories->total}}</p>
       </div>
     </div>
 
