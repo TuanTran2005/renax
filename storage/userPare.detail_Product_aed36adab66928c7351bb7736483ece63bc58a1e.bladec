@@ -2,32 +2,72 @@
 
 <?php $this->startSection('content'); ?>
 
-
  <!-- Product Detail Start -->
  <div class="container py-5">
  <div class="row">
  <div class="col-lg-6">
  <!-- Product Image Gallery -->
+ <?php 
+ // Kiểm tra nếu $product không phải là false và có thuộc tính 'images'
+ if ($product && isset($product->images) && !is_null($product->images)) {
+ // Chuyển chuỗi hình ảnh thành mảng nếu 'images' là một chuỗi phân tách bằng dấu phẩy
+ $imagesArray = explode(',', $product->images); 
+ } else {
+ // Nếu không có hình ảnh, khởi tạo mảng rỗng
+ $imagesArray = [];
+ }
+ ?>
  <div id="mainImage" class="mb-3">
- <img id="largeImage" src="<?php echo \htmlentities(($product->images)[0]??'', ENT_QUOTES, 'UTF-8', false); ?>" class="img-fluid" alt="Product Image">
+ <!-- Kiểm tra mảng hình ảnh trước khi hiển thị -->
+ <?php if(count($imagesArray) > 0): ?>
+ <img id="largeImage" width="600px" src="<?php echo \htmlentities(trim($imagesArray[0], '""[]')??'', ENT_QUOTES, 'UTF-8', false); ?>" class="img-fluid" alt="Product Image">
+ <?php else: ?>
+ <p>No images available</p>
+ <?php endif; ?>
  </div>
  <div id="thumbnailImages" class="d-flex">
- <?php $__currentLoopData = explode(',',$product->images); $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ <?php $__currentLoopData = $imagesArray; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $image): $loop = $this->incrementLoopIndices();  ?>
- 
- 
- <img src="<?php echo \htmlentities($image??'', ENT_QUOTES, 'UTF-8', false); ?>" class="img-thumbnail me-2" alt="Thumbnail Image" onclick="changeImage(<?php echo \htmlentities($image??'', ENT_QUOTES, 'UTF-8', false); ?>)">
- 
+ <?php 
+ // Loại bỏ dấu ngoặc vuông và dấu nháy nếu có
+ $image = str_replace(['[', ']', '"'], '', $image); 
+ ?>
+ <img src="<?php echo \htmlentities($image??'', ENT_QUOTES, 'UTF-8', false); ?>" class="img-thumbnail me-2" width="100px" alt="Thumbnail Image" onclick="changeImage('<?php echo \htmlentities($image??'', ENT_QUOTES, 'UTF-8', false); ?>')">
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </div>
  </div>
  <div class="col-lg-6">
- <h2><?php echo \htmlentities($product->name_product??'', ENT_QUOTES, 'UTF-8', false); ?></h2>
- <p class="text-muted">Category: Car Parts</p>
+ <h2><?php echo \htmlentities($product->name_product ?? 'Product not found'??'', ENT_QUOTES, 'UTF-8', false); ?></h2>
+ <p class="text-muted">Category: <?php echo \htmlentities($product->title ?? 'N/A'??'', ENT_QUOTES, 'UTF-8', false); ?></p>
+
+ <?php 
+ // Kiểm tra nếu $product có thuộc tính 'color'
+ $colors = [];
+ if ($product && isset($product->color) && !is_null($product->color)) {
+ $colors = explode(',', $product->color); // Mảng các màu sắc
+ }
+ ?>
+ <p><strong>Color:</strong></p>
+ <div class="d-flex flex-wrap">
+ <?php $__currentLoopData = $colors; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $color): $loop = $this->incrementLoopIndices();  ?>
+ <?php 
+ // Loại bỏ dấu ngoặc vuông và dấu nháy nếu có
+ $color = str_replace(['[', ']', '"'], '', $color);
+ ?>
+ <div 
+ style="width: 20px; height: 20px; margin-right: 10px; border-radius: 50%; background-color: <?php echo \htmlentities($color??'', ENT_QUOTES, 'UTF-8', false); ?>; cursor: pointer;" 
+ onclick="changeColor('<?php echo \htmlentities($color??'', ENT_QUOTES, 'UTF-8', false); ?>')" 
+ title="Select <?php echo \htmlentities($color??'', ENT_QUOTES, 'UTF-8', false); ?>"
+ class="mb-2"></div>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </div>
+
+ <p><strong>Fuel Type:</strong> <?php echo \htmlentities($product->fuel_type ?? 'N/A'??'', ENT_QUOTES, 'UTF-8', false); ?></p>
  <p class="lead">This is a detailed description of the product that explains its features and advantages.</p>
 
  <div class="mb-3">
- <span class="h4">Price: $199.99</span>
+ <span class="h4">Price: $<?php echo \htmlentities($product->price ?? '0.00'??'', ENT_QUOTES, 'UTF-8', false); ?></span>
  </div>
 
  <div class="mb-3">
@@ -38,34 +78,18 @@
  <button class="btn btn-primary">Add to Cart</button>
  </div>
  </div>
- </div>
- <!-- Product Detail End -->
+</div>
+<!-- Product Detail End -->
 
- <!-- Comments Section Start -->
- <div class="container py-5">
- <h3>Customer Reviews</h3>
- <div class="mb-3">
- <textarea class="form-control" rows="4" placeholder="Leave a comment..."></textarea>
- <button class="btn btn-primary mt-3">Submit Review</button>
- </div>
- <div class="comments-list">
- <div class="comment mb-3">
- <strong>John Doe</strong>
- <p>This product is amazing! Really improved my car's performance.</p>
- </div>
- <div class="comment mb-3">
- <strong>Jane Smith</strong>
- <p>Great value for money. Highly recommend!</p>
- </div>
- </div>
- </div>
-
- <!-- Comments Section End -->
- <script>
+<script>
  function changeImage(src) {
  document.getElementById('largeImage').src = src;
  }
- </script>
+ function changeColor(color) {
+ console.log("Color selected:", color);
+ }
+</script>
+
 <?php $this->stopSection(); ?>
 
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

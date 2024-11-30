@@ -133,28 +133,52 @@ class ProductController extends BaseController{
   }
   public function checkUser() {
     $product = $this->product->getuser();
+
     if (isset($_POST['check'])) { // Kiểm tra xem có form được gửi không
-        foreach ($product as $value) {
-            // Kiểm tra tên đăng nhập và mật khẩu
-            if ($_POST['nameLogin'] == $value->email && $_POST['passwordLogin'] == $value->password) {
-                // Lưu thông tin vào session
-                $_SESSION['auth'] = [
-                    'id' => $value->id,
-                    'email' => $value->email,
-                    'role' => $value->role,
-                ];
-                // Gọi hàm flash để thông báo thành công (nếu có)
-                flash('success', "Thành công", 'userpage');
-                
-                // Chuyển hướng tới trang chủ (hoặc trang đích sau khi đăng nhập)
-                header("Location: http://renax.test/userpage"); // Bạn có thể thay "/userpage" bằng URL bạn muốn chuyển hướng đến
-                exit(); // Sau khi chuyển hướng, cần dừng mọi thao tác tiếp theo
-            } else {
-                // Nếu không thành công, thông báo thất bại
-                flash('error', "Thất Bại", 'login');
+        // Kiểm tra nếu email và mật khẩu đã được gửi từ form
+        $email = $_POST['nameLogin'] ?? null; 
+        $password = $_POST['passwordLogin'] ?? null;
+        
+        if ($email && $password) {
+            // Tìm người dùng theo email (thay vì duyệt qua tất cả người dùng)
+            $user = null;
+            foreach ($product as $value) {
+                if ($value->email == $email) {
+                    $user = $value;
+                    break;
+                }
             }
+    
+            if ($user) {
+                // Kiểm tra mật khẩu nếu người dùng tồn tại
+                if (password_verify($password, $user->password)) {
+                    // Lưu thông tin vào session
+                    $_SESSION['auth'] = [
+                        'id' => $user->id,
+                        'email' => $user->email,
+                        'role' => $user->role,
+                    ];
+    
+                    // Gọi hàm flash để thông báo thành công
+                    flash('success', "Đăng nhập thành công!", 'userpage');
+                    
+                    // Chuyển hướng tới trang người dùng sau khi đăng nhập
+                    header("Location: http://renax.test/userpage"); 
+                    exit();
+                } else {
+                    // Nếu mật khẩu không đúng
+                    flash('error', "Sai mật khẩu!", 'login');
+                }
+            } else {
+                // Nếu không tìm thấy người dùng với email này
+                flash('error', "Email không tồn tại!", 'login');
+            }
+        } else {
+            // Nếu thiếu email hoặc mật khẩu trong form
+            flash('error', "Vui lòng nhập đầy đủ thông tin!", 'login');
         }
     }
+    
 }
 public function detailProduct(){
     $id=$_GET['id'];
