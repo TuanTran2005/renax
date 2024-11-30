@@ -9,6 +9,7 @@ class Product extends BaseModel{
     protected $chitietsanpham="product-information";
     protected $binhluan='product_reviews';
     protected $dichvu='servise';
+    protected $billct='order_details';
     public function getuser(){
         $sql = "SELECT * FROM $this->user ";
         $this->setQuery($sql);
@@ -170,7 +171,21 @@ public function servise($id){
  $this->setQuery($sql);
  return $this->loadAllRows([$id]);
 }
-    
+  public function userPay($id){
+   $sql="SELECT * FROM $this->user WHERE id= ?";
+   $this->setQuery($sql);
+   return $this->loadRow([$id]);
+  }
+  public function productPay($id){
+    $sql="SELECT * FROM $this->sanpham WHERE id= ?";
+    $this->setQuery($sql);
+    return $this->loadRow([$id]);
+   }
+  public function startus(){
+    $sql="SELECT * FROM $this->sanpham WHERE id= ?";
+    $this->setQuery($sql);
+    return $this->loadRow([$id]);
+  }
 }
    
 

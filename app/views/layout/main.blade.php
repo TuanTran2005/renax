@@ -216,7 +216,7 @@ body {
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <div class="navbar-nav ms-auto p-4 p-lg-0">
       <a href="{{route('userpage')}}" class="nav-item nav-link active">Trang chủ</a>
-      <a href="about.html" class="nav-item nav-link">Về chúng tôi</a>
+      <a href="#" class="nav-item nav-link">Về chúng tôi</a>
       
       <!-- Nút "Sản phẩm" -->
       <a href="{{ route('product_page') }}?id=1" class="nav-item nav-link">Sản phẩm</a>

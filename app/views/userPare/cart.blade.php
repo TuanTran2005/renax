@@ -57,7 +57,7 @@
         </div>
  
         <!-- Nút mua sản phẩm -->
-        <button class="btn-custom mt-3 w-100" onclick="buyNow({{ $product_id }})">Mua ngay</button>
+       <a href="{{route('pay')}}?id={{$product_id}}&sl={{$quantity}}"><button class="btn-custom mt-3 w-100" onclick="buyNow({{ $product_id }})">Mua ngay</button></a> 
     </div>
     @endforeach 
      @endforeach

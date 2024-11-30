@@ -214,6 +214,17 @@ public function addToCart(){
     }
     flash('error', "Thêm giỏ hàng thành công", 'product_page');
 }
+public function Pay(){
+    $ids=$_GET['id'];
+        $id=$_SESSION['auth']['id'];
+        $products=$this->product->userPay($id);
+        $buy=$this->product->productPay($ids);
+    return $this->render('userPare.pay',compact('products','buy'));
+}
+// public function bill(){
+//     return $this->render('userPare.bill');
+// }
+
 }
 
 

@@ -32,6 +32,9 @@ try{
     $router->post('reviewProduct/{id}',[App\Controllers\ProductController::class,'review']);
     $router->get('cart',[App\Controllers\ProductController::class,'cartProduct']);
     $router->post('addToCart',[App\Controllers\ProductController::class,'addToCart']);
+    // $router->get('bill',[App\Controllers\ProductController::class,'bill']);
+    $router->get('pay',[App\Controllers\ProductController::class,'Pay']);
+
 
     $router->get('/', [App\Controllers\ProductController::class, 'indes'],['before'=>'auth|admin']);
     $router->get('list-user',[App\Controllers\ProductController::class, 'index'],['before'=>'auth|admin']);
