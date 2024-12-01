@@ -204,14 +204,14 @@ public function addToCart(){
         $color=$_POST['color'];
         $images=$_POST['images'];
         $nameProduct=$_POST['nameProduct'];
-        $priceProduct=$_POST['priceProduct'];
-
+        $priceProduct=$_POST['price'];
         if (isset($_SESSION['cart'][$product_id][$images][$nameProduct][$color][$priceProduct])) {
             $_SESSION['cart'][$product_id][$images][$nameProduct][$color][$priceProduct]+=$quantity;
         }else {
             $_SESSION['cart'][$product_id][$images][$nameProduct][$color][$priceProduct]=$quantity;
         }
     }
+    
     flash('error', "Thêm giỏ hàng thành công", 'product_page');
 }
 public function Pay(){
@@ -235,23 +235,27 @@ public function PayPost(){
        $notes=$_POST['notes'];	
        $product_id=$_GET['idpr'];	
        $Address=$_POST['address'];	
-       $Color=$_POST['color'];
+       $Color=$_POST['color']?$_POST['color']:'white';
        $this->product->addPay($iduser,$quantity,$unit_price,$total_price,$name_user,$phone,$pickup_date,$payment_method,$notes,$product_id, $Address,$Color);
        $buy=$this->product->productPay($product_id);
-       $cleaned_string = str_replace(['[', ']', '"'], '', $buy->images[0]);
-       $cart_key = $product_id . '_' . $cleaned_string . '_' . $buy->name_product . '_' . $Color . '_' .$buy->price;
-       if ($_SESSION['cart'][$cart_key]>$quantity) {
-        $_SESSION['cart'][$cart_key] -=$quantity;
-       }else{
-        unset($_SESSION['cart'][$cart_key]);
-       }
-       
-      
+       $price=strval($buy->price);
+       $img=json_decode($buy->images)[0];
+       $cleaned_string = str_replace(['[', ']', '"'], '', $img);
+       $cart_key = $product_id . '_' . $cleaned_string . '_' . $buy->name_product . '_' . $Color . '_' .$price;
+       if (isset($_SESSION['cart'][$cart_key])) {
+        if ($_SESSION['cart'][$cart_key] > $quantity) {
+            $_SESSION['cart'][$cart_key] -= $quantity;
+        } else {
+            unset($_SESSION['cart'][$cart_key]);
+        }
     }
+    }
+     flash('error', "Đặt hàng thành công", 'bill');
+
 }
-// public function bill(){
-//     return $this->render('userPare.bill');
-// }
+public function bill(){
+    return $this->render('userPare.bill');
+}
 
 }
 

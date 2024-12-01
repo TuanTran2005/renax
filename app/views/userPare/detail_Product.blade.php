@@ -66,7 +66,7 @@
                 <input type="hidden" id="coler" name="color">
                <input type="hidden" value="{{ trim($imagesArray[0], '""[]') }}" name="images">
                <input type="hidden" value="{{$product->name_product}}" name="nameProduct">
-               <input type="hidden" value="{{$product->price}}" name="pricrProduct">
+               <input type="hidden" value="{{$product->price}}" name="price">
                 <div class="mb-3">
                     <label for="quantity" class="form-label">Quantity:</label>
                     <input type="number" id="quantity" class="form-control" name="quantity" value="1" min="1">

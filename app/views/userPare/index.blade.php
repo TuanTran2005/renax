@@ -1,8 +1,6 @@
 @extends('layout.main')
 @section('content')
-@php
-var_dump( $_SESSION['auth']);
-@endphp
+
     <!-- Carousel Start -->
     <div class="container-fluid p-0 mb-5">
       <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">

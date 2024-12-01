@@ -40,9 +40,9 @@
  <label for="pickup_address" class="form-label"><i class="fa fa-map-marker-alt me-2"></i>Địa Chỉ Lấy Xe</label>
  <select class="form-control" name="address" id="pickup_address" required>
  <option value="">Chọn Địa Chỉ Lấy Xe</option>
- <option value="address1">Cửa Hàng A - Địa Chỉ 1</option>
- <option value="address2">Cửa Hàng B - Địa Chỉ 2</option>
- <option value="address3">Cửa Hàng C - Địa Chỉ 3</option>
+ <option value="Cửa Hàng A - Địa Chỉ 1">Cửa Hàng A - Địa Chỉ 1</option>
+ <option value="Cửa Hàng B - Địa Chỉ 2">Cửa Hàng B - Địa Chỉ 2</option>
+ <option value="Cửa Hàng C - Địa Chỉ 3">Cửa Hàng C - Địa Chỉ 3</option>
  </select>
  </div>
 
@@ -67,9 +67,8 @@
  <!-- Total Price -->
  <div class="mb-3">
  <label for="total_price" class="form-label"><i class="fa fa-calculator me-2"></i>Tổng Giá (VND)</label>
- <input type="number" class="form-control" id="total_price" name="tong" placeholder="Tính tổng giá" disabled>
+ <input type="number" class="form-control" id="total_price" name="tong" placeholder="Tính tổng giá" required readonly>
  </div>
-
  <!-- Color Selection -->
  <div class="mb-3">
  <label for="color" class="form-label"><i class="fa fa-paint-brush me-2"></i>Màu Sắc</label>

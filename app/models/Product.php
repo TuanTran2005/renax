@@ -181,6 +181,23 @@ public function servise($id){
     $this->setQuery($sql);
     return $this->loadRow([$id]);
    }
+   public function addPay($iduser,$quantity,$unit_price,$total_price,$name_user,$phone,$pickup_date,$payment_method,$notes,$product_id, $Address,$Color){
+    // Insert vào bảng orders
+$sql = "INSERT INTO `order` (user_id, quantity, unit_price, total_price) VALUES (?, ?, ?, ?)";
+$this->setQuery($sql);
+$this->execute([$iduser, $quantity, $unit_price, $total_price]);
+
+// Lấy ID của bản ghi vừa chèn vào bảng orders (ID tự động tăng)
+$idfk = $this->pdo->lastInsertId();
+
+// Insert vào bảng order_details
+$sql = "INSERT INTO `order_details` (name_user, phone, pickup_date, payment_method, notes, order_id, product_id, `address`, color) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$this->setQuery($sql);
+$this->execute([$name_user, $phone, $pickup_date, $payment_method, $notes, $idfk, $product_id, $Address, $Color]);
+
+
+   }
 //   public function startus(){
 //     $sql="SELECT * FROM $this->billct WHERE id= ?";
 //     $this->setQuery($sql);
