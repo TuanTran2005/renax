@@ -34,6 +34,7 @@ try{
     $router->post('addToCart',[App\Controllers\ProductController::class,'addToCart']);
     // $router->get('bill',[App\Controllers\ProductController::class,'bill']);
     $router->get('pay',[App\Controllers\ProductController::class,'Pay']);
+    $router->post('paypost',[App\Controllers\ProductController::class,'PayPost']);
 
 
     $router->get('/', [App\Controllers\ProductController::class, 'indes'],['before'=>'auth|admin']);

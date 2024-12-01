@@ -181,11 +181,11 @@ public function servise($id){
     $this->setQuery($sql);
     return $this->loadRow([$id]);
    }
-  public function startus(){
-    $sql="SELECT * FROM $this->sanpham WHERE id= ?";
-    $this->setQuery($sql);
-    return $this->loadRow([$id]);
-  }
+//   public function startus(){
+//     $sql="SELECT * FROM $this->billct WHERE id= ?";
+//     $this->setQuery($sql);
+//     return $this->loadRow([$id]);
+//   }
 }
    
 

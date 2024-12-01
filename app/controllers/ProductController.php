@@ -219,7 +219,35 @@ public function Pay(){
         $id=$_SESSION['auth']['id'];
         $products=$this->product->userPay($id);
         $buy=$this->product->productPay($ids);
+
     return $this->render('userPare.pay',compact('products','buy'));
+}
+public function PayPost(){
+    if (isset($_POST['buy'])) {
+       $iduser=$_SESSION['auth']['id'];
+       $quantity=$_POST['soluong'];
+       $unit_price=$_POST['gia'];
+       $total_price=$_POST['tong'];
+       $name_user=$_POST['tenuser'];	
+       $phone=$_POST['sdt'];	
+       $pickup_date=$_POST['date'];
+       $payment_method=$_POST['thanhtoan'];	
+       $notes=$_POST['notes'];	
+       $product_id=$_GET['idpr'];	
+       $Address=$_POST['address'];	
+       $Color=$_POST['color'];
+       $this->product->addPay($iduser,$quantity,$unit_price,$total_price,$name_user,$phone,$pickup_date,$payment_method,$notes,$product_id, $Address,$Color);
+       $buy=$this->product->productPay($product_id);
+       $cleaned_string = str_replace(['[', ']', '"'], '', $buy->images[0]);
+       $cart_key = $product_id . '_' . $cleaned_string . '_' . $buy->name_product . '_' . $Color . '_' .$buy->price;
+       if ($_SESSION['cart'][$cart_key]>$quantity) {
+        $_SESSION['cart'][$cart_key] -=$quantity;
+       }else{
+        unset($_SESSION['cart'][$cart_key]);
+       }
+       
+      
+    }
 }
 // public function bill(){
 //     return $this->render('userPare.bill');

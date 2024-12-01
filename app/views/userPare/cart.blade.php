@@ -39,8 +39,7 @@
             <div class="product-id">ID: <span id="product-id">{{ $product_id }}</span></div>
             
             <!-- Ảnh sản phẩm -->
-            <img src="{{ $image}}" alt="product" class="img-fluid">
-            
+            <img src="{{ $image}}" alt="product"  class="img-fluid">
             <!-- Tên sản phẩm -->
             <div class="product-name">{{ $name}}</div>
             
@@ -56,8 +55,8 @@
             </div>
         </div>
  
-        <!-- Nút mua sản phẩm -->
-       <a href="{{route('pay')}}?id={{$product_id}}&sl={{$quantity}}"><button class="btn-custom mt-3 w-100" onclick="buyNow({{ $product_id }})">Mua ngay</button></a> 
+        <!-- Nút mua sản phẩm --> 
+       <a href="{{route('pay')}}?id={{$product_id}}&sl={{$quantity}}&color={{urlencode($colors)}}"><button class="btn-custom mt-3 w-100" onclick="buyNow({{ $product_id }})">Mua ngay</button></a> 
     </div>
     @endforeach 
      @endforeach
