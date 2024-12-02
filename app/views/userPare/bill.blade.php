@@ -18,10 +18,10 @@
                     <img src="img/user-avatar.jpg" alt="User Avatar" class="rounded-circle me-3" width="80" height="80">
                     <div>
                         <h4>Thông Tin Người Dùng</h4>
-                        <p><strong>Tên Người Dùng:</strong> John Doe</p>
-                        <p><strong>Số Điện Thoại:</strong> +012 345 6789</p>
-                        <p><strong>Email:</strong> johndoe@example.com</p>
-                        <p><strong>Địa Chỉ:</strong> 123 Phố, New York, Mỹ</p>
+                        <p><strong>Tên Người Dùng:</strong> {{$user->name}}</p>
+                        <p><strong>Số Điện Thoại:</strong> {{$user->phone}}</p>
+                        <p><strong>Email:</strong>{{$user->email}}</p>
+                        <p><strong>Địa Chỉ:</strong> {{$user->addpress}}</p>
                     </div>
                 </div>
 

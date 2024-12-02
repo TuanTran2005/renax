@@ -124,9 +124,19 @@ class ProductController extends BaseController{
   }
   public function product_page(){
     $id = isset($_GET['id']) ? $_GET['id'] : 1;
-    $product=$this->product->productPage($id);
+     
+    if (isset($_GET['timkiem'])) {
+        $dulieu=$_GET['dulieu'];
+        $product=$this->product->productPages($dulieu,$id );
     $productx=$this->product->nut();
+        return $this->render('userPare.product',compact('product','productx'));
+    }else{
+        $product=$this->product->productPage($id);
+        $productx=$this->product->nut();
     return $this->render('userPare.product',compact('product','productx'));
+    }
+    
+    
   }
   public function login(){
     return $this->render('userPare.login');
@@ -136,8 +146,8 @@ class ProductController extends BaseController{
  
     if (isset($_POST['checks'])) { // Kiểm tra xem có form được gửi không
         // Kiểm tra nếu email và mật khẩu đã được gửi từ form
-        $email = $_POST['nameLogin'] ?? null; 
-        $password = $_POST['passwordLogin'] ?? null;
+        $email = $_POST['nameLogin'] ; 
+        $password = $_POST['passwordLogin'] ;
         
         if ($email && $password) {
             // Tìm người dùng theo email
@@ -254,7 +264,8 @@ public function PayPost(){
 
 }
 public function bill(){
-    return $this->render('userPare.bill');
+    $user=$this->product->userPay($_SESSION['auth']['id']);
+    return $this->render('userPare.bill',compact('user'));
 }
 
 }

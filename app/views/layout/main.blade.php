@@ -195,9 +195,18 @@ body {
                     <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i class="fab fa-twitter"></i></a>
                     <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i class="fab fa-linkedin-in"></i></a>
                     <a class="btn btn-sm-square bg-white text-primary me-0" href=""><i class="fab fa-instagram"></i></a>
-                    <a class="btn btn-sm-square bg-white text-primary me-1" href="login.html"><i class="fas fa-sign-in-alt"></i></a> 
-                    <a class="btn btn-sm-square bg-white text-primary me-1" href="{{route('login')}}"><i class="fas fa-user"></i></a>
-                </div>
+                   @if (isset($_SESSION['auth']) && $_SESSION['auth']['role']==1)
+                   
+                 
+                    <a class="btn btn-sm-square bg-white text-primary me-1" href="{{route('useradmin')}}"><i class="fas fa-sign-in-alt"></i></a> 
+                     @endif 
+                     @if (isset($_SESSION['auth']) )
+                    
+                     <a class="btn btn-sm-square bg-white text-primary me-1" href="{{route('bill')}}"><i class="fas fa-user"></i></a>
+                @else
+                <a class="btn btn-sm-square bg-white text-primary me-1" href="{{route('login')}}"><i class="fas fa-user"></i></a>
+                @endif 
+               </div>
             </div>
         </div>
     </div>
@@ -245,9 +254,9 @@ body {
     </div>
 
     <!-- Form Tìm kiếm -->
-    <form class="d-flex ms-3" action="search_results.html" method="GET">
-      <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" name="search_query">
-      <button class="btn btn-outline-primary" type="submit">
+    <form class="d-flex ms-3" action="{{route('product_page')}}" method="GET">
+      <input class="form-control me-2"  type="search" placeholder="Tìm kiếm sản phẩm" aria-label="Search" name="dulieu">
+      <button name="timkiem" class="btn btn-outline-primary" type="submit">
         <i class="fas fa-search"></i>
       </button>
     </form>

@@ -117,7 +117,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{$sp->name_product}}</h5>
                             <p class="card-text">${{$sp->price}}</p>
-                            <a href="/product-detail" class="btn btn-primary">View Details</a>
+                            <a href="{{route('detailProduct')}}?id={{$sp->id}}" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
                 </div>

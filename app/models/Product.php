@@ -119,6 +119,20 @@ class Product extends BaseModel{
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
+    public function productPages($ser, $page = 1) {
+        $limit = 6;
+        $offset = ($page - 1) * $limit;
+        
+        // Câu truy vấn với điều kiện tìm kiếm
+        $sql = "SELECT * FROM $this->sanpham WHERE name_product LIKE ? ORDER BY id ASC LIMIT $limit OFFSET $offset";
+        
+        // Thiết lập truy vấn
+        $this->setQuery($sql);
+        
+        // Truyền tham số tìm kiếm vào câu lệnh
+        return $this->loadAllRows(['%' . $ser . '%']);
+    }
+    
     // <--------------------------------------------------->
     public function nut(){
         $limit = 6;

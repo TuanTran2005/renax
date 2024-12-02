@@ -12,7 +12,7 @@ try{
             die;
         }
     });
-    $router->filter('admin', function () {
+    $router->filter('auth', function () {
         // Kiểm tra xem người dùng đã đăng nhập và có quyền admin (role = 1)
         if (isset($_SESSION['auth']) && $_SESSION['auth']['role'] == 1) {
             return; // Người dùng là admin, không làm gì cả
@@ -36,20 +36,20 @@ try{
     $router->get('pay',[App\Controllers\ProductController::class,'Pay']);
     $router->post('paypost',[App\Controllers\ProductController::class,'PayPost']);
 
-
-    $router->get('/', [App\Controllers\ProductController::class, 'indes'],['before'=>'auth|admin']);
-    $router->get('list-user',[App\Controllers\ProductController::class, 'index'],['before'=>'auth|admin']);
-    $router->get('add-product',[App\Controllers\ProductController::class, 'addProduct'],['before'=>'auth|admin']);
-    $router->post('add_cartegori',[App\Controllers\ProductController::class, 'add_cartegori'],['before'=>'auth|admin']);
-    $router->post('update-cartegori',[App\Controllers\ProductController::class,'update_cartegori'],['before'=>'auth|admin']);
-    $router->get('get-product',[App\Controllers\ProductController::class,'get_product'],['before'=>'auth|admin']);
-    $router->post('post-product',[App\Controllers\ProductController::class,'post_product'],['before'=>'auth|admin']);
-    $router->post('delete_cartegory/{id}',[App\Controllers\ProductController::class,'delete_cartegori'],['before'=>'auth|admin']);
-    $router->post('update_user',[App\Controllers\ProductController::class,'update_user'],['before'=>'auth|admin']);
-    $router->post('delete_user',[App\Controllers\ProductController::class,'delete_user'],['before'=>'auth|admin']);
-    $router->post('update-product',[App\Controllers\ProductController::class,'update_product'],['before'=>'auth|admin']);
-    $router->post('delete-product',[App\Controllers\ProductController::class,'delete_product'],['before'=>'auth|admin']);
-  
+     if (isset($_SESSION['auth']) && $_SESSION['auth']['role']==1) {
+    $router->get('useradmin', [App\Controllers\ProductController::class, 'indes']);
+    $router->get('list-user',[App\Controllers\ProductController::class, 'index']);
+    $router->get('add-product',[App\Controllers\ProductController::class, 'addProduct']);
+    $router->post('add_cartegori',[App\Controllers\ProductController::class, 'add_cartegori']);
+    $router->post('update-cartegori',[App\Controllers\ProductController::class,'update_cartegori']);
+    $router->get('get-product',[App\Controllers\ProductController::class,'get_product']);
+    $router->post('post-product',[App\Controllers\ProductController::class,'post_product']);
+    $router->post('delete_cartegory/{id}',[App\Controllers\ProductController::class,'delete_cartegori']);
+    $router->post('update_user',[App\Controllers\ProductController::class,'update_user']);
+    $router->post('delete_user',[App\Controllers\ProductController::class,'delete_user']);
+    $router->post('update-product',[App\Controllers\ProductController::class,'update_product']);
+    $router->post('delete-product',[App\Controllers\ProductController::class,'delete_product']);
+  }
     $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
     $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $url);
