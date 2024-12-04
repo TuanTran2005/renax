@@ -160,36 +160,18 @@ h1{
         <div class="container">
             <h2 class="text-white mb-5">Dịch Vụ Của Chúng Tôi</h2>
             <div class="row">
+                @foreach ( $services as $index )
                 <!-- Service 1 -->
                 <div class="col-md-4">
-                    <div class="service-item">
+                    <div class="service-item" style="background-image: url({{$index->image}});">
                         <div class="service-info">
-                            <h4>Sửa Chữa Động Cơ Động Lực Cao Cấp Với Đảm Bảo</h4>
-                            <p>Đảm bảo động cơ của bạn luôn hoạt động mượt mà với các dịch vụ sửa chữa động cơ chuyên nghiệp. Chúng tôi luôn cung cấp các giải pháp hiệu quả và nhanh chóng.</p>
-                            <a href="#">Tìm hiểu thêm</a>
+                            <h4>{{$index->name}}</h4>
+                            <p>{{$index->description}}</p>
+                            <a href="{{route('service_detail')}}?id={{$index->id}}">Tìm hiểu thêm</a>
                         </div>
                     </div>
                 </div>
-                <!-- Service 2 -->
-                <div class="col-md-4">
-                    <div class="service-item">
-                        <div class="service-info">
-                            <h4>Sửa Chữa Hệ Thống Treo</h4>
-                            <p>Chúng tôi cung cấp dịch vụ sửa chữa hệ thống treo giúp chiếc xe của bạn chạy êm ái hơn.</p>
-                            <a href="#">Tìm hiểu thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Service 3 -->
-                <div class="col-md-4">
-                    <div class="service-item">
-                        <div class="service-info">
-                            <h4>Sửa Chữa Hệ Thống Phanh</h4>
-                            <p>Chúng tôi sửa chữa và thay thế các bộ phận của hệ thống phanh để đảm bảo an toàn khi lái xe.</p>
-                            <a href="#">Tìm hiểu thêm</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

@@ -269,84 +269,82 @@
   
 
   <!-- Đặt Lịch Bắt Đầu -->
-<div
-class="container-fluid bg-secondary booking my-5 wow fadeInUp"
-data-wow-delay="0.1s"
->
-<div class="container">
-  <div class="row gx-5">
-    <div class="col-lg-6 py-5">
-      <div class="py-5">
-        <h1 class="text-white mb-4">
-          Nhà Cung Cấp Dịch Vụ Sửa Chữa Ô Tô Được Chứng Nhận và Giành Giải Thưởng
-        </h1>
-        <p class="text-white mb-0">
-Dịch vụ của CarSev chúng tôi đã trở nên nổi tiếng và in dấu ấn rõ nét trong lòng người tiêu dùng
-        </p>
+  <div class="container-fluid bg-secondary booking my-5 wow fadeInUp" data-wow-delay="0.1s">
+  <div class="container">
+    <div class="row gx-5">
+      <!-- Thông tin -->
+      <div class="col-lg-6 py-5">
+        <div class="py-5">
+          <h1 class="text-white mb-4">
+            Nhà Cung Cấp Dịch Vụ Sửa Chữa Ô Tô Được Chứng Nhận và Giành Giải Thưởng
+          </h1>
+          <p class="text-white mb-0">
+            Dịch vụ của CarSev chúng tôi đã trở nên nổi tiếng và in dấu ấn rõ nét trong lòng người tiêu dùng
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="col-lg-6">
-      <div
-        class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn"
-        data-wow-delay="0.6s"
-      >
-        <h1 class="text-white mb-4">Đặt Lịch Dịch Vụ</h1>
-        <form>
-          <div class="row g-3">
-            <div class="col-12 col-sm-6">
-              <input
-                type="text"
-                class="form-control border-0"
-                placeholder="Tên Của Bạn"
-                style="height: 55px"
-              />
-            </div>
-            <div class="col-12 col-sm-6">
-              <input
-                type="email"
-                class="form-control border-0"
-                placeholder="Email Của Bạn"
-                style="height: 55px"
-              />
-            </div>
-            <div class="col-12 col-sm-6">
-              <select class="form-select border-0" style="height: 55px">
-                <option selected>Chọn Dịch Vụ</option>
-                <option value="1">Dịch Vụ 1</option>
-                <option value="2">Dịch Vụ 2</option>
-                <option value="3">Dịch Vụ 3</option>
-              </select>
-            </div>
-            <div class="col-12 col-sm-6">
-              <div class="date" id="date1" data-target-input="nearest">
-                <input
-                  type="text"
-                  class="form-control border-0 datetimepicker-input"
-                  placeholder="Ngày Dịch Vụ"
-                  data-target="#date1"
-                  data-toggle="datetimepicker"
-                  style="height: 55px"
-                />
+      
+      <!-- Form Đặt Lịch Dịch Vụ -->
+      <div class="col-lg-6">
+        <div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn" data-wow-delay="0.6s">
+          <h1 class="text-white mb-4">Đặt Lịch Dịch Vụ</h1>
+          <form>
+            <div class="row g-3">
+              
+              <!-- Trường Tên -->
+              <div class="col-12 col-sm-6">
+                <input type="text" name="name" class="form-control border-0" placeholder="Tên Của Bạn" style="height: 55px" />
+              </div>
+              
+              <!-- Trường Chọn Sản Phẩm -->
+              <div class="col-12 col-sm-6">
+                <select class="form-select border-0" name="product" style="height: 55px">
+                  <option selected>Chọn Loại Xe</option>
+                  @foreach ( $sql as $roop )
+                  
+                 
+                  <option value="{{$roop->id}}">{{$roop->name_product}}</option>
+                   @endforeach
+                </select>
+              </div>
+              
+              <!-- Trường Chọn Dịch Vụ -->
+              <div class="col-12 col-sm-6">
+                <select class="form-select border-0" name="service" style="height: 55px">
+                  <option selected>Chọn Dịch Vụ</option>
+                  @foreach ($services as $word )
+                  <option value="{{$word->id}}">{{$word->name}}</option>
+                  @endforeach
+                  
+                </select>
+              </div>
+              
+              <!-- Trường Ngày Dịch Vụ -->
+              <div class="col-12 col-sm-6">
+                <div class="date" id="date1" data-target-input="nearest">
+                  <input type="text" name="service_date" class="form-control border-0 datetimepicker-input" placeholder="Ngày Dịch Vụ" data-target="#date1" data-toggle="datetimepicker" style="height: 55px" />
+                </div>
+              </div>
+              
+              <!-- Trường Yêu Cầu Đặc Biệt -->
+              <div class="col-12">
+                <textarea class="form-control border-0" name="special_requests" placeholder="Yêu Cầu Đặc Biệt"></textarea>
+              </div>
+              
+              <!-- Nút Đặt Lịch -->
+              <div class="col-12">
+                <button class="btn btn-secondary w-100 py-3" type="submit">
+                  Đặt Lịch Ngay
+                </button>
               </div>
             </div>
-            <div class="col-12">
-              <textarea
-                class="form-control border-0"
-                placeholder="Yêu Cầu Đặc Biệt"
-              ></textarea>
-            </div>
-            <div class="col-12">
-              <button class="btn btn-secondary w-100 py-3" type="submit">
-                Đặt Lịch Ngay
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
+
 <!-- Đặt Lịch Kết Thúc -->
 
 <!-- Đội Ngũ Bắt Đầu -->

@@ -261,6 +261,16 @@ public function showCreateService(){
     $this->setQuery($sql);
     return $this->loadAllRows();
 }
+public function servicesDetail($id){
+    $sql="SELECT * FROM car_services WHERE id=?";
+    $this->setQuery($sql);
+    return $this->loadRow([$id]);
+}
+public function productshow(){
+    $sql="SELECT * FROM $this->sanpham";
+    $this->setQuery($sql);
+    return $this->loadAllRows();
+}
 
 //   public function startus(){
 //     $sql="SELECT * FROM $this->billct WHERE id= ?";

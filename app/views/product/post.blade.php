@@ -81,7 +81,7 @@
           <td class="p-4">{{$index->updated_at}}</td>
           <td class="p-4">
             <button onclick="openViewArticleModal()" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Xem</button>
-            <button onclick="openEditArticleModal()" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
+            <button onclick="openEditArticleModal(`{{$index->id}}`, `{{$index->title}}`, `{{$index->content}}`)" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
             <button onclick="openDeleteArticleModal({{$index->id}})" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
           </td>
         </tr>
@@ -128,7 +128,9 @@
 <div id="editArticleModal" class="modal">
   <div class="modal-content">
     <h3 class="text-xl font-bold">Sửa bài viết</h3>
-    <form id="editArticleForm">
+    <form id="editArticleForm" method="post" action="{{route('update_post')}}">
+      @csrf
+      <input type="hidden" id="editArticleId" name="id">
       <div>
         <label for="editArticleTitle">Tiêu đề</label>
         <input type="text" id="editArticleTitle" name="title" class="w-full px-4 py-2 rounded border border-gray-300">
@@ -152,11 +154,11 @@
     <p>Bạn có chắc chắn muốn xóa bài viết này?</p>
     <div class="mt-4">
       <form action="{{route('delete_post')}}" method="post">
+        @csrf
         <input type="hidden" id="delete_post" name="delete_post">
-        <button style="submit" class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600">Xóa</button>
-     
+        <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600">Xóa</button>
       </form>
-       <button class="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300" onclick="closeModal('deleteArticleModal')">Hủy</button>
+      <button class="bg-gray-200 text-black px-6 py-2 rounded hover:bg-gray-300" onclick="closeModal('deleteArticleModal')">Hủy</button>
     </div>
   </div>
 </div>
@@ -171,12 +173,16 @@
     document.getElementById("viewArticleModal").style.display = 'block';
   }
 
-  function openEditArticleModal() {
+  function openEditArticleModal(id, title, content) {
+    // Đổ dữ liệu vào các ô chỉnh sửa
+    document.getElementById("editArticleId").value = id;
+    document.getElementById("editArticleTitle").value = title;
+    document.getElementById("editArticleContent").value = content;
     document.getElementById("editArticleModal").style.display = 'block';
   }
 
   function openDeleteArticleModal($id) {
-    document.getElementById("delete_post").value=$id;
+    document.getElementById("delete_post").value = $id;
     document.getElementById("deleteArticleModal").style.display = 'block';
   }
 
@@ -184,10 +190,8 @@
     document.getElementById(modalId).style.display = 'none';
   }
 
-  
   document.getElementById("createArticleForm").addEventListener("submit", function(event) {
     event.preventDefault();
-   
     closeModal('createArticleModal');
   });
 </script>

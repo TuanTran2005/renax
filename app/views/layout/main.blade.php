@@ -234,6 +234,7 @@ body {
       <div class="nav-item dropdown">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Loại hàng</a>
         <div class="dropdown-menu fade-up m-0">
+          
           <a href="product-category1.html" class="dropdown-item">Loại hàng 1</a>
           <a href="product-category2.html" class="dropdown-item">Loại hàng 2</a>
           <a href="product-category3.html" class="dropdown-item">Loại hàng 3</a>

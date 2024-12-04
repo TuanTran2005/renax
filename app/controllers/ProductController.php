@@ -151,7 +151,9 @@ class ProductController extends BaseController{
 // <-------------------------------------------------------->
   public function userpage(){
     $product=$this->product->userPage();
-     return $this->render('userPare.index',compact('product'));
+    $services=$this->product->showCreateService();
+    $sql=$this->product->productshow();
+     return $this->render('userPare.index',compact('product','services','sql'));
   }
   public function product_page(){
     $id = isset($_GET['id']) ? $_GET['id'] : 1;
@@ -384,7 +386,14 @@ public function post_detail(){
     return $this->render('userPare.post_detail',compact('post','sql'));
 }
 public function service(){
-    return $this->render('userPare.service');
+    $services=$this->product->showCreateService();
+    return $this->render('userPare.service',compact('services'));
 }
+public function serviceDetail(){
+    $post= $this->product->showCreateService();
+    $sql=$this->product->servicesDetail($_GET['id']);
+    return $this->render('userPare.service_detail',compact('sql','post'));
+}
+
 }
 ?>

@@ -35,6 +35,7 @@ try{
     $router->get('mainPost',[App\Controllers\ProductController::class,'mainPost']);
     $router->get('post_detail',[App\Controllers\ProductController::class,'post_detail']);
     $router->get('service',[App\Controllers\ProductController::class,'service']);
+    $router->get('service_detail',[App\Controllers\ProductController::class,'serviceDetail']);
    
  
     $router->get('cart',[App\Controllers\ProductController::class,'cartProduct']);

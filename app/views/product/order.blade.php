@@ -35,7 +35,7 @@
                 <td class="p-4 text-green-700">{{$index->status}}</td>
                 <td class="p-4">
                     <button onclick="viewOrderDetails({{$index->id}}, '{{$index->name_user}}', '{{$index->phone}}', '{{$index->address}}', '{{$index->quantity}}', '{{$index->unit_price}}', '{{$index->total_price}}', '{{$index->order_date}}', '{{$index->pickup_date}}', '{{$index->payment_method}}', '{{$index->status}}')" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Xem</button>
-                    <button onclick="openEditOrderModal({{$index->id}}, '{{$index->name_user}}', {{$index->unit_price}}, {{$index->quantity}})" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
+                    <button onclick="openEditOrderModal(`{{$index->id}}`, `{{$index->name_user}}`, `{{$index->unit_price}}`, `{{$index->quantity}}`)" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
                     <button onclick="openDeleteOrderModal({{$index->id}}, '{{$index->name_user}}')" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
                 </td>
             </tr>
