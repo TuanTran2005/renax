@@ -26,44 +26,45 @@
             </div>
             <div class="d-flex flex-wrap">
     <!-- Cart Items -->
-    @foreach ($_SESSION['cart'] as $product_id => $images)
-     @foreach ($images as $image=>$nameProduct )
-      @foreach ($nameProduct as $name=>$color )
-      @foreach ($color as $colors=>$priceProduct )
-       @foreach ( $priceProduct as $price=>$quantity)
-       
-    <div class="col-lg-3 col-md-4 col-sm-6 mb-4 cart-item">
-        <!-- Sản phẩm -->
-        <div class="product-info">
-            <!-- ID sản phẩm -->
-            <div class="product-id">ID: <span id="product-id">{{ $product_id }}</span></div>
-            
-            <!-- Ảnh sản phẩm -->
-            <img src="{{ $image}}" alt="product"  class="img-fluid">
-            <!-- Tên sản phẩm -->
-            <div class="product-name">{{ $name}}</div>
-            
-            <!-- Giá sản phẩm -->
-            <div class="price">{{ $price}} VND</div>
-            <div class="price">Color: {{ $colors ? $colors : 'White' }}</div>
-            <!-- Số lượng và thao tác xóa -->
-            <div class="d-flex justify-content-between align-items-center">
-                <input type="number" class="quantity-input" value="{{ $quantity }}" min="1" id="quantity-input-{{ $product_id }}">
-                <button class="delete-btn" title="Xóa sản phẩm" onclick="removeProduct({{ $product_id }})">
-                    <i class="fa fa-trash"></i>
-                </button>
+    @foreach ($_SESSION['cart'] as $product_id => $product_data)
+    @foreach ($product_data as $color => $product)
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 cart-item">
+           
+            <div class="product-info">
+                
+                <div class="product-id">ID: <span id="product-id">{{ $product_id }}</span></div>
+                
+              
+                <img src="{{ $product['images'] }}" alt="product" class="img-fluid">
+                
+             
+                <div class="product-name">{{ $product['name'] }}</div>
+                
+             
+                <div class="price">{{ $product['price'] }} VND</div>
+                
+             
+                <div class="price">Color: {{ $color }}</div>
+                
+        
+                <div class="d-flex justify-content-between align-items-center">
+                    <input type="number" class="quantity-input" value="{{ $product['quantity'] }}" min="1" id="quantity-input-{{ $product_id }}">
+                    <a href="{{ route('removeFromCart') }}?id={{$product_id}}&color={{ urldecode($color) }}">
+                        <button class="delete-btn" title="Xóa sản phẩm" onclick="removeProduct({{ $product_id }}, '{{ $color }}')">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </a>
+                </div>
             </div>
-        </div>
  
-        <!-- Nút mua sản phẩm --> 
-       <a href="{{route('pay')}}?id={{$product_id}}&sl={{$quantity}}&color={{urlencode($colors)}}"><button class="btn-custom mt-3 w-100" onclick="buyNow({{ $product_id }})">Mua ngay</button></a> 
-    </div>
-    @endforeach 
-     @endforeach
+            <!-- Nút mua sản phẩm --> 
+            <a href="{{ route('pay') }}?id={{ $product_id }}&sl={{ $product['quantity'] }}&color={{ urlencode($color) }}">
+                <button class="btn-custom mt-3 w-100" onclick="buyNow({{ $product_id }})">Mua ngay</button>
+            </a>
+        </div>
     @endforeach
-     @endforeach
-    
-    @endforeach
+@endforeach
+
 </div>
               
 

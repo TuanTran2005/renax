@@ -10,6 +10,8 @@ class Product extends BaseModel{
     protected $binhluan='product_reviews';
     protected $dichvu='servise';
     protected $billct='order_details';
+    protected $order='order';
+    protected $post='post';
     public function getuser(){
         $sql = "SELECT * FROM $this->user ";
         $this->setQuery($sql);
@@ -212,6 +214,54 @@ $this->execute([$name_user, $phone, $pickup_date, $payment_method, $notes, $idfk
 
 
    }
+   public function dangKy($name,  $email, $hashed_password, $address, $phone, $date_of_birth, $gender, $profile_image){
+    $sql = "INSERT INTO user(`name`,  email, `password`, `addpress`, phone, `date`, `status`, gender, images) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $this->setQuery($sql);
+    $this->execute([$name,  $email, $hashed_password, $address, $phone, $date_of_birth, true , $gender, $profile_image]);
+   }
+   public function orderadmin(){
+    $sql="SELECT * FROM `$this->order` INNER JOIN $this->billct ON `$this->order`.id=$this->billct.order_details_id ";
+    $this->setQuery($sql);
+   return $this->loadAllRows();
+   }
+   public function bills($id){
+    $sql="SELECT * FROM `$this->order` INNER JOIN $this->billct ON `$this->order`.id=$this->billct.order_details_id INNER JOIN $this->sanpham ON $this->sanpham.id=$this->billct.product_id WHERE `$this->order`.user_id=? " ;
+    $this->setQuery($sql);
+    return $this->loadAllRows([$id]);
+   }
+   public function posts($img,$content,$title){
+    $sql = "INSERT INTO $this->post(`title`,`images`, `content`, `user_id`) VALUES (?,?, ?, ?)";
+    $this->setQuery($sql);
+    $this->execute([$title,$img,$content,$_SESSION['auth']['id']]);
+   }
+   public function showpost(){
+    $sql="SELECT * FROM $this->post ";
+    $this->setQuery($sql);
+    return $this->loadAllRows();
+   }
+   public function showpost_detail(){
+    $sql="SELECT * FROM $this->post WHERE id= ?";
+    $this->setQuery($sql);
+    return $this->loadRow([$_GET['id']]);
+   }
+   public function postDelete($id){
+   $sql="DELETE FROM $this->post WHERE id= ?";
+   $this->setQuery($sql);
+   $this->execute([$id]);
+   }
+   public function createService($name, $description, $price, $status, $image)
+{
+    // Insert dữ liệu vào bảng 'services'
+    $stmt = "INSERT INTO car_services(`name`, `description`,`price`, `status`,`image`) VALUES (?, ?, ?, ?, ?)";
+$this->setQuery($stmt);
+    $this->execute([$name, $description, $price, $status, $image]);
+}
+public function showCreateService(){
+    $sql="SELECT * FROM car_services";
+    $this->setQuery($sql);
+    return $this->loadAllRows();
+}
+
 //   public function startus(){
 //     $sql="SELECT * FROM $this->billct WHERE id= ?";
 //     $this->setQuery($sql);

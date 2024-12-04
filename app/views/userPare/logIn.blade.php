@@ -57,34 +57,7 @@
 					<a href="#" class="social-login__icon fab fa-twitter"></a>
 				</div>
 			</div>
-
-			<!-- Sign Up Section -->
-			<div id="signup-form" style="display: none;">
-				<h3>Create an Account</h3>
-				<form class="signup" id="signup-form">
-					<div class="login__field">
-						<i class="login__icon fas fa-user"></i>
-						<input type="text" class="login__input" placeholder="Enter your username" id="signup-username" required>
-						<div class="error-message" id="signup-username-error">Vui lòng nhập tên người dùng</div>
-					</div>
-					<div class="login__field">
-						<i class="login__icon fas fa-envelope"></i>
-						<input type="email" class="login__input" placeholder="Email" id="signup-email" required>
-						<div class="error-message" id="signup-email-error">Vui lòng nhập email hợp lệ</div>
-					</div>
-					<div class="login__field">
-						<i class="login__icon fas fa-lock"></i>
-						<input type="password" class="login__input" placeholder="Password" id="signup-password" required>
-						<div class="error-message" id="signup-password-error">Vui lòng nhập mật khẩu (ít nhất 6 ký tự)</div>
-					</div>
-					<button type="submit" class="button login__submit">
-						<span class="button__text">Sign Up</span>
-						<i class="button__icon fas fa-chevron-right"></i>
-					</button>
-				</form>
-			</div>
-
-			<p class="form-toggle" id="toggle-signup">Bạn chưa có tài khoản? Đăng ký tại đây</p>
+			<a href="{{route('register')}}"><p class="form-toggle" id="toggle-signup">Bạn chưa có tài khoản? Đăng ký tại đây</p></a>
 		</div>
 		<div class="screen__background">
 			<span class="screen__background__shape screen__background__shape4"></span>
@@ -147,4 +120,4 @@
   });
 
   // Handle signup form submission (validate fields)
-  d
+  

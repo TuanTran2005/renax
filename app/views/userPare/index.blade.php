@@ -358,7 +358,9 @@ Dịch vụ của CarSev chúng tôi đã trở nên nổi tiếng và in dấu 
       </div>
       <div class="bonbon d-flex">
  @foreach ( $product as $index )
+
     <div class="col-lg-3 col-md-6 wow fadeInUp m-3" data-wow-delay="0.1s">
+       
         <div class="team-item ">
             <div class="position-relative overflow-hidden">
                 <img class="mg-25" src="{{json_decode($index->images)[3] }}" alt="" width="320px" height="250px" />
@@ -369,11 +371,15 @@ Dịch vụ của CarSev chúng tôi đã trở nên nổi tiếng và in dấu 
                 </div>
             </div>
             <div class="bg-light text-center p-4">
+              <a href="{{route('detailProduct')}}?id={{$index->id}}">
                 <h5 class="fw-bold mb-0">{{$index->name_product}}</h5>
-                <small>${{$index->price}}</small>
+                <small>${{$index->price}}</small> 
+                   </a>
             </div>
         </div>
+
     </div>
+  
  @endforeach
     </div>
     </div>

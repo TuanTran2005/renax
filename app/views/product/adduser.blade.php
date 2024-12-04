@@ -38,10 +38,14 @@
           </td>
           @endif
           <td class="p-4">
+       
           <button onclick="openViewUserModal({{ $product->id }}, '{{ $product->name }}', '{{ $product->email }}', {{ $product->role }}, {{ $product->status }},{{$product->id}})" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Xem</button>
-    <button onclick="openEditUserModal('{{ $product->id }}', '{{ $product->name }}', '{{ $product->images }}','{{$product->password}}','{{$product->addpress}}','{{$product->phone}}', '{{ $product->email }}','{{$product->date}}',  '{{ $product->status }}','{{$product->gender}}','{{ $product->role }}')" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
-    <button onclick="openDeleteUserModal({{ $product->id }}, '{{ $product->name }}')" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
-          </td>
+         @if ($_SESSION['auth']['id']!=$product->id) 
+         <button onclick="openEditUserModal('{{ $product->id }}', '{{ $product->name }}', '{{ $product->images }}','{{$product->password}}','{{$product->addpress}}','{{$product->phone}}', '{{ $product->email }}','{{$product->date}}',  '{{ $product->status }}','{{$product->gender}}','{{ $product->role }}')" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
+       
+        <button onclick="openDeleteUserModal({{ $product->id }}, '{{ $product->name }}')" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
+        @endif    
+    </td>
         </tr>
         @endforeach
       </tbody>
@@ -68,9 +72,11 @@
         <p>Bạn có chắc chắn muốn xóa người dùng <strong id="deleteUserName"></strong> không?</p>
         <div class="flex justify-end mt-6 space-x-4">
             <button onclick="closeModal('deleteUserModal')" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
+           
             <form  action="{{route('delete_user')}}" method="POST" style="display: inline-block;">
                 <button type="submit" id="deleteUserForm" name="delete_user" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
             </form>
+            
         </div>
     </div>
 </div>

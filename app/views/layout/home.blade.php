@@ -42,13 +42,29 @@
         </a>
       </li>
       <li class="mb-4">
-        <a href="services.html" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
+        <a href="{{route('car_services')}}" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
           <i class="fas fa-tools mr-2"></i> Dịch vụ
         </a>
       </li>
+      <li class="mb-4">
+        <a href="{{route('order')}}" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
+        <i class="fas fa-file-invoice mr-2"></i> Hóa đơn
+        </a>
+      </li>
+      <li class="mb-4">
+    <a href="{{ route('post') }}" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
+        <i class="fas fa-newspaper mr-2"></i> Bài viết
+    </a>
+</li>
+<li class="mb-4">
+    <a href="{{route('service-invoice')}}" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
+        <i class="fas fa-file-invoice mr-2"></i> Hóa đơn dịch vụ
+    </a>
+</li>
+
     </ul>
     <div class="mt-4">
-      <a href="logout.html" class="block py-2 px-4 bg-red-100 rounded hover:bg-red-200 text-red-800 text-center transition">
+      <a href="{{route('dangxuat')}}" class="block py-2 px-4 bg-red-100 rounded hover:bg-red-200 text-red-800 text-center transition">
         <i class="fas fa-sign-out-alt mr-2"></i> Logout
       </a>
     </div>
