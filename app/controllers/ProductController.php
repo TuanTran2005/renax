@@ -175,15 +175,15 @@ class ProductController extends BaseController{
     return $this->render('userPare.login');
   }
   public function check() {
-    $product = $this->product->getuser();  // Lấy danh sách người dùng
+    $product = $this->product->getuser(); 
  
-    if (isset($_POST['checks'])) { // Kiểm tra xem có form được gửi không
-        // Kiểm tra nếu email và mật khẩu đã được gửi từ form
+    if (isset($_POST['checks'])) { 
+        
         $email = $_POST['nameLogin'] ; 
         $password = $_POST['passwordLogin'] ;
         
         if ($email && $password) {
-            // Tìm người dùng theo email
+          
             $user = null;
             foreach ($product as $value) {
                 if ($value->email == $email) {
@@ -193,25 +193,28 @@ class ProductController extends BaseController{
             }
     
             if ($user) {
-                // Kiểm tra mật khẩu nếu người dùng tồn tại
+                
                 if ($password==$user->password) {
-                    // Lưu thông tin vào session
+                    
                     $_SESSION['auth'] = [
                         'id' => $user->id,
                         'email' => $user->email,
                         'role' => $user->role,
                     ];
-                    flash('success', "Đăng nhập thành công!", 'userpage');
-                    // Chuyển hướng tới trang người dùng sau khi đăng nhập
-                    header("Location: http://renax.test/userpage"); 
+                    // flash('success', "Đăng nhập thành công!", 'userpage');
+                    unset($_SESSION['login-fail-message']);
+                    header("Location: http://renax.test/login"); 
                     exit();
                 } else {
+                    $_SESSION['login-fail-message']='Đăng nhập thất bại';
                     flash('error', "Sai mật khẩu!", 'login');
                 }
             } else {
+                $_SESSION['login-fail-message']='Đăng nhập thất bại';
                 flash('error', "Email không tồn tại!", 'login');
             }
         } else {
+            $_SESSION['login-fail-message']='Đăng nhập thất bại';
             flash('error', "Vui lòng nhập đầy đủ thông tin!", 'login');
         }
     }

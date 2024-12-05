@@ -2,122 +2,198 @@
 <html lang="en">
 <head>
  <meta charset="UTF-8">
- <title>CodePen - A Pen by Mohithpoojary</title>
+ <title>Login</title>
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css">
- <link rel="stylesheet" href="css/login.css">
  <style>
- /* Add custom error messages styling */
- .error-message {
- color: red;
- font-size: 12px;
- display: none;
+ /* General Styles */
+ body {
+ font-family: Arial, sans-serif;
+ margin: 0;
+ padding: 0;
+ background-color: #f4f4f4;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
  }
 
- .form-toggle {
+ .container {
+ position: relative;
+ background-color: white;
+ border-radius: 8px;
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+ width: 350px;
+ padding: 40px;
+ }
+
+ .login__field {
+ margin-bottom: 20px;
+ }
+
+ .login__input {
+ width: 100%;
+ padding: 10px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ margin-top: 10px;
+ }
+
+ .login__submit {
+ width: 100%;
+ padding: 10px;
+ background-color: #007bff;
+ color: white;
+ border: none;
+ border-radius: 4px;
  cursor: pointer;
- color: #007bff;
- text-decoration: underline;
+ }
+
+ .login__submit:hover {
+ background-color: #0056b3;
+ }
+
+ /* Success Message Styling */
+ .login-success-message {
+ position: absolute;
+ top: 10px;
+ left: 50%;
+ transform: translateX(-50%);
+ background-color: #d4edda;
+ color: #155724;
+ border: 1px solid #c3e6cb;
+ padding: 15px 30px;
+ border-radius: 5px;
  font-size: 14px;
+ display: none;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ z-index: 100;
+ animation: fadeIn 0.5s ease;
+ display: flex;
+ align-items: center;
+ }
+
+ .login-success-message i {
+ margin-right: 10px;
+ font-size: 18px;
+ }
+
+ /* Login Fail Message Styling */
+ .login-fail-message {
+ position: absolute;
+ top: 10px;
+ left: 50%;
+ transform: translateX(-50%);
+ background-color: #fff;
+ color: #d9534f;
+ border: 1px solid #d9534f;
+ padding: 15px 30px;
+ border-radius: 5px;
+ font-size: 14px;
+ display: none;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ z-index: 100;
+ animation: fadeIn 0.5s ease;
+ display: flex;
+ align-items: center;
+ }
+
+ .login-fail-message i {
+ margin-right: 10px;
+ font-size: 18px;
+ }
+
+ /* Animation for messages */
+ @keyframes fadeIn {
+ from {
+ opacity: 0;
+ transform: translateX(-50%) translateY(-20px);
+ }
+ to {
+ opacity: 1;
+ transform: translateX(-50%) translateY(0);
+ }
+ }
+
+ .social-login {
+ text-align: center;
+ margin-top: 20px;
+ }
+
+ .social-login a {
+ font-size: 20px;
+ margin: 0 10px;
+ color: #333;
+ text-decoration: none;
  }
  </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
+
 <div class="container">
-	<div class="screen">
- <div class="screen__content">
- <!-- Login Form -->
+ <!-- Success Message -->
+ <div class="login-success-message" style="display:none" id="login-success-message">
+ <i class="fas fa-check-circle"></i>
+ <span>Đăng nhập thành công!</span>
+ </div>
+ 
+ <!-- Fail Message -->
+ <div class="login-fail-message" style="display:none" id="login-fail-message">
+ <i class="fas fa-times-circle"></i>
+ <span>Đăng nhập thất bại. Kiểm tra lại thông tin.</span>
+ </div>
+
  <form action="<?php echo \htmlentities(route('check')??'', ENT_QUOTES, 'UTF-8', false); ?>" method="post" class="login" id="login-form">
  <div class="login__field">
  <i class="login__icon fas fa-user"></i>
  <input type="text" class="login__input" name="nameLogin" placeholder="User name / Email" id="login-username" required>
- <div class="error-message" id="login-username-error">Vui lòng nhập tên đăng nhập hoặc email</div>
  </div>
  <div class="login__field">
  <i class="login__icon fas fa-lock"></i>
  <input type="password" class="login__input" name="passwordLogin" placeholder="Password" id="login-password" required>
- <div class="error-message" id="login-password-error">Vui lòng nhập mật khẩu</div>
  </div>
- <button type="submit" name="checks" class="button login__submit">
+ <button type="submit" name="checks" class="login__submit">
  <span class="button__text">Log In Now</span>
  <i class="button__icon fas fa-chevron-right"></i>
- </button>				
+ </button>  
  </form>
-
- <!-- Success message -->
- <div class="success-message" id="success-message"></div>
 
  <!-- Social login section -->
  <div class="social-login">
  <h3>Log in via</h3>
- <div class="social-icons">
- <a href="#" class="social-login__icon fab fa-instagram"></a>
- <a href="#" class="social-login__icon fab fa-facebook"></a>
- <a href="#" class="social-login__icon fab fa-twitter"></a>
+ <a href="#" class="fab fa-facebook"></a>
+ <a href="#" class="fab fa-twitter"></a>
+ <a href="#" class="fab fa-google"></a>
  </div>
- </div>
- <a href="<?php echo \htmlentities(route('register')??'', ENT_QUOTES, 'UTF-8', false); ?>"><p class="form-toggle" id="toggle-signup">Bạn chưa có tài khoản? Đăng ký tại đây</p></a>
- </div>
- <div class="screen__background">
- <span class="screen__background__shape screen__background__shape4"></span>
- <span class="screen__background__shape screen__background__shape3"></span>		
- <span class="screen__background__shape screen__background__shape2"></span>
- <span class="screen__background__shape screen__background__shape1"></span>
- </div>		
-	</div>
 </div>
-<!-- partial -->
 
 <script>
- // Toggle between login and signup forms
- const toggleSignup = document.getElementById('toggle-signup');
- const signupForm = document.getElementById('signup-form');
- const loginForm = document.getElementById('login-form');
 
- toggleSignup.addEventListener('click', () => {
- loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
- signupForm.style.display = signupForm.style.display === 'none' ? 'block' : 'none';
- toggleSignup.textContent = toggleSignup.textContent.includes('Đăng ký')
- ? "Đã có tài khoản? Đăng nhập tại đây"
- : "Bạn chưa có tài khoản? Đăng ký tại đây";
- });
+ <?php if(isset($_SESSION['login-fail-message'])): ?>
+ setTimeout(function() {
+ const failMessage = document.getElementById('login-fail-message');
+ failMessage.style.display = 'flex';  // Hiển thị thông báo thất bại
+ }, 2000); 
 
- // Handle login form submission
- document.getElementById('login-form').addEventListener('submit', function (event) {
- event.preventDefault();  // Ngừng gửi form để kiểm tra thông tin
+ setTimeout(function() {
+ const failMessage = document.getElementById('login-fail-message');
+ failMessage.style.display = 'none';  // Ẩn sau 3 giây
+ }, 3000); 
+ <?php elseif(isset($_SESSION['auth'])): ?>
+ setTimeout(function() {
+ const successMessage = document.getElementById('login-success-message');
+ successMessage.style.display = 'flex';  // Hiển thị thông báo thành công
+ }, 2000);
 
- const username = document.getElementById('login-username').value;
- const password = document.getElementById('login-password').value;
+ setTimeout(function() {
+ const successMessage = document.getElementById('login-success-message');
+ successMessage.style.display = 'none';  // Ẩn sau 5 giây
+ window.location.href = 'http://renax.test/userpage'; // Chuyển hướng đến trang mới
 
- // Reset các thông báo lỗi
- document.getElementById('login-username-error').style.display = 'none';
- document.getElementById('login-password-error').style.display = 'none';
+ }, 5000); 
+ <?php endif; ?>
+</script>
 
- let isValid = true;
 
- if (!username) {
- document.getElementById('login-username-error').style.display = 'block';
- isValid = false;
- }
 
- if (!password) {
- document.getElementById('login-password-error').style.display = 'block';
- isValid = false;
- }
-
- if (isValid) {
- // Giả sử form gửi qua backend để xử lý đăng nhập
- // Dưới đây là phần gửi AJAX (hoặc bạn có thể để nó gửi theo form thông thường)
- // Ví dụ gửi AJAX: gửi yêu cầu đăng nhập tới server
-
- alert('Đăng nhập thành công!');
- // Nếu bạn cần gửi form bằng AJAX, thêm vào ở đây
- // Hoặc làm theo cách gửi form chuẩn với phương thức HTTP POST
- } else {
- alert('Vui lòng kiểm tra các trường và thử lại.');
- }
- });
-
- // Handle signup form submission (validate fields)
- 
+</body>
+</html>

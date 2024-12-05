@@ -169,7 +169,7 @@
                <input type="hidden" value="{{$product->price}}" name="price">
                 <div class="mb-3">
                     <label for="quantity" class="form-label">Quantity:</label>
-                    <input type="number" id="quantity" class="form-control" min="1" max="100" name="quantity" value="1">
+                    <input type="number" id="quantity" class="form-control" min="1" max="10" name="quantity" value="1">
                 </div>
 
                 <button type="submit" name="add" class="btn btn-primary">Add to Cart</button>

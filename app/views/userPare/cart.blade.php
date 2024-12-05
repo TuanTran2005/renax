@@ -26,6 +26,9 @@
             </div>
             <div class="d-flex flex-wrap">
     <!-- Cart Items -->
+     @if (isset($_SESSION['cart']))
+     
+    
     @foreach ($_SESSION['cart'] as $product_id => $product_data)
     @foreach ($product_data as $color => $product)
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4 cart-item">
@@ -64,7 +67,9 @@
         </div>
     @endforeach
 @endforeach
-
+@else
+<p>There are no products</p>
+@endif
 </div>
               
 
@@ -74,7 +79,11 @@
 
             <!-- Checkout Button -->
             <div class="text-center mt-4">
-                <button class="checkout-btn">Thanh toán</button>
+                @if (!isset($_SESSION['cart']))
+                
+               
+              <a href="{{ route('product_page') }}"> <button class="checkout-btn">Thêm sản phẩm</button></a> 
+                 @endif
             </div>
         </div>
     </div>

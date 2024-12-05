@@ -145,7 +145,7 @@
  }
 
  // Open Edit Order Modal (populate modal with order data)
- function openEditOrderModal(name, unitPrice, quantity) {
+ function openEditOrderModal(id, name, unitPrice, quantity) {
  // Populate edit form fields with the current order data
  document.getElementById('editNameUser').value = name;
  document.getElementById('editQuantity').value = quantity;
