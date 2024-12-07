@@ -12,7 +12,7 @@
   <!-- Sidebar -->
   <aside class="w-64 bg-gradient-to-b from-blue-200 to-green-200 min-h-screen p-6 flex flex-col shadow-md">
   <h1 class="text-2xl font-bold mb-6 flex items-center text-blue-800">
-  <a href="{{route('userpage')}}"><img src="https://cdn.iconscout.com/icon/free/png-256/free-flutter-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030139.png?f=webp&w=256" alt="" class="w-16"></a>
+  <a href="{{route('/')}}"><img src="https://cdn.iconscout.com/icon/free/png-256/free-flutter-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030139.png?f=webp&w=256" alt="" class="w-16"></a>
   Quản lý
 </h1>
     <ul class="flex-1">

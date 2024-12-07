@@ -7,7 +7,7 @@
             <h1 class="display-3 text-white mb-3 animated slideInDown">Sản Phẩm</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center text-uppercase">
-                    <li class="breadcrumb-item"><a href="#">Trang Chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('/')}}">Trang Chủ</a></li>
                     <li class="breadcrumb-item text-white active" aria-current="page">Sản Phẩm</li>
                 </ol>
             </nav>
@@ -85,71 +85,6 @@
 </div>
 <!-- Product List End -->
 
-<!-- Order Now Start -->
-<div class="container-fluid bg-secondary booking my-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container">
-        <div class="row gx-5">
-            <div class="col-lg-6 py-5">
-                <div class="py-5">
-                    <h1 class="text-white mb-4">Sản Phẩm Được Chứng Nhận và Giải Thưởng</h1>
-                    <p class="text-white mb-0">Chúng tôi cung cấp các sản phẩm chất lượng cao được thiết kế để đáp ứng nhu cầu của bạn. Khám phá bộ sưu tập sản phẩm cao cấp của chúng tôi và đặt hàng ngay.</p>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn" data-wow-delay="0.6s">
-                    <h1 class="text-white mb-4">Đặt Hàng Sản Phẩm</h1>
-                    <form>
-                        <div class="row g-3">
-                            <!-- Tên người dùng -->
-                            <div class="col-12 col-sm-6">
-                                <input type="text" class="form-control border-0" placeholder="Họ và Tên" style="height: 55px;">
-                            </div>
-                            <!-- Email -->
-                            <div class="col-12 col-sm-6">
-                                <input type="email" class="form-control border-0" placeholder="Email của Bạn" style="height: 55px;">
-                            </div>
-                            <!-- Số điện thoại -->
-                            <div class="col-12 col-sm-6">
-                                <input type="tel" class="form-control border-0" placeholder="Số điện thoại" style="height: 55px;">
-                            </div>
-                            <!-- Chọn Sản Phẩm -->
-                            <div class="col-12 col-sm-6">
-                                <select class="form-select border-0" style="height: 55px;">
-                                    <option selected>Chọn Sản Phẩm</option>
-                                    <option value="1">Sản phẩm 1</option>
-                                    <option value="2">Sản phẩm 2</option>
-                                    <option value="3">Sản phẩm 3</option>
-                                </select>
-                            </div>
-                            <!-- Số lượng -->
-                            <div class="col-12 col-sm-6">
-                                <input type="number" class="form-control border-0" placeholder="Số Lượng" style="height: 55px;" min="1">
-                            </div>
-                            <!-- Màu sắc -->
-                            <div class="col-12 col-sm-6">
-                                <select class="form-select border-0" style="height: 55px;">
-                                    <option selected>Chọn Màu</option>
-                                    <option value="red">Đỏ</option>
-                                    <option value="blue">Xanh Dương</option>
-                                    <option value="green">Xanh Lá</option>
-                                    <option value="black">Đen</option>
-                                </select>
-                            </div>
-                            <!-- Yêu cầu đặc biệt -->
-                            <div class="col-12">
-                                <textarea class="form-control border-0" placeholder="Yêu Cầu Đặc Biệt" rows="4" style="height: 150px;"></textarea>
-                            </div>
-                            <!-- Nút Đặt Hàng -->
-                            <div class="col-12">
-                                <button class="btn btn-secondary w-100 py-3" type="submit">Đặt Hàng Ngay</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Order Now End -->
+
 
 @endsection

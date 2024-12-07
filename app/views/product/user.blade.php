@@ -36,7 +36,28 @@
     <div class="grid grid-cols-1 gap-6 mb-10">
       <div class="bg-blue-300 p-6 rounded shadow-lg">
         <h3 class="text-lg font-bold text-blue-700"><i class="fas fa-money-bill-wave mr-2"></i> Tổng Doanh Thu</h3>
-        <p class="text-3xl mt-2">10,000,000 VNĐ</p>
+        @php
+$tongAll = 0; 
+@endphp
+
+@foreach ($All as $tong)
+    @if ($tong->status == 'Thành công')
+        @php
+        $tongAll += $tong->total_price ?? 0;
+        @endphp
+    @endif
+@endforeach
+@foreach ($ses as $tongbillct)
+    @if ($tongbillct->status == 'Thành công')
+        @php
+        $tongAll += $tongbillct->price ?? 0;
+        @endphp
+    @endif
+@endforeach
+
+<p class="text-3xl mt-2">{{ $tongAll }} VNĐ</p>
+
+       
       </div>
     </div>
 

@@ -216,15 +216,15 @@ body {
     <!-- Navbar Start -->
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-  <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-    <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
+  <a href="{{route('/')}}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <h2 class="m-0 text-primary"><img src="https://png.pngtree.com/png-vector/20230221/ourmid/pngtree-red-dragon-logo-with-flaming-fire-color-3d-png-image_6611905.png" width="70px" alt="">Renax</h2>
   </a>
   <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <div class="navbar-nav ms-auto p-4 p-lg-0">
-      <a href="{{route('userpage')}}" class="nav-item nav-link active">Trang chủ</a>
+      <a href="{{route('/')}}" class="nav-item nav-link active">Trang chủ</a>
       <a href="#" class="nav-item nav-link">Về chúng tôi</a>
       
       <!-- Nút "Sản phẩm" -->
@@ -234,13 +234,11 @@ body {
       <div class="nav-item dropdown">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Loại hàng</a>
         <div class="dropdown-menu fade-up m-0">
-          
-          <a href="product-category1.html" class="dropdown-item">{{d}}</a>
+          <a href="product-category1.html" class="dropdown-item">Loại hàng 1</a>
           <a href="product-category2.html" class="dropdown-item">Loại hàng 2</a>
           <a href="product-category3.html" class="dropdown-item">Loại hàng 3</a>
         </div>
       </div>
-
       <!-- Nút "Thư mục" chứa bài viết và dịch vụ -->
       <div class="nav-item dropdown">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Thư mục</a>

@@ -3,150 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng ký tài khoản</title>
+  <title>Đăng Ký</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
   <style>
-    /* Toàn bộ trang */
+    /* General Styles */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f2f2f2;  /* Nền trang sáng */
       margin: 0;
       padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      background-color: white;
     }
 
-    /* Container chính */
-    .container {
-      width: 100%;
-      max-width: 450px; /* Thu nhỏ chiều rộng của form */
-      background-color: #ffffff;
-      padding: 20px 30px; /* Giảm padding */
-      border-radius: 8px; /* Bo tròn góc nhỏ hơn */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      box-sizing: border-box;
+    .wrapper {
+      display: flex
+;
+    width: 100%;
+    max-width: 1100px;
+    height: 661px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+    /* Left Section with Image */
+    .left-section {
+      width: 50%;
+      background: url('https://i.pinimg.com/474x/e6/4a/2f/e64a2f781e31ef2527d0f5e1bd6d95e2.jpg') no-repeat center center/cover;
     }
 
-    h3 {
+    /* Right Section (Register Form) */
+    .right-section {
+      width: 50%;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2rem;
       margin-bottom: 20px;
       color: #333;
-      font-size: 24px; /* Giảm kích thước tiêu đề */
     }
 
-    /* Các trường nhập liệu */
     .login__field {
-      margin-bottom: 15px; /* Giảm khoảng cách giữa các trường nhập liệu */
-      position: relative;
+      margin-bottom: 8px;
+      width: 100%;
     }
 
-    /* Định dạng ô input */
     .login__input {
       width: 100%;
-      padding: 10px;
-      border-radius: 6px; /* Bo tròn góc nhỏ hơn */
+      padding: 8px;
       border: 1px solid #ddd;
-      font-size: 14px;
-      color: #333;
-      background-color: #f9f9f9;
-      box-sizing: border-box;
-      outline: none;
-      transition: 0.3s;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: border-color 0.3s;
     }
 
     .login__input:focus {
-      border-color: #4CAF50;  /* Màu sắc khi focus */
-      background-color: #fff;
+      border-color: #d92e2e;
+      outline: none;
     }
 
-    /* Icon ngoài input */
-    .login__icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px; /* Kích thước icon */
-      color: #4CAF50;
+    .button {
+      width: 100%;
+      padding: 12px;
+      background-color: #d92e2e;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 0px;
+      transition: background-color 0.3s;
     }
 
-    /* Các thông báo lỗi */
+    .button:hover {
+      background-color: #d92e2e;
+    }
+
+    .login__link {
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .login__link:hover {
+      text-decoration: underline;
+    }
+
+    /* Success and Error Messages */
     .error-message {
       color: red;
       font-size: 12px;
       display: none;
-      margin-top: 5px;
     }
 
-    /* Nút đăng ký */
-    .button {
-      width: 100%;
-      padding: 12px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
+    /* Make the form responsive */
+    @media (max-width: 768px) {
+      .wrapper {
+        flex-direction: column;
+        height: auto;
+        max-width: 100%;
+      }
+
+      .left-section, .right-section {
+        width: 100%;
+        height: auto;
+      }
+
+      .right-section {
+        padding: 20px;
+      }
+
+      .button {
+        padding: 10px;
+        font-size: 14px;
+      }
+    }
+
+    /* Style for the "Đăng ký qua" section */
+    .social-login {
+      margin-top: -8px;
+      text-align: center;
+    }
+
+    .social-login p {
+      font-size: -12px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .social-button {
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      transition: 0.3s;
-      margin-top: 15px;
-    }
-
-    .button:hover {
-      background-color: #45a049;
-    }
-
-    /* Liên kết chuyển giữa đăng nhập và đăng ký */
-    .form-toggle {
-      margin-top: 12px;
       font-size: 14px;
+      transition: background-color 0.3s;
     }
 
-    .form-toggle a {
-      color: #4CAF50;
-      text-decoration: none;
+    .social-button.facebook {
+      background-color: #3b5998;
+      color: white;
     }
 
-    .form-toggle a:hover {
-      text-decoration: underline;
+    .social-button.google {
+      background-color: #db4437;
+      color: white;
     }
 
-    /* Background Gradient */
-    .screen__background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, #4CAF50, #8BC34A);
-      z-index: -1;
-      border-radius: 8px;
+    .social-button:hover {
+      opacity: 0.8;
     }
 
-    /* Các trường đặc biệt như ảnh đại diện và giới tính */
-    .login__input[type="file"] {
-      padding: 8px;
-      font-size: 12px;
-    }
-    
-    select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      font-size: 14px;
-      background-color: #f9f9f9;
-      outline: none;
+    /* Ensure the text and buttons are centered on mobile */
+    @media (max-width: 768px) {
+      .social-login {
+        margin-top: 10px;
+      }
+
+      .social-button {
+        width: 100%;
+        margin: 5px 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h3>Đăng ký tài khoản</h3>
+<div class="wrapper">
+  <!-- Left Section with Image -->
+  <div class="left-section"></div>
+  
+  <!-- Right Section (Register Form) -->
+  <div class="right-section">
     <form action="{{route('dangkys')}}" method="post" enctype="multipart/form-data">
+      <h1>Đăng Ký</h1>
+
       <!-- Name Field -->
       <div class="login__field">
         <input type="text" class="login__input" placeholder="Nhập tên của bạn" id="signup-name" name="name" required>
@@ -201,89 +242,28 @@
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" name="dangky" onclick="dangky()" class="button">Đăng ký</button>
+      <button type="submit" name="dangky" class="button">Đăng ký</button>
     </form>
 
-    <p class="form-toggle">
-      <a href="#">Đã có tài khoản? Đăng nhập</a>
-    </p>
+    <!-- Login link if already have account -->
+    <div>
+      <a href="{{route('login')}}" class="login__link">Đã có tài khoản? Đăng nhập</a>
+    </div>
+    
+    <!-- Social Media Login -->
+    <div class="social-login">
+      <p>Đăng ký qua</p>
+      <div>
+        <button class="social-button facebook">Facebook</button>
+        <button class="social-button google">Google</button>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="screen__background"></div>
-
-  <script>
-    document.getElementById('signup-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      
-      const name = document.getElementById('signup-name').value;
-      const username = document.getElementById('signup-username').value;
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
-      const address = document.getElementById('signup-address').value;
-      const phone = document.getElementById('signup-phone').value;
-      const date = document.getElementById('signup-date').value;
-      const status = document.getElementById('signup-status').value;
-      const gender = document.getElementById('signup-gender').value;
-      const image = document.getElementById('signup-image').files[0];
-
-      let isValid = true;
-     function dangky(){
-        alert("Đăng ký thành công");
-     }
-      // Reset các thông báo lỗi
-      document.querySelectorAll('.error-message').forEach(function(error) {
-        error.style.display = 'none';
-      });
-
-      // Kiểm tra các trường nhập liệu
-      if (!name) {
-        document.getElementById('signup-name-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!username) {
-        document.getElementById('signup-username-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!email) {
-        document.getElementById('signup-email-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!password) {
-        document.getElementById('signup-password-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!address) {
-        document.getElementById('signup-address-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!phone) {
-        document.getElementById('signup-phone-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!date) {
-        document.getElementById('signup-date-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!status) {
-        document.getElementById('signup-status-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!gender) {
-        document.getElementById('signup-gender-error').style.display = 'block';
-        isValid = false;
-      }
-      if (!image) {
-        document.getElementById('signup-image-error').style.display = 'block';
-        isValid = false;
-      }
-
-      if (isValid) {
-        alert('Đăng ký thành công!');
-      } else {
-        alert('Vui lòng sửa các lỗi và thử lại.');
-      }
-    });
-  </script>
+<script>
+  // Add your JavaScript logic for form validation or custom behavior here.
+</script>
 
 </body>
 </html>

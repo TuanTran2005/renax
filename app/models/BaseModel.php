@@ -100,5 +100,8 @@ class BaseModel
         $this->sta=NULL;
         $this->pdo = NULL;
     }
+    public function process_form_data(){
+        
+    }
 }
 ?>

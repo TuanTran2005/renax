@@ -29,7 +29,7 @@ try{
     $router->get('dangxuat',[App\Controllers\ProductController::class,'dangxuat']);
     
 
-    $router->get('userpage',[App\Controllers\ProductController::class,'userpage']);
+    $router->get('/',[App\Controllers\ProductController::class,'userpage']);
     $router->get('product_page',[App\Controllers\ProductController::class,'product_page']);
     $router->get('detailProduct',[App\Controllers\ProductController::class,'detailProduct']);
     $router->get('mainPost',[App\Controllers\ProductController::class,'mainPost']);
@@ -50,9 +50,13 @@ try{
     $router->get('pay',[App\Controllers\ProductController::class,'Pay']);
     $router->post('paypost',[App\Controllers\ProductController::class,'PayPost']);
     $router->get('removeFromCart',[App\Controllers\ProductController::class,'removeFromCart']);
+    $router->post('themdichvu',[App\Controllers\ProductController::class,'form_data']);
+    $router->get('hoanthanh',[App\Models\Product::class,'hoanthanh']);
     }
 
      if (isset($_SESSION['auth']) && $_SESSION['auth']['role']==1) {
+    $router->post('delete_order',[App\Controllers\ProductController::class,'delete_order']);   
+    $router->post('update_order',[App\Controllers\ProductController::class,'update_order']);
     $router->post('add_service',[App\Controllers\ProductController::class,'add_service']);
     $router->get('car_services',[App\Controllers\ProductController::class,'car_services']);
     $router->post('delete_post',[App\Controllers\ProductController::class,'delete_post']);
@@ -72,6 +76,7 @@ try{
     $router->post('update-product',[App\Controllers\ProductController::class,'update_product']);
     $router->post('delete-product',[App\Controllers\ProductController::class,'delete_product']);
   }
+ 
     $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
     $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $url);

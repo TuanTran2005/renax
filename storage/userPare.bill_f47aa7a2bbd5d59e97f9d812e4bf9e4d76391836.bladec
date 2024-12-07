@@ -77,11 +77,6 @@
  font-size: 1em;
  }
 
- /* Tạo khoảng cách cho nút đăng xuất */
- .user-info form {
- margin-top: 20px;
- }
-
  /* Sử dụng flexbox để chia layout */
  .user-info-container {
  display: flex;
@@ -118,10 +113,22 @@
  background-color: #007bff; /* Màu sắc đẹp mắt cho nút */
  border: none;
  transition: background-color 0.3s ease;
+ padding: 12px 25px; /* Tăng kích thước nút */
+ font-size: 1.1em; /* Tăng kích thước font chữ */
+ border-radius: 50px; /* Bo góc nút thành hình tròn */
+ display: inline-flex; /* Giữ nút gọn gàng */
+ align-items: center;
+ justify-content: center;
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng mờ cho nút */
  }
 
  .btn-primary:hover {
  background-color: #0056b3; /* Đổi màu khi hover */
+ box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Thêm hiệu ứng shadow khi hover */
+ }
+
+ .btn-primary i {
+ margin-right: 10px; /* Khoảng cách giữa icon và văn bản */
  }
 
  /* Thêm hiệu ứng hover cho bảng */
@@ -162,6 +169,15 @@
  background-color: #dc3545;
  color: #fff;
  }
+
+ .service-history {
+ margin-top: 50px;
+ display: none; /* Ẩn lịch sử dịch vụ mặc định */
+ }
+
+ .btn-toggle-history {
+ margin-top: 20px;
+ }
 </style>
 
 <!-- Banner Start -->
@@ -170,7 +186,7 @@
 </div>
 <!-- Banner End -->
 
-<!-- Invoice Start -->
+<!-- User Profile Start -->
 <div class="container py-5">
  <div class="row justify-content-center">
  <div class="col-lg-12">
@@ -195,6 +211,11 @@
  <div class="user-info-avatar">
  <a href="<?php echo \htmlentities(route('dangxuat')??'', ENT_QUOTES, 'UTF-8', false); ?>"><button type="submit" class="btn btn-danger"><i class="fa fa-sign-out-alt me-2"></i>Đăng Xuất</button></a>
  </div>
+
+ <!-- Nút Xem Lịch Sử Dịch Vụ -->
+ <button class="btn btn-primary btn-toggle-history" id="toggleHistoryBtn">
+ <i class="fa fa-history"></i> Xem Lịch Sử Dịch Vụ
+ </button>
  </div>
 
  <!-- Invoice Table Column -->
@@ -208,8 +229,8 @@
  <th>Số Lượng</th>
  <th>Đơn Giá (VND)</th>
  <th>Tổng Giá (VND)</th>
- <th>Trạng Thái</th> <!-- Cột trạng thái mới -->
- <th>Action</th>
+ <th>Trạng Thái</th>
+ <th>Hành Động</th> <!-- Cột Hành động -->
  </tr>
  </thead>
  <tbody>
@@ -220,14 +241,47 @@
  <td><?php echo \htmlentities($router->quantity??'', ENT_QUOTES, 'UTF-8', false); ?></td>
  <td><?php echo \htmlentities($router->unit_price??'', ENT_QUOTES, 'UTF-8', false); ?>$</td>
  <td><?php echo \htmlentities($router->total_price??'', ENT_QUOTES, 'UTF-8', false); ?>$</td>
- <td><span class="status <?php echo \htmlentities(strtolower($router->status)??'', ENT_QUOTES, 'UTF-8', false); ?>"><?php echo \htmlentities($router->status??'', ENT_QUOTES, 'UTF-8', false); ?></span></td> <!-- Trạng thái -->
+ <td><span class="status "><?php echo \htmlentities($router->status??'', ENT_QUOTES, 'UTF-8', false); ?></span></td>
  <td>
- <button class="btn btn-primary view-detail-btn"
- data-name="<?php echo \htmlentities($router->name_product??'', ENT_QUOTES, 'UTF-8', false); ?>"
- data-quantity="<?php echo \htmlentities($router->quantity??'', ENT_QUOTES, 'UTF-8', false); ?>"
- data-unit-price="<?php echo \htmlentities($router->unit_price??'', ENT_QUOTES, 'UTF-8', false); ?>">
- <i class="fa fa-eye me-2"></i>Xem Chi Tiết Hóa Đơn
- </button>
+ <?php if($router->status !='Thành công'): ?>
+ <a href="<?php echo \htmlentities(route('hoanthanh')??'', ENT_QUOTES, 'UTF-8', false); ?>?id=<?php echo \htmlentities($router->order_details_id??'', ENT_QUOTES, 'UTF-8', false); ?>"><button class="btn btn-danger complete-btn" >Hoàn Thành</button> </a> 
+ <?php else: ?>
+ 
+ <button class="btn btn-secondary complete-btn">Đã Hoàn Thành</button>
+ <?php endif; ?>
+ 
+ </td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </tbody>
+ </table>
+ </div>
+</div>
+
+ </div>
+
+ <!-- Lịch sử Dịch vụ -->
+
+ <div class="service-history">
+ <h4>Lịch Sử Dịch Vụ</h4>
+
+ <div class="table-responsive">
+ <table class="table table-bordered">
+ <thead>
+ <tr>
+ <th>Tên Dịch Vụ</th>
+ <th>Ngày Sử Dụng</th>
+ <th>Trạng Thái</th>
+ </tr>
+ </thead>
+ <tbody>
+ <?php $__currentLoopData = $services; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $service): $loop = $this->incrementLoopIndices();  ?>
+ <tr>
+ <td><?php echo \htmlentities($service->car_name??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($service->time??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td>
+ <span class="status "><?php echo \htmlentities($service->status??'', ENT_QUOTES, 'UTF-8', false); ?></span>
  </td>
  </tr>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
@@ -235,48 +289,18 @@
  </table>
  </div>
  </div>
- </div>
- </div>
- </div>
-</div>
-<!-- Invoice End -->
 
-<!-- Modal (for displaying detailed info) -->
-<div class="modal" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
- <div class="modal-dialog">
- <div class="modal-content">
- <div class="modal-header">
- <h5 class="modal-title" id="detailModalLabel">Chi Tiết Hóa Đơn</h5>
- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
- </div>
- <div class="modal-body">
- <p><strong>Tên Sản Phẩm:</strong> <span id="productName"></span></p>
- <p><strong>Số Lượng:</strong> <span id="productQuantity"></span></p>
- <p><strong>Đơn Giá:</strong> <span id="productUnitPrice"></span></p>
- <!-- Thêm các chi tiết hóa đơn khác ở đây -->
- </div>
  </div>
  </div>
 </div>
+<!-- User Profile End -->
 
 <script>
- // Gắn sự kiện cho các nút "Xem Chi Tiết Hóa Đơn"
- document.querySelectorAll('.view-detail-btn').forEach(function(button) {
- button.addEventListener('click', function() {
- // Lấy dữ liệu từ các thuộc tính data-*
- var name = button.getAttribute('data-name');
- var quantity = button.getAttribute('data-quantity');
- var unitPrice = button.getAttribute('data-unit-price');
-
- // Cập nhật thông tin vào modal
- document.getElementById('productName').innerText = name;
- document.getElementById('productQuantity').innerText = quantity;
- document.getElementById('productUnitPrice').innerText = unitPrice;
-
- // Hiển thị modal
- var modal = new bootstrap.Modal(document.getElementById('detailModal'));
- modal.show();
- });
+ 
+ // Toggle service history visibility
+ document.getElementById('toggleHistoryBtn').addEventListener('click', function() {
+ var historySection = document.querySelector('.service-history');
+ historySection.style.display = (historySection.style.display === 'none' || historySection.style.display === '') ? 'block' : 'none';
  });
 </script>
 

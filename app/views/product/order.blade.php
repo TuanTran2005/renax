@@ -34,8 +34,8 @@
                 <td class="p-4">{{$index->payment_method}}</td>
                 <td class="p-4 text-green-700">{{$index->status}}</td>
                 <td class="p-4">
-                    <button onclick="viewOrderDetails({{$index->id}}, '{{$index->name_user}}', '{{$index->phone}}', '{{$index->address}}', '{{$index->quantity}}', '{{$index->unit_price}}', '{{$index->total_price}}', '{{$index->order_date}}', '{{$index->pickup_date}}', '{{$index->payment_method}}', '{{$index->status}}')" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Xem</button>
-                    <button onclick="openEditOrderModal(`{{$index->id}}`, `{{$index->name_user}}`, `{{$index->unit_price}}`, `{{$index->quantity}}`)" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
+                    <button onclick="viewOrderDetails({{$index->id}}, '{{$index->name_user}}', '{{$index->phone}}', '{{$index->Address}}', '{{$index->quantity}}', '{{$index->unit_price}}', '{{$index->total_price}}', '{{$index->order_date}}', '{{$index->pickup_date}}', '{{$index->payment_method}}', '{{$index->status}}')" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Xem</button>
+                    <button onclick="openEditOrderModal(`{{$index->id}}`, `{{$index->name_user}}`,`{{$index->phone}}`,`{{$index->Address}}`,`{{$index->quantity}}`,`{{$index->unit_price}}`,`{{$index->payment_method}}`,`{{$index->status}}`)" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
                     <button onclick="openDeleteOrderModal({{$index->id}}, '{{$index->name_user}}')" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
                 </td>
             </tr>
@@ -62,19 +62,29 @@
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-red-600 mb-4">Xóa Hóa Đơn</h2>
         <p>Bạn có chắc chắn muốn xóa hóa đơn của <strong id="deleteOrderName">Nguyễn Văn A</strong> không?</p>
-        <div class="flex justify-end mt-6 space-x-4">
-            <button onclick="closeModal('deleteOrderModal')" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
-            <button onclick="deleteOrder()" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
-        </div>
+        
+        <!-- Thêm một trường ẩn để lưu id hóa đơn -->
+        <form id="deleteOrderForm" action="{{ route('delete_order') }}" method="POST">
+            @csrf
+            <input type="hidden" id="deleteOrderId" name="order_id">
+            
+            
+               
+                <button type="submit" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
+           
+        </form>
+         <button onclick="closeModal('deleteOrderModal')" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
     </div>
 </div>
 
 <!-- Edit Order Modal -->
+<!-- Edit Order Modal -->
 <div id="editOrderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Sửa Thông Tin Hóa Đơn</h2>
-        <form>
+        <form action="{{route('update_order')}}" method="post">
             <div class="space-y-4">
+                <input type="hidden" id="id" name="id">
                 <div>
                     <label for="editNameUser" class="block">Tên Người Dùng:</label>
                     <input type="text" id="editNameUser" name="editNameUser" class="w-full p-2 border border-gray-300 rounded" required>
@@ -88,27 +98,33 @@
                     <input type="text" id="editAddress" name="editAddress" class="w-full p-2 border border-gray-300 rounded" required>
                 </div>
                 <div>
-                    <label for="editPaymentMethod" class="block">Phương Thức Thanh Toán:</label>
-                    <select id="editPaymentMethod" name="editPaymentMethod" class="w-full p-2 border border-gray-300 rounded">
-                        <option value="cash">Thanh toán khi nhận</option>
-                        <option value="bank_transfer">Chuyển khoản ngân hàng</option>
-                    </select>
+                    <label for="editQuantity" class="block">Số Lượng:</label>
+                    <input type="number" id="editQuantity" name="editQuantity" class="w-full p-2 border border-gray-300 rounded" required>
                 </div>
                 <div>
-                    <label for="editStatus" class="block">Trạng Thái:</label>
-                    <select id="editStatus" name="editStatus" class="w-full p-2 border border-gray-300 rounded">
-                        <option value="1">Đã thanh toán</option>
-                        <option value="0">Chưa thanh toán</option>
-                    </select>
+                    <label for="editUnitPrice" class="block">Đơn Giá (VND):</label>
+                    <input type="number" id="editUnitPrice" name="editUnitPrice" class="w-full p-2 border border-gray-300 rounded" required>
                 </div>
+                <select id="editPaymentMethod" name="editPaymentMethod" class="w-full p-2 border border-gray-300 rounded">
+    <option value="cash">Thanh toán khi nhận</option>
+    <option value="bank_transfer">Chuyển khoản ngân hàng</option>
+</select>
+
+<select id="editStatus" name="editStatus" class="w-full p-2 border border-gray-300 rounded">
+    <option value="Đã thanh toán">Đã thanh toán</option>
+    <option value="Chưa thanh toán">Chưa thanh toán</option>
+    <option value="Thành công">Thành công</option>
+    <option value="Đang xử lý">Chờ Xử Lý</option>
+</select>
             </div>
             <div class="flex justify-end mt-6">
                 <button type="button" onclick="closeModal('editOrderModal')" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
-                <button type="submit" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Lưu</button>
+                <button type="submit" name="luu" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Lưu</button>
             </div>
         </form>
     </div>
 </div>
+
 
 <script>
     // Close Modal Function
@@ -130,7 +146,7 @@
             <li><strong>Ngày Đặt:</strong> ${orderDate}</li>
             <li><strong>Ngày Nhận:</strong> ${pickupDate}</li>
             <li><strong>Phương Thức Thanh Toán:</strong> ${paymentMethod}</li>
-            <li><strong>Trạng Thái:</strong> ${status === '1' ? 'Đã thanh toán' : 'Chưa thanh toán'}</li>
+            <li><strong>Trạng Thái:</strong> ${status}</li>
         `;
         // Hiển thị modal
         document.getElementById('viewOrderModal').classList.remove('hidden');
@@ -144,21 +160,31 @@
     }
 
     // Open Edit Order Modal (populate modal with order data)
-    function openEditOrderModal(id, name, unitPrice, quantity) {
-        // Populate edit form fields with the current order data
-        document.getElementById('editNameUser').value = name;
-        document.getElementById('editQuantity').value = quantity;
-        document.getElementById('editUnitPrice').value = unitPrice;
-        // Show the modal
-        document.getElementById('editOrderModal').classList.remove('hidden');
-    }
+// Open Edit Order Modal (populate modal with order data)
+function openEditOrderModal(id, name, phone, address, quantity, unitPrice, paymentMethod, status) {
+    // Populate edit form fields with the current order data
+   document.getElementById('id').value=id;
+    document.getElementById('editNameUser').value = name;
+    document.getElementById('editPhone').value = phone;
+    document.getElementById('editAddress').value = address;
+    document.getElementById('editQuantity').value = quantity;
+    document.getElementById('editUnitPrice').value = unitPrice;
+    document.getElementById('editPaymentMethod').value = paymentMethod;  
+document.getElementById('editStatus').value = status; 
 
-    // Open Delete Order Modal (populate modal with order name for confirmation)
+   console.log(status);
+   
+    // Show the modal
+    document.getElementById('editOrderModal').classList.remove('hidden');
+}
+
+
     function openDeleteOrderModal(id, name) {
-        document.getElementById('deleteOrderName').innerText = name;
-        // Show the modal
-        document.getElementById('deleteOrderModal').classList.remove('hidden');
-    }
+
+    document.getElementById('deleteOrderName').innerText = name;
+    document.getElementById('deleteOrderId').value = id;
+    document.getElementById('deleteOrderModal').classList.remove('hidden');
+}
 </script>
 
 @endsection

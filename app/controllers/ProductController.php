@@ -8,12 +8,15 @@ class ProductController extends BaseController{
     public function __construct(){
         $this->product = new Product();
     }
+    
     public function indes(){
+        $ses=$this->product->billct();
         $user=$this->product->userTotal();
         $reviews=$this->product->product_reviews();
         $product=$this->product->productTotal();
         $categories=$this->product->categoriesTotal();
-        return $this->render('product.user', compact('user','reviews','product','categories'));
+        $All=$this->product->tong();
+        return $this->render('product.user', compact('user','reviews','product','categories','All','ses'));
     }
     public function index(){
         $products = $this->product->getuser();
@@ -146,6 +149,20 @@ class ProductController extends BaseController{
 
         flash('success', "Thêm dịch vụ thành công", 'car_services');
     }
+}
+public function update_order(){
+    if (isset($_POST['luu'])) {
+       
+    
+    $this->product->updateOrder($_POST['id'],  $_POST['editNameUser'],$_POST['editPhone'],$_POST['editAddress'],$_POST['editQuantity'],$_POST['editUnitPrice'],$_POST['editPaymentMethod'],$_POST['editStatus']);
+    var_dump($_POST['id']);
+    // flash('success', "Sửa đơn hàng thành công", 'order');
+}
+
+}
+public function delete_order(){
+   $this->product->deleteOrder($_POST['order_id']);
+   header("Location: http://renax.test/order"); 
 }
 
 // <-------------------------------------------------------->
@@ -313,9 +330,10 @@ public function PayPost(){
 
 }
 public function bill(){
+    $services=$this->product->servisePage($_SESSION['auth']['id']);
     $bill=$this->product->bills($_SESSION['auth']['id']);
     $user=$this->product->userPay($_SESSION['auth']['id']);
-    return $this->render('userPare.bill',compact('user','bill'));
+    return $this->render('userPare.bill',compact('user','bill','services'));
 }
 public function register(){
     return $this->render('userPare.dangky');
@@ -397,6 +415,26 @@ public function serviceDetail(){
     $sql=$this->product->servicesDetail($_GET['id']);
     return $this->render('userPare.service_detail',compact('sql','post'));
 }
+public function form_data() {
+        
+
+    if (isset($_POST['datlich'])) {
+      
+        $name = $_POST['name'];  
+        $phone = $_POST['phone']; 
+        $product_id = $_POST['product']; 
+        $service_id = $_POST['service']; 
+        $service_date = $_POST['service_date'];
+        $notes = $_POST['notes'];
+
+       
+        $this->product->process_form($name, $phone, $product_id, $service_id, $service_date, $notes);
+        
+        header("Location: http://renax.test/userpage");
+        
+    }
+}
+
 
 }
 ?>

@@ -12,6 +12,7 @@ class Product extends BaseModel{
     protected $billct='order_details';
     protected $order='order';
     protected $post='post';
+    protected $servise='servise';
     public function getuser(){
         $sql = "SELECT * FROM $this->user ";
         $this->setQuery($sql);
@@ -134,21 +135,29 @@ class Product extends BaseModel{
         // Truyền tham số tìm kiếm vào câu lệnh
         return $this->loadAllRows(['%' . $ser . '%']);
     }
-    
+    public function tong(): mixed{
+     $sql="SELECT * FROM `$this->order` INNER JOIN `$this->billct` ON `$this->order`.id=`$this->billct`.order_id ";
+     $this->setQuery($sql);
+     return $this->loadAllRows([]);
+    }
+    public function updateOrder($id, $name,$phone,$address,$quantity,$unitPrice,$paymentMethod,$status){
+        $cccp="UPDATE `order_details` SET name_user= ? , phone= ? , `Address`= ? ,  payment_method= ? , `status` = ? WHERE 	order_id= ?";
+       $this->setQuery($cccp);
+       $this->execute([$name,$phone,$address,$paymentMethod,$status,$id]);
+       $sql="UPDATE `$this->order` SET 	quantity= ? , unit_price= ? , 	total_price= ?  WHERE id= ?";
+       $this->setQuery($sql);
+       $total_price=$quantity*$unitPrice;
+       $this->execute([$quantity,$unitPrice, $total_price,$id]);
+       header("Location: http://renax.test/order"); 
+    }
     // <--------------------------------------------------->
     public function nut(){
         $limit = 6;
-        
-        // Truy vấn để đếm tổng số bản ghi
         $sql_count = "SELECT COUNT(*) AS total FROM $this->sanpham";
         $this->setQuery($sql_count);
-        $totalRecords = $this->loadAllRows(); // Trả về mảng đối tượng stdClass
-        
-        // Lấy tổng số bản ghi từ đối tượng (không phải mảng)
-        $totalRecords = $totalRecords[0]->total; // Truy cập bằng cú pháp đối tượng
-    
-        // Tính số trang
-        $totalPages = ceil($totalRecords / $limit); // Tính số trang
+        $totalRecords = $this->loadAllRows(); 
+        $totalRecords = $totalRecords[0]->total; 
+        $totalPages = ceil($totalRecords / $limit); 
         return $totalPages;
     }
     public function detail_Product($id) {
@@ -200,17 +209,18 @@ public function servise($id){
    public function addPay($iduser,$quantity,$unit_price,$total_price,$name_user,$phone,$pickup_date,$payment_method,$notes,$product_id, $Address,$Color){
     // Insert vào bảng orders
 $sql = "INSERT INTO `order` (user_id, quantity, unit_price, total_price) VALUES (?, ?, ?, ?)";
+
 $this->setQuery($sql);
 $this->execute([$iduser, $quantity, $unit_price, $total_price]);
 
 // Lấy ID của bản ghi vừa chèn vào bảng orders (ID tự động tăng)
 $idfk = $this->pdo->lastInsertId();
-
+$status='Chờ Xử Lý';
 // Insert vào bảng order_details
-$sql = "INSERT INTO `order_details` (name_user, phone, pickup_date, payment_method, notes, order_id, product_id, `address`, color) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO `order_details` (name_user, phone, pickup_date, payment_method, notes, order_id, product_id, `address`, color, `status`) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 $this->setQuery($sql);
-$this->execute([$name_user, $phone, $pickup_date, $payment_method, $notes, $idfk, $product_id, $Address, $Color]);
+$this->execute([$name_user, $phone, $pickup_date, $payment_method, $notes, $idfk, $product_id, $Address, $Color, $status]);
 
 
    }
@@ -266,19 +276,49 @@ public function servicesDetail($id){
     $this->setQuery($sql);
     return $this->loadRow([$id]);
 }
+public function process_form($name, $phone, $product_id, $service_id, $service_date, $notes){
+   
+        $user_id=$_SESSION['auth']['id'];
+    $sql = "INSERT INTO servise(`name`, detail, `status`, product_id, user_id, id_car_services, `time`, phone) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $this->setQuery($sql); 
+    $this->execute([$name,$notes,'Đang xử ký', $product_id, $user_id, $service_id, $service_date,$phone]);
+}
 public function productshow(){
     $sql="SELECT * FROM $this->sanpham";
     $this->setQuery($sql);
     return $this->loadAllRows();
 }
+public function servisePage($id) {
+    $sql = "SELECT $this->servise.name AS service_name,`car_services`.name AS car_name, $this->servise.*, car_services.* FROM  $this->servise INNER JOIN 
+    car_services ON   $this->servise.id_car_services = car_services.id  WHERE user_id = ?";
 
-//   public function startus(){
-//     $sql="SELECT * FROM $this->billct WHERE id= ?";
-//     $this->setQuery($sql);
-//     return $this->loadRow([$id]);
-//   }
+    $this->setQuery($sql);
+    return $this->loadAllRows([$id]);
 }
-   
+public function deleteOrder($id) {
+        $sqk="DELETE FROM `$this->billct` WHERE order_id = ?";
+    $this->setQuery($sqk);
+    $this->execute([$id]);
+    $sql = "DELETE FROM `$this->order` WHERE id = ?";
+    $this->setQuery($sql);  
+    $this->execute([$id]);
 
+}
+public function hoanthanh(){
+    $sql="UPDATE $this->billct SET `status` = ? WHERE order_details_id= ?";
+    $this->setQuery($sql);
+    $sua='Thành công';
+    $id=$_GET['id'];
+    $this->execute([$sua,$id]);
+    header("Location: http://renax.test/bill"); 
+}
+public function billct (){
+    $sql = "SELECT $this->servise.name AS service_name,`car_services`.name AS car_name, $this->servise.*, car_services.* FROM  $this->servise INNER JOIN 
+    car_services ON   $this->servise.id_car_services = car_services.id";
 
+    $this->setQuery($sql);
+    return $this->loadAllRows();
+}
+}
 ?>
