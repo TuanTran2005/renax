@@ -36,7 +36,7 @@ try{
     $router->get('post_detail',[App\Controllers\ProductController::class,'post_detail']);
     $router->get('service',[App\Controllers\ProductController::class,'service']);
     $router->get('service_detail',[App\Controllers\ProductController::class,'serviceDetail']);
-   
+    $router->get('aubost',[App\Controllers\ProductController::class,'aubost']);
  
     $router->get('cart',[App\Controllers\ProductController::class,'cartProduct']);
     $router->get('error',[App\Controllers\ProductController::class,'error']);
@@ -55,6 +55,11 @@ try{
     }
 
      if (isset($_SESSION['auth']) && $_SESSION['auth']['role']==1) {
+    $router->post('delete_service_invoice',[App\Models\Product::class,'delete_service_invoice']);
+    $router->post('update_service_invoice',[App\Controllers\ProductController::class,'update']);
+    $router->get('service-invoice',[App\Controllers\ProductController::class,'servise']);
+    $router->post('updateService',[App\Controllers\ProductController::class,'updateService']);
+    $router->get('delete_service',[App\Models\Product::class,'deleteCar_services']);
     $router->post('delete_order',[App\Controllers\ProductController::class,'delete_order']);   
     $router->post('update_order',[App\Controllers\ProductController::class,'update_order']);
     $router->post('add_service',[App\Controllers\ProductController::class,'add_service']);

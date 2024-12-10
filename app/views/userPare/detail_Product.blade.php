@@ -156,7 +156,7 @@
 
             <p><strong>Fuel Type:</strong> {{ $product->fuel_type ?? 'N/A' }}</p>
             <p class="lead">This is a detailed description of the product that explains its features and advantages.</p>
-
+            <p><strong>Remaining Quantity:</strong> {{ $product->quantity ?? 'N/A' }}</p>
             <div class="mb-3">
                 <span class="h4">Price: ${{ $product->price ?? '0.00' }}</span>
             </div>
@@ -169,7 +169,7 @@
                <input type="hidden" value="{{$product->price}}" name="price">
                 <div class="mb-3">
                     <label for="quantity" class="form-label">Quantity:</label>
-                    <input type="number" id="quantity" class="form-control" min="1" max="10" name="quantity" value="1">
+                    <input type="number" id="quantity" class="form-control" min="1" max="{{$product->quantity}}" name="quantity" value="1">
                 </div>
 
                 <button type="submit" name="add" class="btn btn-primary">Add to Cart</button>

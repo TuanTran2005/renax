@@ -60,11 +60,11 @@
                 <td class="p-4">
                     <button onclick="openViewModal('{{$service->name}}', '{{$service->description}}', '{{$service->price}}', '{{$service->status}}', '{{$service->image}}', '{{$service->created_at}}', '{{$service->updated_at}}')" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Xem</button>
                     <button onclick="openEditModal('{{$service->id}}', '{{$service->name}}', '{{$service->description}}', '{{$service->price}}', '{{$service->status}}', '{{$service->image}}', '{{$service->created_at}}', '{{$service->updated_at}}', '{{$service->id_services}}')" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Sửa</button>
-                    <form action="{{route('delete_service/'.$service->id)}}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
+                 
+                        <a href="{{route('delete_service')}}?id={{$service->id}}">
                         <button type="submit" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
-                    </form>
+                  </a>  
+               
                 </td>
             </tr>
             @endforeach
@@ -105,12 +105,31 @@
         </form>
     </div>
 </div>
+<!-- View Service Modal -->
+<div id="viewServiceModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+    <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-blue-800 mb-4">Chi Tiết Dịch Vụ</h2>
+        <div id="viewServiceDetails">
+            <p id="viewServiceName" class="mb-2 text-gray-700 font-semibold"></p>
+            <p id="viewServiceDescription" class="mb-2 text-gray-700 font-semibold"></p>
+            <p id="viewServicePrice" class="mb-2 text-gray-700 font-semibold"></p>
+            <p id="viewServiceStatus" class="mb-2 text-gray-700 font-semibold"></p>
+            <p id="viewServiceCreated" class="mb-2 text-gray-700 font-semibold"></p>
+            <p id="viewServiceUpdated" class="mb-2 text-gray-700 font-semibold"></p>
+            <p id="viewServiceRelated" class="mb-2 text-gray-700 font-semibold"></p>
+            <img id="images" src="" alt="Service Image" class="w-32 h-32 object-cover mt-4">
+        </div>
+        <div class="flex justify-end space-x-4 mt-6">
+            <button onclick="closeModal('viewServiceModal')" type="button" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Đóng</button>
+        </div>
+    </div>
+</div>
 
 <!-- Edit Service Modal -->
 <div id="editServiceModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Chỉnh Sửa Dịch Vụ</h2>
-        <form action="{{route('update_service')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('updateService')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
                 <label for="editServiceName" class="block text-sm font-semibold text-gray-700">Tên Dịch Vụ</label>
@@ -132,11 +151,12 @@
                 <label for="editServiceImage" class="block text-sm font-semibold text-gray-700">Ảnh</label>
                 <input type="file" name="image" id="editServiceImage" class="w-full px-4 py-2 rounded border border-gray-300">
             </div>
-            <img src="" id="images" alt="">
+            <img src="" style="width: 100px ;" id="images" alt="">
+            <input type="hidden" name="images" id="images">
             <input type="hidden" name="id" id="editServiceId">
             <div class="flex justify-end space-x-4">
                 <button onclick="closeModal('editServiceModal')" type="button" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
-                <button type="submit" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Lưu</button>
+                <button type="submit" name="luu" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Lưu</button>
             </div>
         </form>
     </div>
@@ -144,14 +164,12 @@
 
 
 <script>
-    // Function to open modals
     function openModal(modalId) {
         document.getElementById(modalId).classList.remove("hidden");
     }
     function closeModal(modalId) {
         document.getElementById(modalId).classList.add("hidden");
     }
-    // Function to view service details
     function openViewModal(name, description, price, status, image, created_at, updated_at) {
         document.getElementById('viewServiceName').innerText = `Tên Dịch Vụ: ${name}`;
         document.getElementById('viewServiceDescription').innerText = `Mô Tả: ${description}`;
@@ -165,14 +183,16 @@
         
         openModal('viewServiceModal');
     }
-    // Function to open edit service modal
     function openEditModal(id, name, description, price, status, image, created_at, updated_at, id_services) {
         document.getElementById('editServiceId').value = id;
         document.getElementById('editServiceName').value = name;
         document.getElementById('editServiceDescription').value = description;
         document.getElementById('editServicePrice').value = price;
         document.getElementById('editServiceStatus').value = status;
-       
+        document.getElementById('images').src=image;
+        document.getElementById('images').value=image;
+        console.log(image);
+        
         openModal('editServiceModal');
     }
 </script>

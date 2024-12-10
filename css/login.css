@@ -177,6 +177,7 @@ body {
 	transform: scale(1.5);	
 }
 .form-toggle {
+	
 	cursor: pointer;
 	color: #007bff;
 	text-decoration: underline;

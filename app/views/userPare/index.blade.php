@@ -5,7 +5,7 @@
     position: relative;
   }
  </style>
-    <!-- Carousel Start -->
+  
     <div class="container-fluid p-0 mb-5">
       <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -92,9 +92,7 @@
         </button>
       </div>
     </div>
-    <!-- Carousel End -->
 
-   <!-- Dịch Vụ Bắt Đầu -->
 <div class="container-xxl py-5">
     <div class="container">
       <div class="row g-4">
@@ -104,7 +102,7 @@
             <div class="ps-4">
               <h5 class="mb-3">Dịch Vụ Chất Lượng</h5>
               <p>Chúng tôi đảm bảo dịch vụ chất lượng chăm sóc xe tốt nhất</p>
-              <a class="text-secondary border-bottom" href="">Đọc Thêm</a>
+              <a class="text-secondary border-bottom" href="{{route('service')}}">Đọc Thêm</a>
             </div>
           </div>
         </div>
@@ -135,15 +133,11 @@
       </div>
     </div>
   </div>
-  <!-- Dịch Vụ Kết Thúc -->
-  
 
-    <!-- Giới Thiệu Bắt Đầu -->
-<!-- Giới Thiệu Dịch Vụ Bán Xe Hơi -->
 <div class="container-xxl py-5">
   <div class="container">
     <div class="row g-5">
-      <!-- Phần hình ảnh xe hơi -->
+
       <div class="col-lg-6 pt-4" style="min-height: 400px">
         <div class="position-relative h-100 wow fadeIn" data-wow-delay="0.1s">
           <img
@@ -164,7 +158,6 @@
         </div>
       </div>
 
-      <!-- Phần giới thiệu về dịch vụ bán xe -->
       <div class="col-lg-6">
         <h6 class="text-primary text-uppercase">// Giới Thiệu //</h6>
         <h1 class="mb-4">
@@ -174,7 +167,7 @@
           CarServ cung cấp những mẫu xe hơi chất lượng cao, được kiểm tra kỹ lưỡng và cam kết mang đến cho bạn những lựa chọn tốt nhất. Chúng tôi cung cấp dịch vụ bán xe mới và đã qua sử dụng với các thương hiệu nổi tiếng trên thị trường.
         </p>
         
-        <!-- Các điểm nổi bật về dịch vụ bán xe -->
+     
         <div class="row g-4 mb-3 pb-3">
           <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
             <div class="d-flex">
@@ -220,7 +213,7 @@
           </div>
         </div>
         
-        <!-- Nút đọc thêm -->
+       
         <a href="" class="btn btn-primary py-3 px-5">
           Tìm Hiểu Thêm<i class="fa fa-arrow-right ms-3"></i>
         </a>
@@ -273,7 +266,6 @@
   <div class="container">
     <div class="row gx-5">
 
-      <!-- Thông Tin -->
       <div class="col-lg-6 py-5">
         <div class="py-5">
           <h1 class="text-white mb-4">Nhà Cung Cấp Dịch Vụ Sửa Chữa Ô Tô Được Chứng Nhận và Giành Giải Thưởng</h1>
@@ -283,7 +275,6 @@
         </div>
       </div>
 
-      <!-- Form Đặt Lịch Dịch Vụ -->
       <div class="col-lg-6">
         <div class="bg-white h-100 d-flex flex-column justify-content-center p-5 wow zoomIn" data-wow-delay="0.6s">
           <h1 class="text-primary mb-4">Đặt Lịch Dịch Vụ</h1>
@@ -291,22 +282,20 @@
           @csrf
             <div class="row g-4">
 
-                <!-- Trường Tên -->
+               
                 <div class="col-12">
                     <input type="text" name="name" class="form-control p-3" placeholder="Tên Của Bạn" required />
                 </div>
 
-                <!-- Trường Số Điện Thoại -->
+           
                 <div class="col-12 col-md-6">
                     <input type="tel" name="phone" class="form-control p-3" placeholder="Số Điện Thoại" required />
                 </div>
 
-                <!-- Trường Địa Chỉ -->
                 <div class="col-12 col-md-6">
                     <input type="text" name="address" class="form-control p-3" placeholder="Địa Chỉ" required />
                 </div>
 
-                <!-- Trường Chọn Sản Phẩm -->
                 <div class="col-12 col-md-6">
                     <select class="form-select p-3" name="product" required>
                         <option selected>Chọn Loại Xe</option>
@@ -316,7 +305,6 @@
                     </select>
                 </div>
 
-                <!-- Trường Chọn Dịch Vụ -->
                 <div class="col-12 col-md-6">
                     <select class="form-select p-3" name="service" required>
                         <option selected>Chọn Dịch Vụ</option>
@@ -326,17 +314,14 @@
                     </select>
                 </div>
 
-                <!-- Trường Ngày Dịch Vụ -->
                 <div class="col-12 col-md-6">
-                    <input type="text" name="service_date" class="form-control p-3 datetimepicker-input" placeholder="Ngày Dịch Vụ" required />
+                    <input type="date" name="service_date" class="form-control p-3 datetimepicker-input" placeholder="Ngày Dịch Vụ" required />
                 </div>
 
-                <!-- Trường Ghi Chú -->
                 <div class="col-12">
                     <textarea class="form-control p-3" name="notes" placeholder="Ghi Chú" rows="3"></textarea>
                 </div>
 
-                <!-- Nút Đặt Lịch -->
                 <div class="col-12">
                     <button class="btn btn-primary w-100 py-3" name="datlich" type="submit">
                         Đặt Lịch Ngay
@@ -351,9 +336,6 @@
   </div>
 </div>
 
-<!-- Đặt Lịch Kết Thúc -->
-
-<!-- Đội Ngũ Bắt Đầu -->
 <div class="container-xxl py-5">
     <div class="container">
       <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -388,9 +370,7 @@
     </div>
     </div>
   </div>
-  <!-- Đội Ngũ Kết Thúc -->
-  
-<!-- Đội Ngũ Bắt Đầu -->
+
 <div class="container-xxl py-5">
     <div class="container">
       <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -469,6 +449,6 @@
    
     </div>
   </div>
-  <!-- Đội Ngũ Kết Thúc -->
+
 
 @endsection

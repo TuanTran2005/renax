@@ -3,31 +3,31 @@
 @section('content')
 
 <style>
-    /* Điều chỉnh không gian hai bên để giảm khoảng trống */
+  
     .container {
-        max-width: 90%; /* Giảm bớt khoảng cách hai bên */
+        max-width: 90%; 
     }
 
-    /* Thêm phần cuộn cho bảng hóa đơn */
+
     .invoice-table-container {
-        max-height: 400px; /* Chiều cao tối đa */
-        overflow-y: auto;  /* Cho phép cuộn dọc khi nội dung vượt quá chiều cao */
-        border: 1px solid #ddd; /* Đường viền nhẹ cho bảng */
-        padding: 10px; /* Khoảng cách giữa bảng và viền */
-        border-radius: 8px; /* Bo góc cho bảng */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Thêm bóng mờ cho bảng */
+        max-height: 400px; 
+        overflow-y: auto;  
+        border: 1px solid #ddd; 
+        padding: 10px; 
+        border-radius: 8px; 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
     }
 
-    /* Tùy chỉnh bảng hóa đơn */
+ 
     .table {
-        border-collapse: collapse; /* Gộp các ô lại với nhau */
-        width: 100%; /* Chiều rộng 100% cho bảng */
+        border-collapse: collapse; 
+        width: 100%; 
     }
 
     .table th, .table td {
-        padding: 15px; /* Khoảng cách trong các ô */
-        text-align: center; /* Canh giữa văn bản trong các ô */
-        vertical-align: middle; /* Căn giữa nội dung theo chiều dọc */
+        padding: 15px; 
+        text-align: center; 
+        vertical-align: middle; 
     }
 
     .table-bordered {
@@ -237,12 +237,12 @@
             @foreach ($bill as $router)
                 <tr>
                     <td>{{ $router->name_product }}</td>
-                    <td>{{ $router->quantity }}</td>
+                    <td>{{ $router->order_quantity }}</td>
                     <td>{{ $router->unit_price }}$</td>
                     <td>{{ $router->total_price }}$</td>
-                    <td><span class="status ">{{ $router->status }}</span></td>
+                    <td><span class="status ">{{ $router->billct_status }}</span></td>
                     <td>
-                        @if ($router->status !='Thành công')
+                        @if ($router->billct_status !='Thành công')
                          <a href="{{route('hoanthanh')}}?id={{$router->order_details_id}}"><button class="btn btn-danger complete-btn" >Hoàn Thành</button> </a> 
                          @else
                      

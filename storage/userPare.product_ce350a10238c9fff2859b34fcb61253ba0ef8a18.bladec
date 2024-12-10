@@ -26,6 +26,8 @@
  <div class="row g-4">
  <?php $__currentLoopData = $product; $this->addLoop($__currentLoopData);$this->getFirstLoop();
  foreach($__currentLoopData as $index): $loop = $this->incrementLoopIndices();  ?>
+ <?php if($index->status != 'hidden'): ?>
+ 
  
  
  <!-- Product Item 1 -->
@@ -40,6 +42,7 @@
  </div>
  </div>
  </div>
+ <?php endif; ?>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  
  </div>

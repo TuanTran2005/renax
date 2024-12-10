@@ -215,8 +215,11 @@
     </div>
   </div>
 </div>
-
+@php
+unset($_SESSION['on']);
+@endphp
 <script>
+  
   @if (isset($_SESSION['login-fail-message']))
     setTimeout(() => {
       const failMessage = document.getElementById('login-fail-message');

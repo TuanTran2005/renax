@@ -17,6 +17,8 @@
           <th class="p-4 text-blue-800">Tên Sản Phẩm</th>
           <th class="p-4 text-blue-800">Giá</th>
           <th class="p-4 text-blue-800">Loại</th>
+          <th class="p-4 text-blue-800">Số lượng</th>
+          <th class="p-4 text-blue-800">Trạng thái</th>
           <th class="p-4 text-blue-800">Nhiên Liệu</th>
           <th class="p-4 text-blue-800">Hành Động</th>
         </tr>
@@ -29,12 +31,14 @@
           <td class="p-4">{{$product->name_product}}</td>
           <td class="p-4">{{$product->price}} VNĐ</td>
           <td class="p-4">{{$product->category_id }}</td>
+          <td class="p-4">{{$product->quantity }}</td>
+          <td class="p-4">{{$product->status }}</td>
           <td class="p-4 ">
           {{$product->fuel }}
           </td>
           <td class="p-4">
             <button onclick="openreview('viewProductModal','{{$product->id_pr }}','{{$product->id_if }}','{{$product->color}}','{{$product->seat_number}}','{{$product->move}}','{{$product->consumption}}','{{$product->fuel}}','{{ json_decode($product->images, true)[0] ?? '' }}')" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Xem</button>
-            <button onclick="openUpdate('editProductModal','{{$product->id_pr }}','{{$product->id_if }}','{{$product->name_product}}','{{$product->color}}','{{$product->seat_number}}','{{$product->move}}','{{$product->consumption}}','{{$product->fuel}}','{{ json_decode($product->images, true)[0] ?? '' }}','{{$product->images}}','{{$product->category_id }}','{{$product->title}}','{{$product->price}}')" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Sửa</button>
+            <button onclick="openUpdate('editProductModal','{{$product->id_pr }}','{{$product->id_if }}','{{$product->name_product}}','{{$product->color}}','{{$product->seat_number}}','{{$product->move}}','{{$product->consumption}}','{{$product->fuel}}','{{ json_decode($product->images, true)[0] ?? '' }}','{{$product->images}}','{{$product->category_id }}','{{$product->title}}','{{$product->price}}','{{$product->quantity}}','{{$product->status}}')" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Sửa</button>
             <button onclick="openDelete('deleteProductModal','{{$product->id_pr }}')" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
           </td>
         </tr>
@@ -94,6 +98,17 @@
       <div class="mb-4">
         <label for="productImage" class="block text-sm font-semibold text-gray-700">Ảnh Sản Phẩm</label>
         <input type="file" id="productImage" name="product_image[]" multiple class="w-full px-4 py-2 rounded border border-gray-300" placeholder="Nhập URL ảnh sản phẩm">
+      </div>
+      <div class="mb-4">
+        <label for="productQuantity" class="block text-sm font-semibold text-gray-700">Số lượng</label>
+        <input type="number" id="productQuantity" name="product_quantity" class="w-full px-4 py-2 rounded border border-gray-300" placeholder="Nhập tên sản phẩm">
+      </div>
+      <div class="mb-4">
+        <label for="productSatust" class="block text-sm font-semibold text-gray-700">Trạng thái</label>
+        <select name="product_satust" id="productSatust" class="w-full px-4 py-2 rounded border border-gray-300">
+          <option value="still">still</option>
+          <option value="hidden">hidden</option>
+        </select>
       </div>
       <div class="flex justify-end space-x-4">
         <button onclick="closeModal('addProductModal')" type="button" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
@@ -162,6 +177,17 @@
         <label for="editProductImage" class="block text-sm font-semibold text-gray-700">Ảnh Sản Phẩm</label>
         <input type="file" id="editProductImage" name="product_image[]" multiple class="w-full px-4 py-2 rounded border border-gray-300">
       </div>
+      <div class="mb-4">
+        <label for="productQuantity" class="block text-sm font-semibold text-gray-700">Số lượng</label>
+        <input type="number" id="editProductQuantity" name="editProductQuantity" class="w-full px-4 py-2 rounded border border-gray-300" placeholder="Nhập tên sản phẩm">
+      </div>
+      <div class="mb-4">
+        <label for="productSatust" class="block text-sm font-semibold text-gray-700">Trạng thái</label>
+        <select name="editProductSatust" id="editProductSatust" class="w-full px-4 py-2 rounded border border-gray-300">
+          <option value="still">still</option>
+          <option value="hidden">hidden</option>
+        </select>
+      </div>
       <div class="flex justify-end space-x-4">
         <button onclick="closeModal('editProductModal')" type="button" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Hủy bỏ</button>
         <button type="submit" name="capnhat" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Cập nhật</button>
@@ -222,7 +248,7 @@
    document.getElementById('img').src=img;
       document.getElementById(modalId).classList.remove("hidden");
     }
-    function openUpdate(modalId,idpk,idif,nameproduct,coler,seat_number,move,consumption,fuel,img,images,category_id,title,price ) {
+    function openUpdate(modalId,idpk,idif,nameproduct,coler,seat_number,move,consumption,fuel,img,images,category_id,title,price,quantity,status ) {
    document.getElementById('editProductId').value=idpk;
    document.getElementById('editProductIdIf').value=idif;
    document.getElementById('loaihang').value=category_id ;
@@ -234,6 +260,8 @@
    document.getElementById('editProductFuel').value=fuel;
    document.getElementById('editProductTitle').value=title;
    document.getElementById('editProductPrice').value=price;
+   document.getElementById('editProductQuantity').value=quantity;
+   document.getElementById('editProductSatust').value=status;
    document.getElementById('img').value=images;
    const anh=JSON.parse(images);
    const imageContainer=document.getElementById('imageContainer');
@@ -252,7 +280,7 @@
       document.getElementById(modalId).classList.remove("hidden");
     }
 
-    // Close Modal
+ 
     function closeModal(modalId) {
       document.getElementById(modalId).classList.add("hidden");
     }

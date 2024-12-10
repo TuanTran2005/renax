@@ -13,6 +13,7 @@ class Product extends BaseModel{
     protected $order='order';
     protected $post='post';
     protected $servise='servise';
+    protected $car_services='car_services';
     public function getuser(){
         $sql = "SELECT * FROM $this->user ";
         $this->setQuery($sql);
@@ -31,11 +32,11 @@ class Product extends BaseModel{
         $this->setQuery($sql);
         return $this->loadAllRows();
     }
-      public function addProduct($product_name, $product_image,$product_title,$product_price, $product_color, $product_manufacturer, $product_seat_count,$edit_product_move, $product_fuel,$product_consumption){
-        $sql = "INSERT INTO `$this->sanpham` (name_product, images, title, price, category_id) VALUES (?, ?, ?, ?, ?)";;
+      public function addProduct($product_name, $product_image,$product_title,$product_price, $product_color, $product_manufacturer, $product_seat_count,$edit_product_move, $product_fuel,$product_consumption,$product_quantity,$product_satust){
+        $sql = "INSERT INTO `$this->sanpham` (name_product, images, title, price, category_id, quantity, `status`) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         $this->setQuery($sql);
-        $this->execute([$product_name,$product_image,$product_title,$product_price, $product_manufacturer]);
+        $this->execute([$product_name,$product_image,$product_title,$product_price, $product_manufacturer,$product_quantity,$product_satust]);
         $idfk=$this->pdo->lastInsertId();
         $sqll = "INSERT INTO `$this->chitietsanpham`(product_id, color, seat_number, move, consumption, fuel) VALUES (?, ?, ?, ?, ?, ?)";
         $this->setQuery($sqll);
@@ -68,10 +69,10 @@ class Product extends BaseModel{
         $this->setQuery($sql);
         $this->execute([$id]);
     }
-    public function update_product($name_product,$images,$title,$price,$category_id,$idpk,$color,$seat_number,$move,$consumption,$fuel,$idif){
-        $sql= "UPDATE product SET name_product= ? ,images= ? ,title= ? ,price= ? ,category_id= ? WHERE id= ?";
+    public function update_product($name_product,$images,$title,$price,$category_id,$idpk,$color,$seat_number,$move,$consumption,$fuel,$idif,$quantity,$status){
+        $sql= "UPDATE product SET name_product= ? ,images= ? ,title= ? ,price= ? ,category_id= ? , quantity = ? ,`status`= ? WHERE id= ?";
         $this->setQuery($sql);
-        $this->execute([$name_product,$images,$title,$price,$category_id,$idpk]);
+        $this->execute([$name_product,$images,$title,$price,$category_id,$quantity,$status,$idpk]);
         $sqlx= "UPDATE `product-information` SET color= ? ,seat_number= ? ,`move`= ? ,consumption= ? ,fuel= ? WHERE id= ?";
         $this->setQuery($sqlx);
         $this->execute([$color,$seat_number,$move,$consumption,$fuel,$idif]);
@@ -143,19 +144,55 @@ class Product extends BaseModel{
     public function updateOrder($id, $name,$phone,$address,$quantity,$unitPrice,$paymentMethod,$status){
         $cccp="UPDATE `order_details` SET name_user= ? , phone= ? , `Address`= ? ,  payment_method= ? , `status` = ? WHERE 	order_id= ?";
        $this->setQuery($cccp);
-       $this->execute([$name,$phone,$address,$paymentMethod,$status,$id]);
+       $this->execute([$name,$phone,$address,$paymentMethod,$status,$id-1]);
        $sql="UPDATE `$this->order` SET 	quantity= ? , unit_price= ? , 	total_price= ?  WHERE id= ?";
        $this->setQuery($sql);
        $total_price=$quantity*$unitPrice;
        $this->execute([$quantity,$unitPrice, $total_price,$id]);
        header("Location: http://renax.test/order"); 
     }
+    public function updateService($id, $name, $description, $price, $status, $image)
+{
+    
+    $cccp = "UPDATE $this->car_services SET `name` = ?, `description` = ?, `price` = ?, `status` = ?, `image` = ? WHERE `id` = ?";
+   
+    $this->setQuery($cccp);
+    $this->execute([$name, $description, $price, $status, $image, $id]);
+    
+    
+    
+}
+public function suaService($id, $name, $detail, $status, $id_car_services, $time,$phone)
+{
+    
+    $cccp = "UPDATE $this->servise SET `name` = ?, `detail` = ?, `status` = ?, `id_car_services` = ?, `time` = ?, `phone` = ? WHERE `id` = ?";
+    $this->setQuery($cccp);
+    $this->execute([$name, $detail, $status, $id_car_services, $time, $phone, $id]);
+    
+    
+    
+}
+public function delete_service_invoice(){
+    $sql="DELETE FROM $this->servise WHERE id= ?";
+    $this->setQuery($sql);
+    $this->execute([$_POST['invoice_id']]);
+    header("Location: http://renax.test/service-invoice"); 
+}
     // <--------------------------------------------------->
     public function nut(){
         $limit = 6;
-        $sql_count = "SELECT COUNT(*) AS total FROM $this->sanpham";
+        $sql_count = "SELECT COUNT(*) AS total FROM $this->sanpham ";
         $this->setQuery($sql_count);
         $totalRecords = $this->loadAllRows(); 
+        $totalRecords = $totalRecords[0]->total; 
+        $totalPages = ceil($totalRecords / $limit); 
+        return $totalPages;
+    }
+    public function nuts($dulieu){
+        $limit = 6;
+        $sql_count = "SELECT COUNT(*) AS total FROM $this->sanpham WHERE name_product LIKE ?";
+        $this->setQuery($sql_count);
+        $totalRecords = $this->loadAllRows(['%' . $dulieu . '%']); 
         $totalRecords = $totalRecords[0]->total; 
         $totalPages = ceil($totalRecords / $limit); 
         return $totalPages;
@@ -235,7 +272,23 @@ $this->execute([$name_user, $phone, $pickup_date, $payment_method, $notes, $idfk
    return $this->loadAllRows();
    }
    public function bills($id){
-    $sql="SELECT * FROM `$this->order` INNER JOIN $this->billct ON `$this->order`.id=$this->billct.order_details_id INNER JOIN $this->sanpham ON $this->sanpham.id=$this->billct.product_id WHERE `$this->order`.user_id=? " ;
+    $sql = "SELECT 
+    `$this->order`.*, 
+    $this->billct.*, 
+    $this->sanpham.*, 
+    $this->sanpham.quantity AS sanpham_quantity,
+    $this->order.quantity AS order_quantity,
+    $this->billct.`status` AS billct_status, 
+    $this->sanpham.`status` AS sanpham_status 
+FROM 
+    `$this->order` 
+INNER JOIN 
+    $this->billct ON `$this->order`.id = $this->billct.order_details_id 
+INNER JOIN 
+    $this->sanpham ON $this->sanpham.id = $this->billct.product_id 
+WHERE 
+    `$this->order`.user_id = ?";
+
     $this->setQuery($sql);
     return $this->loadAllRows([$id]);
    }
@@ -319,6 +372,74 @@ public function billct (){
 
     $this->setQuery($sql);
     return $this->loadAllRows();
+}
+public function billcts() {
+    $sql = "SELECT 
+    $this->servise.name AS service_name, 
+    car_services.name AS car_name, 
+    user.name AS user_name, 
+    $this->servise.status AS service_status, 
+    car_services.status AS car_service_status, 
+    user.status AS user_status,  
+    $this->servise.id AS service_id, 
+    car_services.id AS car_service_id, 
+    user.id AS user_id, 
+    $this->servise.*, 
+    car_services.*, 
+    user.* 
+FROM 
+    $this->servise
+INNER JOIN 
+    car_services ON $this->servise.id_car_services = car_services.id
+INNER JOIN 
+    user ON $this->servise.user_id = user.id";
+
+
+    $this->setQuery($sql);
+    return $this->loadAllRows();
+}
+
+public function productPagew($idlh,$page=1){
+    $limit = 6;
+    $offset = ($page - 1) * $limit;
+    
+    // Câu truy vấn với điều kiện tìm kiếm
+    $sql = "SELECT * FROM $this->sanpham WHERE category_id = ? ORDER BY id ASC LIMIT $limit OFFSET $offset";
+    
+    // Thiết lập truy vấn
+    $this->setQuery($sql);
+    
+    // Truyền tham số tìm kiếm vào câu lệnh
+    return $this->loadAllRows([$idlh]);
+}
+public function nutw($dulieu){
+    $limit = 6;
+    $sql_count = "SELECT COUNT(*) AS total FROM $this->sanpham WHERE category_id = ?";
+    $this->setQuery($sql_count);
+    $totalRecords = $this->loadAllRows([$dulieu]); 
+    $totalRecords = $totalRecords[0]->total; 
+    $totalPages = ceil($totalRecords / $limit); 
+    return $totalPages;
+}
+public function deleteCar_services(){
+    $id=$_GET['id'];
+    $sql="DELETE FROM $this->car_services WHERE id = ?";
+    $this->setQuery($sql);
+    $this->execute([$id]);
+    $sqls="DELETE FROM $this->servise WHERE id_car_services = ?";
+    $this->setQuery($sqls);
+    $this->execute([$id]);
+    header("Location: http://renax.test/car_services"); 
+}
+public function updateQuantity($id,$soluong){
+   $sql="UPDATE $this->sanpham SET quantity = ?, `status` = ? WHERE id=?";
+$this->setQuery($sql);
+if ($soluong>0) {
+    $status="still";
+}else{
+    $status="hidden";
+}
+$this->execute([$soluong,$status,$id]);
 }
 }
 ?>

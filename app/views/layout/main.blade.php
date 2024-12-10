@@ -42,7 +42,7 @@
 }
 body {
             font-family: 'Ubuntu', sans-serif;
-            background-color: #f4f7fc;
+            background-color: white;
             color: #333;
         }
 
@@ -225,7 +225,7 @@ body {
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <div class="navbar-nav ms-auto p-4 p-lg-0">
       <a href="{{route('/')}}" class="nav-item nav-link active">Trang chủ</a>
-      <a href="#" class="nav-item nav-link">Về chúng tôi</a>
+      <a href="{{route('aubost')}}" class="nav-item nav-link">Về chúng tôi</a>
       
       <!-- Nút "Sản phẩm" -->
       <a href="{{ route('product_page') }}?id=1" class="nav-item nav-link">Sản phẩm</a>
@@ -234,9 +234,9 @@ body {
       <div class="nav-item dropdown">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Loại hàng</a>
         <div class="dropdown-menu fade-up m-0">
-          <a href="product-category1.html" class="dropdown-item">Loại hàng 1</a>
-          <a href="product-category2.html" class="dropdown-item">Loại hàng 2</a>
-          <a href="product-category3.html" class="dropdown-item">Loại hàng 3</a>
+          <a href="{{route('product_page')}}?id_loaihang=1" class="dropdown-item">Senda3</a>
+          <a href="{{route('product_page')}}?id_loaihang=3" class="dropdown-item">Mazda3</a>
+          <a href="{{route('product_page')}}?id_loaihang=5" class="dropdown-item">Xe Hatchback</a>
         </div>
       </div>
       <!-- Nút "Thư mục" chứa bài viết và dịch vụ -->

@@ -1,7 +1,6 @@
 <?php $_shouldextend[1]=1; ?>
 <?php $this->startSection('content'); ?>
 
-<!-- Payment Start -->
 <div class="container py-5">
  <div class="row justify-content-center">
  <div class="col-lg-8">
@@ -23,7 +22,7 @@
  
  <div class="mb-3">
  <label for="payment_method" class="form-label"><i class="fa fa-credit-card me-2"></i>Phương Thức Thanh Toán</label>
- <select class="form-control" id="payment_method" name="thanhtoan"required>
+ <select class="form-control" id="payment_method" name="thanhtoan" required>
  <option value="cash">Tiền Mặt</option>
  <option value="card">Thẻ Ngân Hàng</option>
  </select>
@@ -55,7 +54,8 @@
  
  <div class="mb-3">
  <label for="quantity" class="form-label"><i class="fa fa-cogs me-2"></i>Số Lượng</label>
- <input type="number" class="form-control" name="soluong" value="<?php echo \htmlentities($_GET['sl']??'', ENT_QUOTES, 'UTF-8', false); ?>" id="quantity" placeholder="Nhập số lượng" required>
+ <input type="number" class="form-control" name="soluong" min="1" max="<?php echo \htmlentities($buy->quantity??'', ENT_QUOTES, 'UTF-8', false); ?>" value="<?php echo \htmlentities($_GET['sl']??'', ENT_QUOTES, 'UTF-8', false); ?>" id="quantity" placeholder="Nhập số lượng" required>
+ 
  </div>
 
  
@@ -72,7 +72,7 @@
  
  <div class="mb-3">
  <label for="color" class="form-label"><i class="fa fa-paint-brush me-2"></i>Màu Sắc</label>
- <input type="text" class="form-control" id="color" name="color" value="<?php echo \htmlentities($_GET['color'] ?? ''??'', ENT_QUOTES, 'UTF-8', false); ?>" required readonly>
+ <input type="text" class="form-control" id="color" name="color" value="<?php echo \htmlentities($_GET['color'] ? $_GET['color'] :  'White'??'', ENT_QUOTES, 'UTF-8', false); ?>" required readonly>
  </div>
 
  <button type="submit" name="buy" class="btn btn-primary"><i class="fa fa-check-circle me-2"></i>Đặt Hàng</button>
@@ -81,22 +81,67 @@
  </div>
 </div>
 
+<div class="login-message login-fail-message" id="login-fail-message" style="display:none;">
+ <i class="fas fa-times-circle"></i>
+ <span>Số lượng không đủ, vui lòng chọn ít hơn <?php echo \htmlentities($buy->quantity??'', ENT_QUOTES, 'UTF-8', false); ?>.</span>
+</div>
 
 <script>
+
 function updateTotalPrice() {
  const quantity = parseFloat(document.getElementById('quantity').value);
  const unitPrice = parseFloat(document.getElementById('unit_price').value);
- if (!isNaN(quantity) && !isNaN(unitPrice)) {
+ 
  const totalPrice = quantity * unitPrice;
  document.getElementById('total_price').value = totalPrice;
- }
+ 
 }
 
-document.getElementById('quantity').addEventListener('input', updateTotalPrice);
-document.getElementById('unit_price').addEventListener('input', updateTotalPrice);
-
 updateTotalPrice();
+
+<?php if($_GET['sl']>$buy->quantity): ?>
+
+
+setTimeout(() => {
+ const failMessage = document.getElementById('login-fail-message');
+ failMessage.style.display = 'flex'; 
+}, 500);
+setTimeout(() => {
+ const failMessage = document.getElementById('login-fail-message');
+ failMessage.style.display = 'none'; 
+}, 3500);
+<?php endif; ?>
+
 </script>
+
 <?php $this->stopSection(); ?>
+
+<style>
+
+.login-message {
+ position: fixed;
+ top: 20px; 
+ left: 50%;
+ transform: translateX(-50%);
+ background-color: #f8d7da;
+ color: #721c24;
+ padding: 10px 20px;
+ border-radius: 5px;
+ display: flex;
+ align-items: center;
+ font-size: 16px;
+ z-index: 9999;
+}
+
+.login-fail-message {
+ display: none;
+ flex-direction: row;
+ gap: 10px;
+}
+
+.login-fail-message i {
+ font-size: 20px;
+}
+</style>
 
 <?php if (isset($_shouldextend[1])) { echo $this->runChild('layout.main'); } ?>

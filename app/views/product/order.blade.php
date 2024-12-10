@@ -5,7 +5,6 @@
         <i class="fas fa-file-invoice bg-white text-blue-300 p-2 rounded-full mr-2"></i> Quản lý Hóa Đơn
     </h2>
 
-    <!-- Order Table -->
     <table class="w-full bg-white rounded shadow-lg overflow-hidden mb-8">
         <thead>
             <tr class="bg-blue-100 text-left">
@@ -44,12 +43,11 @@
     </table>
 </main>
 
-<!-- View Order Modal -->
 <div id="viewOrderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Thông tin Hóa Đơn</h2>
         <ul id="orderDetails" class="space-y-2">
-            <!-- Details will be populated dynamically -->
+
         </ul>
         <div class="flex justify-end mt-6">
             <button onclick="closeModal('viewOrderModal')" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Đóng</button>
@@ -57,13 +55,11 @@
     </div>
 </div>
 
-<!-- Delete Order Modal -->
 <div id="deleteOrderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-red-600 mb-4">Xóa Hóa Đơn</h2>
         <p>Bạn có chắc chắn muốn xóa hóa đơn của <strong id="deleteOrderName">Nguyễn Văn A</strong> không?</p>
-        
-        <!-- Thêm một trường ẩn để lưu id hóa đơn -->
+      
         <form id="deleteOrderForm" action="{{ route('delete_order') }}" method="POST">
             @csrf
             <input type="hidden" id="deleteOrderId" name="order_id">
@@ -77,14 +73,13 @@
     </div>
 </div>
 
-<!-- Edit Order Modal -->
-<!-- Edit Order Modal -->
 <div id="editOrderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Sửa Thông Tin Hóa Đơn</h2>
         <form action="{{route('update_order')}}" method="post">
             <div class="space-y-4">
                 <input type="hidden" id="id" name="id">
+                <input type="hidden" id="order_details_id " name="order_details_id ">
                 <div>
                     <label for="editNameUser" class="block">Tên Người Dùng:</label>
                     <input type="text" id="editNameUser" name="editNameUser" class="w-full p-2 border border-gray-300 rounded" required>
@@ -105,7 +100,7 @@
                     <label for="editUnitPrice" class="block">Đơn Giá (VND):</label>
                     <input type="number" id="editUnitPrice" name="editUnitPrice" class="w-full p-2 border border-gray-300 rounded" required>
                 </div>
-                <select id="editPaymentMethod" name="editPaymentMethod" class="w-full p-2 border border-gray-300 rounded">
+<select id="editPaymentMethod" name="editPaymentMethod" class="w-full p-2 border border-gray-300 rounded">
     <option value="cash">Thanh toán khi nhận</option>
     <option value="bank_transfer">Chuyển khoản ngân hàng</option>
 </select>
@@ -114,7 +109,7 @@
     <option value="Đã thanh toán">Đã thanh toán</option>
     <option value="Chưa thanh toán">Chưa thanh toán</option>
     <option value="Thành công">Thành công</option>
-    <option value="Đang xử lý">Chờ Xử Lý</option>
+    <option value="Chờ Xử Lý">Chờ Xử Lý</option>
 </select>
             </div>
             <div class="flex justify-end mt-6">
@@ -127,13 +122,13 @@
 
 
 <script>
-    // Close Modal Function
+
     function closeModal(modalId) {
         const modal = document.getElementById(modalId);
         modal.classList.add('hidden');
     }
 
-    // View Order Details (display dynamically)
+ 
     function viewOrderDetails(id, name, phone, address, quantity, unitPrice, totalPrice, orderDate, pickupDate, paymentMethod, status) {
         document.getElementById('orderDetails').innerHTML = `
             <li><strong>Mã Hóa Đơn:</strong> ${id}</li>
@@ -148,21 +143,19 @@
             <li><strong>Phương Thức Thanh Toán:</strong> ${paymentMethod}</li>
             <li><strong>Trạng Thái:</strong> ${status}</li>
         `;
-        // Hiển thị modal
+
         document.getElementById('viewOrderModal').classList.remove('hidden');
     }
 
-    // Delete Order (delete order logic)
     function deleteOrder() {
-        // Logic to delete the order (you can call an API or trigger a form submission)
+       
         alert("Đã xóa hóa đơn.");
-        closeModal('deleteOrderModal');  // Close the modal after deletion
+        closeModal('deleteOrderModal');  
     }
 
-    // Open Edit Order Modal (populate modal with order data)
-// Open Edit Order Modal (populate modal with order data)
+
 function openEditOrderModal(id, name, phone, address, quantity, unitPrice, paymentMethod, status) {
-    // Populate edit form fields with the current order data
+ 
    document.getElementById('id').value=id;
     document.getElementById('editNameUser').value = name;
     document.getElementById('editPhone').value = phone;
@@ -173,8 +166,7 @@ function openEditOrderModal(id, name, phone, address, quantity, unitPrice, payme
 document.getElementById('editStatus').value = status; 
 
    console.log(status);
-   
-    // Show the modal
+
     document.getElementById('editOrderModal').classList.remove('hidden');
 }
 

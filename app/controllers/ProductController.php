@@ -59,7 +59,7 @@ class ProductController extends BaseController{
                $colors = explode(',', $_POST['product_color']);
                $colors_json = json_encode($colors);
                
-               $this->product->addProduct($_POST['product_name'],$image_paths_json,$_POST['product_title'],$_POST['product_price'],$colors_json,$_POST['product_manufacturer'],$_POST['product_seat_count'],$_POST['edit_product_move'],$_POST['product_fuel'],$_POST['product_consumption']);
+               $this->product->addProduct($_POST['product_name'],$image_paths_json,$_POST['product_title'],$_POST['product_price'],$colors_json,$_POST['product_manufacturer'],$_POST['product_seat_count'],$_POST['edit_product_move'],$_POST['product_fuel'],$_POST['product_consumption'],$_POST['product_quantity'],$_POST['product_satust']);
                flash('success', "Thêm thành công", 'get-product');
             
         }
@@ -111,7 +111,7 @@ class ProductController extends BaseController{
     }else{
  $image_paths_json=$_POST['img'];
     }
-   $this->product->update_product($_POST['product_name'],$image_paths_json,$_POST['product_title'],$_POST['product_price'],$_POST['product_category'],$_POST['product_id'],$_POST['product_color'],$_POST['product_seat_count'],$_POST['product_move'],$_POST['product_consumption'],$_POST['product_fuel'],$_POST['product_idif']);
+   $this->product->update_product($_POST['product_name'],$image_paths_json,$_POST['product_title'],$_POST['product_price'],$_POST['product_category'],$_POST['product_id'],$_POST['product_color'],$_POST['product_seat_count'],$_POST['product_move'],$_POST['product_consumption'],$_POST['product_fuel'],$_POST['product_idif'],$_POST['editProductQuantity'],$_POST['editProductSatust']);
    flash('success', "Sửa thành công", 'get-product');
  }
     }
@@ -155,8 +155,7 @@ public function update_order(){
        
     
     $this->product->updateOrder($_POST['id'],  $_POST['editNameUser'],$_POST['editPhone'],$_POST['editAddress'],$_POST['editQuantity'],$_POST['editUnitPrice'],$_POST['editPaymentMethod'],$_POST['editStatus']);
-    var_dump($_POST['id']);
-    // flash('success', "Sửa đơn hàng thành công", 'order');
+
 }
 
 }
@@ -164,6 +163,56 @@ public function delete_order(){
    $this->product->deleteOrder($_POST['order_id']);
    header("Location: http://renax.test/order"); 
 }
+public function updateService()
+{
+    if (isset($_POST['luu'])) {
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+        $status = $_POST['status'];
+        $id = $_POST['id'];
+        
+
+        if (isset($_FILES['image']) && !empty($_FILES['image']['name'])) {
+            $img = basename($_FILES['image']['name']);
+            $url = 'imgs/';
+            $imagePath = $url . $img;
+            move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
+        } else {
+
+            $imagePath = $_POST['images'];
+        }
+
+        $this->product->updateService($id, $name, $description, $price, $status, $imagePath);
+        
+        header("Location: http://renax.test/car_services"); 
+    }
+}
+
+public function servise(){
+    $serviceInvoices=$this->product->billcts();
+    $dichvu=$this->product->showCreateService();
+    return $this->render('product.servise',compact('serviceInvoices','dichvu'));
+}
+
+    public function update(){
+        if (isset($_POST['luu'])) {
+            $id=$_POST['id'];
+            $name = $_POST['name'];
+        $detail = $_POST['detail'];
+        $status = $_POST['status'];
+        $id_car_services = $_POST['id_car_services'];
+        $time = $_POST['time'];
+        $phone = $_POST['phone'];
+        $this->product->suaService($id, $name, $detail, $status, $id_car_services, $time,$phone);
+        
+        }
+header("Location: http://renax.test/service-invoice"); 
+        
+
+     
+    }
+
 
 // <-------------------------------------------------------->
   public function userpage(){
@@ -178,9 +227,16 @@ public function delete_order(){
     if (isset($_GET['timkiem'])) {
         $dulieu=$_GET['dulieu'];
         $product=$this->product->productPages($dulieu,$id );
-    $productx=$this->product->nut();
+    $productx=$this->product->nuts($dulieu);
         return $this->render('userPare.product',compact('product','productx'));
-    }else{
+    }
+    elseif (isset($_GET['id_loaihang'])) {
+        $idlh=$_GET['id_loaihang'];
+        $product=$this->product->productPagew($idlh,$id);
+        $productx=$this->product->nutw($idlh);
+    return $this->render('userPare.product',compact('product','productx'));
+    }
+    else{
         $product=$this->product->productPage($id);
         $productx=$this->product->nut();
     return $this->render('userPare.product',compact('product','productx'));
@@ -259,9 +315,9 @@ public function cartProduct(){
 }
 public function addToCart(){
    
-    if (!isset($_SESSION['cart'])) {
-       $_SESSION['cart'] = [];
-    }
+    // if (!isset($_SESSION['cart'])) {
+    //    $_SESSION['cart'] = [];
+    // }
 
     if (isset($_POST['add'])) {
     
@@ -271,13 +327,13 @@ public function addToCart(){
         $images = $_POST['images']; 
         $nameProduct = $_POST['nameProduct'];
         $priceProduct = $_POST['price'];
+        $id=$_SESSION['auth']['id'];
 
-
-        if (isset($_SESSION['cart'][$product_id][$color])) {
+        if (isset($_SESSION['cart'][$product_id][$color][$id])) {
             $_SESSION['cart'][$product_id][$color]['quantity'] += $quantity;
         } else {
   
-            $_SESSION['cart'][$product_id][$color] = [
+            $_SESSION['cart'][$product_id][$color][$id] = [
                 'name' => $nameProduct,
                 'price' => $priceProduct,
                 'images' => $images, 
@@ -292,6 +348,7 @@ public function addToCart(){
 
 public function Pay(){
     $ids=$_GET['id'];
+    
         $id=$_SESSION['auth']['id'];
         $products=$this->product->userPay($id);
         $buy=$this->product->productPay($ids);
@@ -299,6 +356,7 @@ public function Pay(){
     return $this->render('userPare.pay',compact('products','buy'));
 }
 public function PayPost(){
+
     if (isset($_POST['buy'])) {
        $iduser=$_SESSION['auth']['id'];
        $quantity=$_POST['soluong'];
@@ -317,14 +375,17 @@ public function PayPost(){
        $price=strval($buy->price);
        $img=json_decode($buy->images)[0];
        $cleaned_string = str_replace(['[', ']', '"'], '', $img);
-       $cart_key = $product_id . '_' . $Color ;
+       $cart_key = $product_id . '_' . $Color . '_' . $_SESSION['auth']['id'] ;
        if (isset($_SESSION['cart'][$cart_key])) {
         if ($_SESSION['cart'][$cart_key] > $quantity) {
             $_SESSION['cart'][$cart_key] -= $quantity;
         } else {
-            unset($_SESSION['cart'][$product_id][$Color]);
+            unset($_SESSION['cart'][$product_id][$Color][$_SESSION['auth']['id']]);
         }
     }
+    $product=$this->product->productPay($product_id);
+    $tong=$product->quantity-$quantity;
+   $this->product->updateQuantity($product_id,$tong);
     }
      flash('error', "Đặt hàng thành công", 'bill');
 
@@ -347,6 +408,7 @@ public function adduser(){
         $password = isset($_POST['password']) ? $_POST['password'] : '';
         foreach ($user as $value) {
             if ($value->email==$email && $value->password==$password) {
+                $_SESSION['off']='thatbai';
                 header("Location: http://renax.test/register?name=0");
             }
         }
@@ -360,12 +422,14 @@ public function adduser(){
         $noi=$url.$img;
         move_uploaded_file($_FILES['profile_image']['tmp_name'],$noi);
         $this->product->dangKy($name,  $email, $password, $address, $phone, $date_of_birth, $gender, $noi);
-        flash('error', "Đăng ký thành công", 'login');
+        unset($_SESSION['off']);
+        $_SESSION['on']='thanhcong';
+        flash('error', "Đăng ký thành công", 'register');
     }
 }
 public function dangxuat(){
     unset($_SESSION['auth']);
-    flash('success', "Xóa thành công", 'userpage');
+    flash('success', "Xóa thành công", '/');
 }
 public function error(){
     return $this->render('404');
@@ -373,7 +437,7 @@ public function error(){
 public function removeFromCart(){
     $id=$_GET['id'];
     $color=trim($_GET['color'], "");
-    unset($_SESSION['cart'][$id][$color]);
+    unset($_SESSION['cart'][$id][$color][$_SESSION['auth']['id']]);
     flash('success', "Xóa thành công", 'cart');
 }
 public function post(){
@@ -430,9 +494,12 @@ public function form_data() {
        
         $this->product->process_form($name, $phone, $product_id, $service_id, $service_date, $notes);
         
-        header("Location: http://renax.test/userpage");
+        header("Location: http://renax.test//");
         
     }
+}
+public function aubost(){
+    return $this->render('userPare.aubost');
 }
 
 

@@ -80,7 +80,6 @@
           <td class="p-4">{{$index->created_at	}}</td>
           <td class="p-4">{{$index->updated_at}}</td>
           <td class="p-4">
-            <button onclick="openViewArticleModal()" class="bg-blue-200 px-4 py-2 rounded hover:bg-blue-300 text-blue-800 transition">Xem</button>
             <button onclick="openEditArticleModal(`{{$index->id}}`, `{{$index->title}}`, `{{$index->content}}`)" class="bg-yellow-200 px-4 py-2 rounded hover:bg-yellow-300 text-yellow-800 transition">Sửa</button>
             <button onclick="openDeleteArticleModal({{$index->id}})" class="bg-red-200 px-4 py-2 rounded hover:bg-red-300 text-red-800 transition">Xóa</button>
           </td>

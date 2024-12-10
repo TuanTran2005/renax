@@ -26,11 +26,15 @@
             </div>
             <div class="d-flex flex-wrap">
     <!-- Cart Items -->
-     @if (isset($_SESSION['cart']))
+     @if (isset($_SESSION['cart']) && isset($_SESSION['auth']))
      
     
     @foreach ($_SESSION['cart'] as $product_id => $product_data)
-    @foreach ($product_data as $color => $product)
+    @foreach ($product_data as $color => $products)
+    @foreach ( $products as $id=>$product )
+         @if ($id==$_SESSION['auth']['id'])
+         
+         
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4 cart-item">
            
             <div class="product-info">
@@ -47,37 +51,35 @@
                 <div class="price">{{ $product['price'] }} VND</div>
                 
              
-                <div class="price">Color: {{ $color }}</div>
+                <div class="price">Color: {{ $color ? $color : "White" }}</div>
                 
         
                 <div class="d-flex justify-content-between align-items-center">
-                    <input type="number" class="quantity-input" value="{{ $product['quantity'] }}" min="1" id="quantity-input-{{ $product_id }}">
+                    <input type="number" class="quantity-input" value="{{ $product['quantity'] }}" min="1" id="quantity-input-{{ $product_id }}-{{ $loop->index }}">
                     <a href="{{ route('removeFromCart') }}?id={{$product_id}}&color={{ urldecode($color) }}">
-                        <button class="delete-btn" title="Xóa sản phẩm" onclick="removeProduct({{ $product_id }}, '{{ $color }}')">
+                        <button class="delete-btn" title="Xóa sản phẩm" >
                             <i class="fa fa-trash"></i>
                         </button>
                     </a>
                 </div>
             </div>
  
-            <!-- Nút mua sản phẩm --> 
-            <a href="{{ route('pay') }}?id={{ $product_id }}&sl={{ $product['quantity'] }}&color={{ urlencode($color) }}">
-                <button class="btn-custom mt-3 w-100" onclick="buyNow({{ $product_id }})">Mua ngay</button>
+             <a href="#" 
+               onclick="updateHref(this, {{ $product_id }}, '{{ $color ? $color : `White`  }}', {{ $loop->index }});">
+                <button class="btn-custom mt-3 w-100">Mua ngay</button>
             </a>
         </div>
+        @endif
+
+        @endforeach
     @endforeach
 @endforeach
 @else
 <p>There are no products</p>
 @endif
 </div>
-              
-
-                <!-- Add more products here -->
             </div>
 
-
-            <!-- Checkout Button -->
             <div class="text-center mt-4">
                 @if (!isset($_SESSION['cart']))
                 
@@ -87,4 +89,15 @@
             </div>
         </div>
     </div>
+    <script>
+        function updateHref(anchor, productId, color, index) {
+  
+    const quantityInput = document.getElementById(`quantity-input-${productId}-${index}`);
+    const quantity = quantityInput.value;
+
+
+    anchor.href = `{{ route('pay') }}?id=${productId}&sl=${quantity}&color=${color}`;
+}
+
+    </script>
     @endsection

@@ -25,7 +25,9 @@
         </div>
         <div class="row g-4">
             @foreach ( $product as $index )
-            
+             @if ($index->status != 'hidden')
+             
+             
            
             <!-- Product Item 1 -->
             <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
@@ -39,6 +41,7 @@
                     </div>
                 </div>
             </div>
+            @endif
              @endforeach
            
         </div>

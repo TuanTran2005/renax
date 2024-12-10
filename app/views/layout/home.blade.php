@@ -12,7 +12,7 @@
   <!-- Sidebar -->
   <aside class="w-64 bg-gradient-to-b from-blue-200 to-green-200 min-h-screen p-6 flex flex-col shadow-md">
   <h1 class="text-2xl font-bold mb-6 flex items-center text-blue-800">
-  <a href="{{route('/')}}"><img src="https://cdn.iconscout.com/icon/free/png-256/free-flutter-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-3-pack-logos-icons-3030139.png?f=webp&w=256" alt="" class="w-16"></a>
+  <a href="{{route('/')}}"><img src="imgs/Untitled_Project-removebg-preview.png" alt=""  width="100px"></a>
   Quản lý
 </h1>
     <ul class="flex-1">
@@ -26,11 +26,11 @@
           <i class="fas fa-user mr-2"></i> Người dùng
         </a>
       </li>
-      <li class="mb-4">
+      <!-- <li class="mb-4">
         <a href="comments.html" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
           <i class="fas fa-comments mr-2"></i> Bình luận
         </a>
-      </li>
+      </li> -->
       <li class="mb-4">
         <a href="{{route('get-product')}}" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
           <i class="fas fa-box mr-2"></i> Sản phẩm
