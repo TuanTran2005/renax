@@ -1,6 +1,6 @@
 @extends('layout.home')
 @section('content')
-  <!-- Main Content -->
+  
   <main class="flex-1 p-6">
     <h2 class="text-2xl font-bold mb-6 text-blue-800">
     <i class="fa-brands fa-shopify" style="color: #1e40af;"></i> Quản lý Sản Phẩm
@@ -10,7 +10,7 @@
       Thêm Sản Phẩm
     </button>
 
-    <!-- Product Table -->
+  
     <table class="w-full bg-white rounded shadow-lg overflow-hidden mb-8">
       <thead>
         <tr class="bg-blue-100 text-left">
@@ -47,12 +47,12 @@
     </table>
   </main>
 
-  <!-- Add Product Modal -->
+  
   <div id="addProductModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
   <div class="modal-content bg-white text-gray-800 w-1/3 max-h-screen p-6 rounded-lg shadow-lg overflow-y-auto">
     <h2 class="text-2xl font-bold text-blue-800 mb-4">Thêm Sản Phẩm Mới</h2>
     <form action="{{route('post-product')}}" method="post" enctype="multipart/form-data">
-      <!-- Form fields here -->
+      
       <div class="mb-4">
         <label for="productName" class="block text-sm font-semibold text-gray-700">Tên Sản Phẩm</label>
         <input type="text" id="productName" name="product_name" class="w-full px-4 py-2 rounded border border-gray-300" placeholder="Nhập tên sản phẩm">
@@ -119,7 +119,7 @@
 </div>
 
 
-  <!-- Edit Product Modal -->
+  
   <div id="editProductModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
   <div class="modal-content bg-white text-gray-800 w-1/3 max-h-screen p-6 rounded-lg shadow-lg overflow-y-auto">
     <h2 class="text-2xl font-bold text-blue-800 mb-4">Chỉnh Sửa Sản Phẩm</h2>
@@ -197,7 +197,7 @@
 </div>
 
 
-  <!-- View Product Modal -->
+  
   <div id="viewProductModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-bold text-blue-800 mb-4">Thông Tin Sản Phẩm</h2>
@@ -217,7 +217,7 @@
     </div>
   </div>
 
-  <!-- Delete Product Modal -->
+  
   <div id="deleteProductModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
       <h2 class="text-xl font-semibold text-red-600 mb-4">Xóa Sản Phẩm</h2>
@@ -233,7 +233,7 @@
   </div>
 
   <script>
-    // Open Modal
+   
     function openModal(modalId) {
       document.getElementById(modalId).classList.remove("hidden");
     }

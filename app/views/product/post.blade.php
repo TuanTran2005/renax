@@ -1,25 +1,25 @@
 <style>
-    /* Giới hạn chiều cao cho nội dung và sử dụng ellipsis */
+    
     .td-content {
-        max-width: 200px; /* Giới hạn chiều rộng của ô */
-        overflow: hidden; /* Ẩn phần nội dung vượt quá */
-        text-overflow: ellipsis; /* Hiển thị dấu ... nếu nội dung quá dài */
-        white-space: nowrap; /* Ngăn văn bản xuống dòng */
+        max-width: 200px; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        white-space: nowrap; 
     }
 
-    /* Giới hạn kích thước ảnh trong bảng */
+   
     .td-image img {
-        max-width: 100px; /* Giới hạn chiều rộng tối đa của ảnh */
-        max-height: 100px; /* Giới hạn chiều cao tối đa của ảnh */
-        object-fit: cover; /* Cắt ảnh sao cho phù hợp */
+        max-width: 100px; 
+        max-height: 100px; 
+        object-fit: cover; 
     }
 
-    /* Đảm bảo các ô có chiều cao đồng đều */
+    
     td {
         vertical-align: middle;
     }
 
-    /* CSS cho Modal */
+    
     .modal {
         display: none;
         position: fixed;
@@ -47,12 +47,12 @@
         <i class="fas fa-newspaper bg-white text-blue-300 p-2 rounded-full mr-2"></i> Quản lý bài viết
     </h2>
 
-    <!-- Nút thêm bài viết -->
+    
     <button onclick="openCreateArticleModal()" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition mb-4">
         <i class="fas fa-plus mr-2"></i> Thêm bài viết
     </button>
 
-    <!-- Article Table -->
+    
     <table class="w-full bg-white rounded shadow-lg overflow-hidden mb-8">
       <thead>
         <tr class="bg-blue-100 text-left">
@@ -69,7 +69,7 @@
         @foreach ( $post as $index )
         
        
-        <!-- Ví dụ bài viết -->
+        
         <tr class="hover:bg-blue-50 transition">
           <td class="p-4">{{$index->id}}</td>
           <td class="p-4">{{$index->title}}</td>
@@ -89,7 +89,7 @@
     </table>
 </main>
 
-<!-- Modal Thêm bài viết -->
+
 <div id="createArticleModal" class="modal">
   <div class="modal-content">
     <h3 class="text-xl font-bold">Thêm bài viết mới</h3>
@@ -114,7 +114,7 @@
   </div>
 </div>
 
-<!-- Modal xem bài viết -->
+
 <div id="viewArticleModal" class="modal">
   <div class="modal-content">
     <h3 class="text-xl font-bold">Chi tiết bài viết</h3>
@@ -123,7 +123,7 @@
   </div>
 </div>
 
-<!-- Modal sửa bài viết -->
+
 <div id="editArticleModal" class="modal">
   <div class="modal-content">
     <h3 class="text-xl font-bold">Sửa bài viết</h3>
@@ -146,7 +146,7 @@
   </div>
 </div>
 
-<!-- Modal xóa bài viết -->
+
 <div id="deleteArticleModal" class="modal">
   <div class="modal-content">
     <h3 class="text-xl font-bold">Xóa bài viết</h3>
@@ -163,7 +163,7 @@
 </div>
 
 <script>
-  // Mở và đóng modal
+  
   function openCreateArticleModal() {
     document.getElementById("createArticleModal").style.display = 'block';
   }
@@ -173,7 +173,7 @@
   }
 
   function openEditArticleModal(id, title, content) {
-    // Đổ dữ liệu vào các ô chỉnh sửa
+   
     document.getElementById("editArticleId").value = id;
     document.getElementById("editArticleTitle").value = title;
     document.getElementById("editArticleContent").value = content;

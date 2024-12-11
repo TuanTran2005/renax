@@ -12,7 +12,7 @@
       <i class="fas fa-chart-line bg-white text-blue-300 p-2 rounded-full mr-2"></i> Dashboard
     </h2>
      
-    <!-- Statistics -->
+
     <div class="grid grid-cols-4 gap-6 mb-10">
       <div class="bg-green-300 p-6 rounded shadow-lg">
         <h3 class="text-lg font-bold text-green-700"><i class="fas fa-users mr-2"></i> Người dùng</h3>
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <!-- New Row for Total Revenue -->
+  
     <div class="grid grid-cols-1 gap-6 mb-10">
       <div class="bg-blue-300 p-6 rounded shadow-lg">
         <h3 class="text-lg font-bold text-blue-700"><i class="fas fa-money-bill-wave mr-2"></i> Tổng Doanh Thu</h3>
@@ -61,15 +61,15 @@ $tongAll = 0;
       </div>
     </div>
 
-    <!-- Charts Section -->
+
     <div class="grid grid-cols-2 gap-6">
-      <!-- Pie Chart -->
+   
       <div class="bg-white rounded shadow-lg p-6">
         <h3 class="text-lg font-bold text-blue-800 mb-4">Tỷ lệ danh mục sản phẩm</h3>
         <canvas id="pieChart"></canvas>
       </div>
 
-      <!-- Bar Chart -->
+      
       <div class="bg-white rounded shadow-lg p-6">
         <h3 class="text-lg font-bold text-blue-800 mb-4">Doanh thu theo tháng</h3>
         <canvas id="barChart"></canvas>
@@ -78,7 +78,7 @@ $tongAll = 0;
   </main>
 
   <script>
-    // Pie Chart
+  
     const pieCtx = document.getElementById('pieChart').getContext('2d');
     new Chart(pieCtx, {
       type: 'pie',
@@ -100,7 +100,7 @@ $tongAll = 0;
       }
     });
 
-    // Bar Chart
+    
     const barCtx = document.getElementById('barChart').getContext('2d');
     new Chart(barCtx, {
       type: 'bar',

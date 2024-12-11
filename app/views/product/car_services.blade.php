@@ -7,21 +7,21 @@
         text-overflow: ellipsis;
     }
     .max-w-xs {
-        max-width: 150px; /* Bạn có thể thay đổi giá trị này để điều chỉnh độ dài */
+        max-width: 150px; 
     }
-    /* Thêm overflow: auto cho phần form của modal sửa dịch vụ */
+   
     .modal-content form {
-        overflow: auto; /* Thêm cuộn tự động nếu form có nội dung quá dài */
-        max-height: 500px; /* Bạn có thể điều chỉnh giá trị max-height tùy theo nhu cầu */
-        padding-right: 10px; /* Đảm bảo có không gian cho thanh cuộn dọc */
+        overflow: auto; 
+        max-height: 500px; 
+        padding-right: 10px; 
     }
 
-    /* Thêm overflow: auto cho textarea, input để hỗ trợ cuộn tự động */
+    
     textarea, input {
         overflow: auto;
     }
 </style>
-<!-- Main Content -->
+
 <main class="flex-1 p-6">
     <h2 class="text-2xl font-bold mb-6 text-blue-800">
         <i class="fas fa-cogs bg-white text-blue-300 p-2 rounded-full mr-2"></i> Quản lý Dịch Vụ
@@ -31,7 +31,7 @@
         Thêm Dịch Vụ
     </button>
 
-    <!-- Service Table -->
+
     <table class="w-full bg-white rounded shadow-lg overflow-hidden mb-8">
         <thead>
             <tr class="bg-blue-100 text-left">
@@ -72,7 +72,7 @@
     </table>
 </main>
 
-<!-- Add Service Modal -->
+
 <div id="addServiceModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Thêm Dịch Vụ</h2>
@@ -105,7 +105,7 @@
         </form>
     </div>
 </div>
-<!-- View Service Modal -->
+
 <div id="viewServiceModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Chi Tiết Dịch Vụ</h2>
@@ -125,7 +125,7 @@
     </div>
 </div>
 
-<!-- Edit Service Modal -->
+
 <div id="editServiceModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Chỉnh Sửa Dịch Vụ</h2>

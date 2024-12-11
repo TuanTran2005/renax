@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
-    /* Improved Color Circle Style */
+
     .color-option {
         width: 20px;
         height: 20px;
@@ -13,15 +13,15 @@
     }
 
     .color-option:hover {
-        transform: scale(1.1);  /* Hover effect for enlarging */
+        transform: scale(1.1);  
     }
 
     .selected-color {
-        border: 3px solid #007bff;  /* Blue border for selected color */
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Adding shadow */
+        border: 3px solid #007bff;  
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
     }
 
-    /* Card Body and Content Styling */
+   
     .card-body {
         padding: 20px;
     }
@@ -43,7 +43,6 @@
         padding: 10px;
     }
 
-    /* Improved Input Form Styling */
     .form-control {
         border-radius: 0.375rem;
     }
@@ -74,7 +73,7 @@
         transform: scale(1.05);
     }
 
-    /* Review Section Styling */
+   
     #reviews {
         max-height: 300px;
         overflow-y: auto;
@@ -100,11 +99,11 @@
     }
 </style>
 
-<!-- Product Detail Start -->
+
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-6">
-            <!-- Product Image Gallery -->
+          
             @php
                 if ($product && isset($product->images) && !is_null($product->images)) {
                     $imagesArray = explode(',', $product->images); 
@@ -177,7 +176,7 @@
         </div>
     </div>
 
-    <!-- Product Description -->
+    
     <div class="row mt-5 product-description">
         <div class="col-12">
             <h3>Product Description</h3>
@@ -194,7 +193,7 @@
         </div>
     </div>
 
-    <!-- Related Products -->
+   
     <div class="row mt-5">
         <div class="col-12">
             <h3>Related Products</h3>
@@ -215,7 +214,7 @@
         </div>
     </div>
 
-    <!-- Product Reviews -->
+  
     <div class="row mt-5">
         <div class="col-12">
             <h3>Product Reviews</h3>
@@ -265,25 +264,25 @@
     </div>
 
 </div>
-<!-- Product Detail End -->
+
 
 <script>
-    // Function to handle the color selection
+   
     function changeColor($coler) {
         document.getElementById('coler').value = $coler;
         
-        // Remove the 'selected-color' class from all color options
+        
         var colorOptions = document.querySelectorAll('.color-option');
         colorOptions.forEach(function(option) {
             option.classList.remove('selected-color');
         });
         
-        // Add the 'selected-color' class to the selected color option
+        
         var selectedColorOption = document.querySelector(`[data-color="${$coler}"]`);
         selectedColorOption.classList.add('selected-color');
     }
 
-    // Function to change the main image when clicking on thumbnail
+   
     function changeImage(imageSrc) {
         document.getElementById('largeImage').src = imageSrc;
     }

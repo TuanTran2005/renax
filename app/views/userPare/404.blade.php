@@ -2,7 +2,7 @@
    @section('content')
    
  
-    <!-- Page Header Start -->
+   
     <div class="container-fluid page-header mb-5 p-0" style="background-image: url(img/carousel-bg-2.jpg);">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
@@ -17,10 +17,10 @@
             </div>
         </div>
     </div>
-    <!-- Page Header End -->
+   
 
 
-    <!-- 404 Start -->
+    
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container text-center">
             <div class="row justify-content-center">
@@ -34,6 +34,6 @@
             </div>
         </div>
     </div>
-    <!-- 404 End -->
+  
         
   @endsection 

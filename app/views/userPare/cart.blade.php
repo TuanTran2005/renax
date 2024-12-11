@@ -15,9 +15,7 @@
             </div>
         </div>
     </div>
-    <!-- Page Header End -->
 
-    <!-- Cart Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -25,7 +23,7 @@
                 <h1 class="mb-5">Các sản phẩm trong giỏ hàng của bạn</h1>
             </div>
             <div class="d-flex flex-wrap">
-    <!-- Cart Items -->
+
      @if (isset($_SESSION['cart']) && isset($_SESSION['auth']))
      
     

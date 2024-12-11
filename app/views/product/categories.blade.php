@@ -1,6 +1,6 @@
 @extends('layout.home')
 @section('content')
-<!-- Main Content -->
+
 <main class="flex-1 p-6">
     <h2 class="text-2xl font-bold mb-6 text-blue-800">
       <i class="fas fa-tags bg-white text-blue-300 p-2 rounded-full mr-2"></i> Quản lý Loại Hàng
@@ -10,7 +10,7 @@
       Thêm Loại Hàng
     </button>
 
-    <!-- Category Table -->
+   
     <table class="w-full bg-white rounded shadow-lg overflow-hidden mb-8">
       <thead>
         <tr class="bg-blue-100 text-left">
@@ -38,7 +38,7 @@
     </table>
 </main>
 
-<!-- Add Category Modal -->
+
 <div id="addCategoryModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-bold text-blue-800 mb-4">Thêm Loại Hàng</h2>
@@ -60,7 +60,7 @@
     </div>
 </div>
 
-<!-- View Category Modal -->
+
 <div id="viewCategoryModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-bold text-blue-800 mb-4">Xem Chi Tiết Loại Hàng</h2>
@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<!-- Edit Category Modal -->
+
 <div id="editCategoryModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-bold text-blue-800 mb-4">Chỉnh Sửa Loại Hàng</h2>
@@ -95,7 +95,7 @@
 </div>
 
 <script>
-    // Open Modal
+   
     function openModal(modalId) {
         document.getElementById(modalId).classList.remove("hidden");
        
@@ -105,19 +105,19 @@
         confirm("Ban co chac muon xoa no khong");
     }
 
-    // Close Modal
+
     function closeModal(modalId) {
         document.getElementById(modalId).classList.add("hidden");
     }
 
-    // Open View Modal
+  
     function openViewModal(name, description) {
         document.getElementById('viewCategoryName').innerText = `Tên Loại Hàng: ${name}`;
         document.getElementById('viewCategoryDescription').innerText = `Mô Tả: ${description}`;
         openModal('viewCategoryModal');
     }
 
-    // Open Edit Modal
+
     function openEditModal(name, description,id) {
         document.getElementById('editCategoryName').value = name;
         document.getElementById('editCategoryDescription').value = description;

@@ -9,7 +9,6 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 flex">
-  <!-- Sidebar -->
   <aside class="w-64 bg-gradient-to-b from-blue-200 to-green-200 min-h-screen p-6 flex flex-col shadow-md">
   <h1 class="text-2xl font-bold mb-6 flex items-center text-blue-800">
   <a href="{{route('/')}}"><img src="imgs/Untitled_Project-removebg-preview.png" alt=""  width="100px"></a>
@@ -26,11 +25,6 @@
           <i class="fas fa-user mr-2"></i> Người dùng
         </a>
       </li>
-      <!-- <li class="mb-4">
-        <a href="comments.html" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
-          <i class="fas fa-comments mr-2"></i> Bình luận
-        </a>
-      </li> -->
       <li class="mb-4">
         <a href="{{route('get-product')}}" class="block py-2 px-4 bg-blue-100 rounded hover:bg-blue-200 text-blue-800 transition">
           <i class="fas fa-box mr-2"></i> Sản phẩm
@@ -70,8 +64,6 @@
     </div>
   </aside>
 
-
-    <!-- Main Content -->
     @yield('content')
 </body>
 </html>

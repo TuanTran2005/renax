@@ -193,11 +193,10 @@
  document.getElementById('editPassword').value=pass;
  document.getElementById('editid').value=id;
  document.getElementById('editPhone').value=phone;
-    // Gán các giá trị mới cho các trường bổ sung
+    
    
   
 
-    // Mở modal
     modal.classList.remove('hidden');
 }
 
@@ -207,13 +206,13 @@ function closeModal(modalId) {
 }
 
 function openDeleteUserModal(id, name) {
-    // Cập nhật tên người dùng trong modal
+  
     document.getElementById('deleteUserName').textContent = name;
     
     
     document.getElementById('deleteUserForm').value = id ;
     
-    // Mở modal
+   
     document.getElementById('deleteUserModal').classList.remove('hidden');
 }
 

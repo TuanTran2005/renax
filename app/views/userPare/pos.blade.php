@@ -2,7 +2,7 @@
 @section('content')
 
     <style>
-        /* Page Header */
+       
         .page-header {
             background-image: url('https://inanaz.com.vn/wp-content/uploads/2024/02/banner-catalogue-xe-hoi.jpg');
             background-size: cover;
@@ -24,7 +24,7 @@
             background: none;
         }
 
-        /* Blog Section */
+      
         .blog-header {
             text-align: center;
             margin-top: -80px;
@@ -49,7 +49,7 @@ a{
             color: #555;
         }
 
-        /* Blog Posts */
+        
         .blog-posts {
             margin-top: 30px;
         }
@@ -71,7 +71,7 @@ a{
             
         }
 
-        /* Giảm kích thước hình ảnh */
+        
         .blog-posts .blog-post-item img {
             width: 80px; /* Hình ảnh chiều rộng 80px */
             height: 80px; /* Chiều cao 80px */

@@ -5,7 +5,7 @@
         <i class="fas fa-file-invoice bg-white text-blue-300 p-2 rounded-full mr-2"></i> Quản lý Hóa Đơn Dịch Vụ
     </h2>
 
-    <!-- Service Invoice Table -->
+   
     <table class="w-full bg-white rounded shadow-lg overflow-hidden mb-8">
         <thead>
             <tr class="bg-blue-100 text-left">
@@ -44,12 +44,12 @@
     </table>
 </main>
 
-<!-- View Service Invoice Modal -->
+
 <div id="viewServiceInvoiceModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Thông tin Hóa Đơn Dịch Vụ</h2>
         <ul id="serviceInvoiceDetails" class="space-y-2">
-            <!-- Details will be populated dynamically -->
+            
         </ul>
         <div class="flex justify-end mt-6">
             <button onclick="closeModal('viewServiceInvoiceModal')" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 text-gray-800 transition">Đóng</button>
@@ -57,7 +57,7 @@
     </div>
 </div>
 
-<!-- Edit Service Invoice Modal -->
+
 <div id="editServiceInvoiceModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg max-h-[80vh] overflow-auto">
         <h2 class="text-2xl font-bold text-blue-800 mb-4">Sửa Hóa Đơn Dịch Vụ</h2>
@@ -106,7 +106,7 @@
     </div>
 </div>
 
-<!-- Delete Service Invoice Modal -->
+
 <div id="deleteServiceInvoiceModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
     <div class="modal-content bg-white text-gray-800 w-1/3 p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-red-600 mb-4">Xóa Hóa Đơn Dịch Vụ</h2>
@@ -126,7 +126,7 @@
     }
 
     function viewServiceInvoice(id, name, detail, status, product_id, user_id, car_service_id, time, phone) {
-    // Populate the modal with invoice details dynamically
+    
     document.getElementById('serviceInvoiceDetails').innerHTML = `
         <li><strong>ID:</strong> ${id}</li>
         <li><strong>Tên:</strong> ${name}</li>
@@ -139,7 +139,7 @@
         <li><strong>Số Điện Thoại:</strong> ${phone}</li>
     `;
     
-    // Show the modal
+   
     document.getElementById('viewServiceInvoiceModal').classList.remove('hidden');
 }
 
