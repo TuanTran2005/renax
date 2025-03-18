@@ -24,7 +24,7 @@
                     <label for="payment_method" class="form-label"><i class="fa fa-credit-card me-2"></i>Phương Thức Thanh Toán</label>
                     <select class="form-control" id="payment_method" name="thanhtoan" required>
                         <option value="cash">Tiền Mặt</option>
-                        <option value="card">Thẻ Ngân Hàng</option>
+                        
                     </select>
                 </div>
 
